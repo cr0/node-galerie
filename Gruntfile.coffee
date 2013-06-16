@@ -32,7 +32,7 @@ module.exports = (grunt) ->
       server:
         options:
           reporter: 'spec'
-        src:        ['.test/js/*.js']
+        src:        ['.test/*.js']
 
     watch:
       coffee:
