@@ -1,0 +1,39 @@
+{
+  "name": "node-galerie",
+  "version": "0.0.0",
+  "description": "a gallery written in node, nothing more.",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "install": "grunt build",
+    "start": "npm start",
+    "test": "vows --spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cr0/node-galerie"
+  },
+  "keywords": [
+    "node",
+    "gallery",
+    "coffee",
+    ""
+  ],
+  "author": "Christian Roth <christian.roth@port17.de> (https://github.com/cr0)",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "express": "3.x",
+    "stylus": "0.32.x",
+    "nib": "0.9.x",
+    "mongoose": "3.6.x",
+    "jade": "0.31.x",
+    "grunt": "0.4.x",
+    "grunt-contrib-coffee": "0.7.x"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "0.4.x"
+  }
+}
