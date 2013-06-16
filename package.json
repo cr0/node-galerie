@@ -31,7 +31,8 @@
     "mongoose": "3.6.x",
     "jade": "0.31.x",
     "grunt": "0.4.x",
-    "grunt-contrib-coffee": "0.7.x"
+    "grunt-cli": "0.1.x"
+    "grunt-contrib-coffee": "0.7.x",
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.4.x"
