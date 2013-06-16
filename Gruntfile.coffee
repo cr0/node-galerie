@@ -21,7 +21,7 @@ module.exports = (grunt) ->
     simplemocha:
       server:
         options:
-          reporter: 'Spec'
+          reporter: 'spec'
         src:        ['test/**/*.coffee']
 
     watch:
