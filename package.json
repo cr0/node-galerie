@@ -9,7 +9,7 @@
   "scripts": {
     "install": "grunt build",
     "start": "npm start",
-    "test": "vows --spec"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
