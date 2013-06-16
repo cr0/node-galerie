@@ -9,7 +9,7 @@
   "scripts": {
     "install": "grunt build",
     "start": "npm start",
-    "test": "vows --spec"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -32,9 +32,12 @@
     "jade": "0.31.x",
     "grunt": "0.4.x",
     "grunt-cli": "0.1.x",
-    "grunt-contrib-coffee": "0.7.x"
+    "grunt-contrib-coffee": "0.7.x",
+    "grunt-contrib-clean": "~0.4.1"
   },
   "devDependencies": {
-    "grunt-contrib-watch": "0.4.x"
+    "grunt-contrib-watch": "0.4.x",
+    "grunt-vows": "~0.4.x",
+    "vows": "0.7.x"
   }
 }
