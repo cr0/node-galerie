@@ -33,11 +33,12 @@
     "grunt": "0.4.x",
     "grunt-cli": "0.1.x",
     "grunt-contrib-coffee": "0.7.x",
-    "grunt-contrib-clean": "~0.4.1"
+    "grunt-contrib-clean": "0.4.x"
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.4.x",
-    "grunt-vows": "~0.4.x",
-    "vows": "0.7.x"
+    "mocha": "1.11.x",
+    "grunt-simple-mocha": "0.4.x",
+    "chai": "1.6.x"
   }
 }

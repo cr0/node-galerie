@@ -5,8 +5,6 @@ module.exports = (grunt) ->
     clean:
       server:
         src:        ['app']
-      test:
-        src:        ['.test']
 
     coffee:
       server:
@@ -19,20 +17,12 @@ module.exports = (grunt) ->
           dest:     'app'
           ext:      '.js'
         ]
-      test:
-        files: [
-          expand:   true
-          cwd:      'test/'
-          src:      ['**/*.coffee']
-          dest:     '.test'
-          ext:      '.js'
-        ]
 
-    vows:
+    simplemocha:
       server:
         options:
-          reporter: 'spec'
-        src:        ['.test/*.js']
+          reporter: 'Spec'
+        src:        ['test/**/*.coffee']
 
     watch:
       coffee:
@@ -40,9 +30,9 @@ module.exports = (grunt) ->
         tasks:      'coffee'
 
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-vows'
+  grunt.loadNpmTasks 'grunt-simple-mocha'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 
   grunt.registerTask 'build', [
@@ -50,7 +40,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'clean:test', 'coffee:test', 'vows:server', 'clean:test'
+    'simplemocha:server'
   ]   
 
   grunt.registerTask 'server', [
