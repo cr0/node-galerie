@@ -43,8 +43,9 @@
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.4.x",
-    "mocha": "~1.11.0",
+    "mocha": "1.11.x",
     "chai": "1.6.x",
-    "grunt-mocha-cov": "0.0.x"
+    "grunt-mocha-cov": "0.0.x",
+    "coffee-coverage": "0.1.x"
   }
 }

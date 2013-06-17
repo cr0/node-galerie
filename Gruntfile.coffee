@@ -23,7 +23,6 @@ module.exports = (grunt) ->
     mochacov:
       coverage:
         options:
-          files:          ['.test/**/*.js']
           require:        ['.codecov.js']
           coveralls:
             serviceName:  'travis-ci'
@@ -31,14 +30,14 @@ module.exports = (grunt) ->
         options:
           reporter:   'spec'
           growl:      true
-          files:      'test/**/*.coffee'
-          compilers:  ['coffee:coffee-script']
       options:
-        recursive:  true
+        recursive:    true
+        files:        'test/**/*.coffee'
+        compilers:    ['coffee:coffee-script']
 
     watch:
       coffee:
-        files:      ['**/*.coffee']
+        files:      ['**/*Test.coffee']
         tasks:      'coffee'
 
 
