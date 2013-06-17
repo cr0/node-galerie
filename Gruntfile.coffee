@@ -18,11 +18,19 @@ module.exports = (grunt) ->
           ext:      '.js'
         ]
 
-    simplemocha:
-      server:
+    mochacov:
+      coverage:
+        options:
+          coveralls:
+            serviceName: 'travis-ci'
+      test:
         options:
           reporter: 'spec'
-        src:        ['test/**/*.coffee']
+          growl:    true
+      options:
+        recursive:  true
+        compilers:  ['coffee:coffee-script']
+        files:      'test/**/*.coffee'
 
     watch:
       coffee:
@@ -32,7 +40,7 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-simple-mocha'
+  grunt.loadNpmTasks 'grunt-mocha-cov'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 
   grunt.registerTask 'build', [
@@ -40,8 +48,12 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'simplemocha:server'
+    'mochacov:test'
   ]   
+
+  grunt.registerTask 'travis', [
+    'mochacov:coverage'
+  ]
 
   grunt.registerTask 'server', [
     'coffee', 'watch:coffee'

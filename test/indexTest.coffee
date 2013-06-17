@@ -8,5 +8,6 @@ describe 'Foo', ->
     'test'.should.equal 'test'
   it 'bla equals bla string', ->
     'bla'.should.equal 'bla'
-  it 'foo equals foo string', ->
-    'foo'.should.equal 'foo'
+  describe 'Bar', ->
+    it 'foo equals foo string', ->
+      'foo'.should.equal 'foo'
