@@ -27,6 +27,7 @@ module.exports = (grunt) ->
         options:
           reporter: 'spec'
           growl:    true
+          bail:     true
       options:
         recursive:  true
         compilers:  ['coffee:coffee-script']
@@ -48,7 +49,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'clean:server', 'coffee:server', 'mochacov:test'
+    'clean:server', 'coffee:server', 'mochacov:test', 'mochacov:coverage'
   ]   
 
   grunt.registerTask 'travis', [
