@@ -9,7 +9,12 @@
   "scripts": {
     "install": "grunt build",
     "start": "npm start",
-    "test": "grunt test"
+    "test": "grunt test",
+    "blanket": {
+      "pattern": [
+        "app"
+      ]
+    }
   },
   "repository": {
     "type": "git",

@@ -48,11 +48,11 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'mochacov:test'
+    'clean:server', 'coffee:server', 'mochacov:test'
   ]   
 
   grunt.registerTask 'travis', [
-    'mochacov:coverage'
+    'clean:server', 'coffee:server', 'mochacov:coverage'
   ]
 
   grunt.registerTask 'server', [
