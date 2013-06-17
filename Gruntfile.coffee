@@ -5,6 +5,8 @@ module.exports = (grunt) ->
     clean:
       server:
         src:        ['app']
+      test:
+        src:        ['.test']
 
     coffee:
       server:
@@ -21,17 +23,18 @@ module.exports = (grunt) ->
     mochacov:
       coverage:
         options:
+          files:          ['.test/**/*.js']
+          require:        ['.codecov.js']
           coveralls:
-            serviceName: 'travis-ci'
-      test:
+            serviceName:  'travis-ci'
+      server:
         options:
-          reporter: 'spec'
-          growl:    true
-          bail:     true
+          reporter:   'spec'
+          growl:      true
+          files:      'test/**/*.coffee'
+          compilers:  ['coffee:coffee-script']
       options:
         recursive:  true
-        compilers:  ['coffee:coffee-script']
-        files:      'test/**/*.coffee'
 
     watch:
       coffee:
@@ -49,11 +52,11 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'clean:server', 'coffee:server', 'mochacov:test', 'mochacov:coverage'
+    'mochacov:server'
   ]   
 
   grunt.registerTask 'travis', [
-    'clean:server', 'coffee:server', 'mochacov:coverage'
+     'clean:test', 'mochacov:coverage', 'clean:test'
   ]
 
   grunt.registerTask 'server', [

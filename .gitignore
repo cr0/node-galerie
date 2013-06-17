@@ -2,3 +2,4 @@
 app
 doc
 node_modules
+.codecov.js

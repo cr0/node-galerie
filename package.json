@@ -12,7 +12,7 @@
     "test": "grunt test",
     "blanket": {
       "pattern": [
-        "app"
+        ".test"
       ]
     }
   },
