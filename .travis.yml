@@ -4,5 +4,5 @@ node_js:
 before_script:
   - npm install -g grunt-cli coffee-coverage
 after_script: 
-  - coffeecoverage --initfile .codecov.js --exclude node_modules --path relative src .test
+  - coffeecoverage --initfile .codecov.js --exclude node_modules,Gruntfile.coffee,.git,test,assets --path relative . .
   - grunt travis

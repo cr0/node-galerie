@@ -5,8 +5,8 @@ module.exports = (grunt) ->
     clean:
       server:
         src:        ['app']
-      test:
-        src:        ['.test']
+      coverage:
+        src:        ['src/**/*.js']
 
     coffee:
       server:
@@ -55,7 +55,7 @@ module.exports = (grunt) ->
   ]   
 
   grunt.registerTask 'travis', [
-     'clean:test', 'mochacov:coverage', 'clean:test'
+     'mochacov:coverage', 'clean:coverage'
   ]
 
   grunt.registerTask 'server', [
