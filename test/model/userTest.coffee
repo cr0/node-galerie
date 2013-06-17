@@ -14,3 +14,7 @@ describe 'User', ->
   it 'correct password allows login', ->
     user = new User 'hans@mail.com'
     user.login('p4ss').should.be.true
+
+  it 'wrong password denies login', ->
+    user = new User 'hans@mail.com'
+    user.login('1234').should.be.false
