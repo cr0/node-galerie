@@ -35,6 +35,10 @@ module.exports = (grunt) ->
         files:        'test/**/*.coffee'
         compilers:    ['coffee:coffee-script']
 
+    shell:
+      coverage:
+        command:    './node_modules/coffee-coverage/bin/coffeecoverage --initfile .codecov.js --exclude node_modules,Gruntfile.coffee,.git,test,assets --path relative . .'
+
     watch:
       coffee:
         files:      ['**/*Test.coffee']
@@ -45,6 +49,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-mocha-cov'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-shell'
 
   grunt.registerTask 'build', [
     'clean:server', 'coffee:server'
@@ -55,7 +60,7 @@ module.exports = (grunt) ->
   ]   
 
   grunt.registerTask 'travis', [
-     'mochacov:coverage', 'clean:coverage'
+     'shell:coverage', 'mochacov:coverage', 'clean:coverage'
   ]
 
   grunt.registerTask 'server', [
