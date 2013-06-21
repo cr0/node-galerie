@@ -34,7 +34,7 @@ module.exports = (grunt) ->
           growl:      true
       options:
         recursive:    true
-        files:        'test/**/*.coffee'
+        files:        'test/**/*-test.coffee'
         compilers:    ['coffee:coffee-script']
 
     stylus:

@@ -1,8 +1,8 @@
 passport            = require 'passport'
 GoogleStrategy      = require('passport-google-oauth').OAuth2Strategy
 
-Config              = require './Config'
-Oauth               = require './Oauth'
+Config              = require './config'
+Oauth               = require './oauth'
 
 
 class GoogleOauth extends Oauth

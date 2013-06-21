@@ -3,9 +3,9 @@ fs            = require 'fs'
 path          = require 'path'
 passport      = require 'passport'
 
-AmazonOauth   = require './util/AmazonOauth'
-FacebookOauth = require './util/FacebookOauth'
-GoogleOauth   = require './util/GoogleOauth'
+AmazonOauth   = require './util/amazon-oauth'
+FacebookOauth = require './util/facebook-oauth'
+GoogleOauth   = require './util/google-oauth'
 
 class App
   EXPRESS: express()
@@ -18,7 +18,7 @@ class App
 
 
   routes: ->
-    @_includeRoute file for file in fs.readdirSync __dirname + '/routes/' when file.endsWith 'Route.js'
+    @_includeRoute file for file in fs.readdirSync __dirname + '/routes/' when file.endsWith '-route.js'
 
     # create 404 route
     @EXPRESS.all '*', (req, res) ->

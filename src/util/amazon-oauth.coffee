@@ -1,8 +1,8 @@
 passport            = require 'passport'
 AmazonStrategy      = require('passport-amazon').Strategy
 
-Config              = require './Config'
-Oauth               = require './Oauth'
+Config              = require './config'
+Oauth               = require './oauth'
 
 
 class AmazonOauth extends Oauth

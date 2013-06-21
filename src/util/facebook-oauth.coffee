@@ -1,8 +1,8 @@
 passport            = require 'passport'
 FacebookStrategy    = require('passport-facebook').Strategy
 
-Config              = require './Config'
-Oauth               = require './Oauth'
+Config              = require './config'
+Oauth               = require './oauth'
 
 
 class FacebookOauth extends Oauth
