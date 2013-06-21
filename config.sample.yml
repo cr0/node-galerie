@@ -1,0 +1,20 @@
+default:
+
+  baseurl:      'http://localhost:3000'
+
+  mongodb:
+    port:       27017
+    host:       '127.0.0.1'
+    passwort:   ''
+
+  oauth:
+    google:
+      clientId: ''
+      secret:   ''
+    facebook:
+      clientId: ''
+      secret:   ''
+    amazon:
+      clientId: ''
+      secret:   ''
+

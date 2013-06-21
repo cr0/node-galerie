@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  ul
+    li
+      a(href='/auth/local/', title='Login with local account') Login with Local Account
+
+    li
+      a(href='/auth/google/', title='Login with Google') Login with Google
+
+    li
+      a(href='/auth/facebook/', title='Login with Facebook') Login with Facebook
+
+    li
+      a(href='/auth/amazon/', title='Login with Amazon') Login with Amazon

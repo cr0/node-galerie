@@ -7,6 +7,8 @@ module.exports = (grunt) ->
         src:        ['app']
       coverage:
         src:        ['src/**/*.js']
+      public:
+        src:        ['public/css/*', 'public/js/*']
 
     coffee:
       server:
@@ -35,6 +37,13 @@ module.exports = (grunt) ->
         files:        'test/**/*.coffee'
         compilers:    ['coffee:coffee-script']
 
+    stylus:
+      assets:
+        options:
+          linenos:    true
+        files:
+          'public/css/main.css': 'assets/styl/*.styl'
+
     shell:
       coverage:
         command:    './node_modules/coffee-coverage/bin/coffeecoverage --initfile .codecov.js --exclude node_modules,Gruntfile.coffee,.git,test,assets --path relative . .'
@@ -42,17 +51,22 @@ module.exports = (grunt) ->
     watch:
       coffee:
         files:      ['src/**/*.coffee']
-        tasks:      'coffee'
+        tasks:      ['clean:server', 'coffee:server']
+      stylus:
+        files:      ['assets/styl/*.styl']
+        tasks:      ['stylus:assets']
+
 
 
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-stylus'
   grunt.loadNpmTasks 'grunt-mocha-cov'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-shell'
 
   grunt.registerTask 'build', [
-    'clean:server', 'coffee:server'
+    'clean:public', 'clean:server', 'coffee:server', 'stylus:assets'
   ]
 
   grunt.registerTask 'test', [
@@ -63,6 +77,6 @@ module.exports = (grunt) ->
      'shell:coverage', 'mochacov:coverage', 'clean:coverage'
   ]
 
-  grunt.registerTask 'server', [
-    'coffee', 'watch:coffee'
+  grunt.registerTask 'dev', [
+    'clean:public', 'clean:server', 'coffee:server', 'stylus:assets', 'watch'
   ]

@@ -8,7 +8,6 @@
   },
   "scripts": {
     "install": "grunt build",
-    "start": "npm start",
     "test": "grunt test",
     "blanket": {
       "pattern": [
@@ -23,8 +22,7 @@
   "keywords": [
     "node",
     "gallery",
-    "coffee",
-    ""
+    "coffee"
   ],
   "author": "Christian Roth <christian.roth@port17.de> (https://github.com/cr0)",
   "license": "MIT",
@@ -32,21 +30,26 @@
   "dependencies": {
     "coffee-script": "1.6.x",
     "express": "3.x",
-    "stylus": "0.32.x",
-    "nib": "0.9.x",
     "mongoose": "3.6.x",
     "jade": "0.31.x",
     "grunt": "0.4.x",
     "grunt-cli": "0.1.x",
     "grunt-contrib-coffee": "0.7.x",
-    "grunt-contrib-clean": "0.4.x"
+    "grunt-contrib-clean": "0.4.x",
+    "passport": "0.1.x",
+    "passport-amazon": "0.1.x",
+    "passport-google-oauth": "0.1.x",
+    "passport-facebook": "0.1.x",
+    "yaml-config": "0.2.x"
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.4.x",
+    "grunt-mocha-cov": "0.0.x",
+    "grunt-shell": "0.2.x",
+    "grunt-contrib-stylus": "0.5.x",
     "mocha": "1.11.x",
     "chai": "1.6.x",
-    "grunt-mocha-cov": "0.0.x",
     "coffee-coverage": "0.1.x",
-    "grunt-shell": "0.2.x"
+    "nib": "0.9.x"
   }
 }
