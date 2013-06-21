@@ -1,7 +1,7 @@
 chai    = require 'chai'
 expect  = chai.expect
 
-User    = require process.cwd() + '/src/model/User'
+User    = require process.cwd() + '/src/model/user'
 
 chai.should()
 
