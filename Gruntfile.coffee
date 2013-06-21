@@ -40,6 +40,9 @@ module.exports = (grunt) ->
     stylus:
       assets:
         options:
+          use: [
+            require('nib')
+          ],
           linenos:    true
         files:
           'public/css/main.css': 'assets/styl/*.styl'

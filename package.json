@@ -50,6 +50,7 @@
     "mocha": "1.11.x",
     "chai": "1.6.x",
     "coffee-coverage": "0.1.x",
-    "nib": "0.9.x"
+    "nib": "0.9.x",
+    "stylus": "0.32.x"
   }
 }
