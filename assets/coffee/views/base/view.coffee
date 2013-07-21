@@ -1,0 +1,9 @@
+define [
+  'chaplin'
+  'lib/view-helper'
+], (Chaplin) ->
+  'use strict'
+
+  class View extends Chaplin.View
+    autoRender: true
+    getTemplateFunction: -> @template

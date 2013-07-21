@@ -19,9 +19,9 @@ class AmazonOauth extends Oauth
       clientID:       config.oauth.amazon.clientId,
       clientSecret:   config.oauth.amazon.secret,
       callbackURL:    config.baseurl + '/auth/amazon/callback'
-      , (accessToken, refreshToken, profile, done) ->
+      , (accessToken, refreshToken, profile, done) =>
         console.log "Got accesstoken #{accessToken} and a profile", profile
-        done null, profile
+        @_findOauthUser 'amazon', profile, done
 
 
 module.exports = AmazonOauth

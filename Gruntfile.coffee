@@ -1,3 +1,5 @@
+path = require 'path'
+
 module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -8,7 +10,8 @@ module.exports = (grunt) ->
       coverage:
         src:        ['src/**/*.js']
       public:
-        src:        ['public/css/*', 'public/js/*']
+        src:        ['public/css/**', 'public/js/**', '!public/js/vendor/*']
+        filter:     'isFile'
 
     coffee:
       server:
@@ -19,6 +22,17 @@ module.exports = (grunt) ->
           cwd:      'src/'
           src:      ['**/*.coffee']
           dest:     'app'
+          ext:      '.js'
+        ]
+      client:
+        options:
+          sourceMap: true
+          sourceRoot: '/coffee/'
+        files: [
+          expand:   true
+          cwd:      'assets/coffee/'
+          src:      ['**/*.coffee']
+          dest:     'public/js/'
           ext:      '.js'
         ]
 
@@ -42,10 +56,40 @@ module.exports = (grunt) ->
         options:
           use: [
             require('nib')
-          ],
+          ]
+          paths: [
+            'public/'
+          ]
+          urlfunc:    'url',
           linenos:    true
         files:
           'public/css/main.css': 'assets/styl/*.styl'
+
+    jade:
+      client:
+        options:
+          amd: true
+          namespace: false
+          client: true
+          compileDebug: false
+          processName: ( filename ) ->
+            path.basename( filename ).split( '.' )[0]
+        files:
+          'public/js/templates/home.js':      'assets/tpl/home.jade'
+          'public/js/templates/imprint.js':   'assets/tpl/imprint.jade'
+          'public/js/templates/skeleton.js':  'assets/tpl/skeleton.jade'
+
+          'public/js/templates/ajax/.js':     'assets/tpl/ajax/login.jade'
+
+    requirejs: 
+      compile: 
+        options:
+          preserveLicenseComments: false
+          generateSourceMaps: false
+          baseUrl: 'public/js'
+          name: 'main'
+          mainConfigFile: 'public/js/main.js'
+          out: 'public/js/optimized.js'
 
     shell:
       coverage:
@@ -64,12 +108,14 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-stylus'
+  grunt.loadNpmTasks 'grunt-contrib-jade'
+  grunt.loadNpmTasks 'grunt-contrib-requirejs'
   grunt.loadNpmTasks 'grunt-mocha-cov'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-shell'
 
   grunt.registerTask 'build', [
-    'clean:public', 'clean:server', 'coffee:server', 'stylus:assets'
+    'clean:public', 'clean:server', 'coffee:server', 'coffee:client', 'stylus:assets', 'jade:client'
   ]
 
   grunt.registerTask 'test', [

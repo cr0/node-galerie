@@ -7,23 +7,40 @@ class AuthRoute extends Route
 
   setup: ->
 
+    # login
+    @app.all '/login', (req, res) ->
+      res.render 'login', 
+        needslogin: true
+
     # google
     @app.all '/auth/google', passport.authenticate 'google', scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-    @app.all '/auth/google/callback', passport.authenticate('google', failureRedirect: '/auth/failed'), (req, res) ->
-      res.redirect '/account'
+    @app.all '/auth/google/callback', passport.authenticate 'google', 
+      failureRedirect: '/auth/failed'
+      successReturnToOrRedirect: '/account'
 
     # facebook
     @app.all '/auth/facebook', passport.authenticate 'facebook', scope: ['email']
-    @app.all '/auth/facebook/callback', passport.authenticate('facebook', failureRedirect: '/auth/failed'), (req, res) ->
-      res.redirect '/account'
+    @app.all '/auth/facebook/callback', passport.authenticate 'facebook', 
+      failureRedirect: '/auth/failed'
+      successReturnToOrRedirect: '/account'
 
     # amazon
     @app.all '/auth/amazon', passport.authenticate 'amazon', scope: ['profile']
-    @app.all '/auth/amazon/callback', passport.authenticate('amazon', failureRedirect: '/auth/failed'), (req, res) ->
-      res.redirect '/account'
+    @app.all '/auth/amazon/callback', passport.authenticate 'amazon', 
+      failureRedirect: '/auth/failed'
+      successReturnToOrRedirect: '/account'
+
+    # local
+    @app.all '/auth/local', passport.authenticate 'local', 
+      failureRedirect: '/auth/failed'
+      successReturnToOrRedirect: '/account'
+
+    @app.all 'logout', (req, res) ->
+      req.logout()
+      res.redirect '/'
 
     # error
     @app.all '/auth/failed', (req, res) ->
@@ -31,14 +48,14 @@ class AuthRoute extends Route
         res.json 
           error:
             code:     401
-            message:  "login failed"
+            message:  'login failed'
         , 401
       else
         res.status 401
         res.render 'error',
           error:
             code:     401
-            message:  "login failed"
+            message:  'login failed'
 
 
 module.exports = AuthRoute

@@ -2,10 +2,12 @@ express       = require 'express'
 fs            = require 'fs'
 path          = require 'path'
 passport      = require 'passport'
+mongoose      = require 'mongoose'
 
 AmazonOauth   = require './util/amazon-oauth'
 FacebookOauth = require './util/facebook-oauth'
 GoogleOauth   = require './util/google-oauth'
+LocalOauth    = require './util/local-oauth'
 
 class App
   EXPRESS: express()
@@ -15,6 +17,8 @@ class App
 
     @_setConfig()
     @_setOauth()
+
+    mongoose.connect 'mongodb://localhost/test'
 
 
   routes: ->
@@ -29,11 +33,7 @@ class App
             message:  "route not found"
         , 404
       else
-        res.status 404
-        res.render 'error',
-          error:
-            code:     404
-            message:  "route not found"
+        res.redirect '/'
       
 
   start: ->
@@ -51,9 +51,14 @@ class App
 
   _setConfig: ->
     @EXPRESS.use express.static(process.cwd() + '/public')
+    @EXPRESS.use express.static(process.cwd() + '/assets')
     @EXPRESS.use express.bodyParser()
     @EXPRESS.use express.favicon()
     @EXPRESS.use express.logger('dev')
+
+    @EXPRESS.use express.cookieParser()
+    @EXPRESS.use express.session
+      secret: 'node-galerie'
 
     @EXPRESS.set 'view engine', 'jade'
 
@@ -66,6 +71,7 @@ class App
       new AmazonOauth()
       new FacebookOauth()
       new GoogleOauth()
+      new LocalOauth()
     catch err
       console.error "Error adding oauth: #{err}"
 

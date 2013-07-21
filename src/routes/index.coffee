@@ -1,4 +1,7 @@
 
+ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
+
+
 class Route
   constructor: (@app) ->
 

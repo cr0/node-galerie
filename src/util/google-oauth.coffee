@@ -19,9 +19,9 @@ class GoogleOauth extends Oauth
       clientID:       config.oauth.google.clientId,
       clientSecret:   config.oauth.google.secret,
       callbackURL:    config.baseurl + '/auth/google/callback'
-      , (accessToken, refreshToken, profile, done) ->
+      , (accessToken, refreshToken, profile, done) =>
         console.log "Got accesstoken #{accessToken} and a profile", profile
-        done null, profile
+        @_findOauthUser 'google', profile, done
 
 
 module.exports = GoogleOauth

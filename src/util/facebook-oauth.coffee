@@ -14,14 +14,14 @@ class FacebookOauth extends Oauth
 
   _createStrategy: ->
     config = Config.getInstance().get()
-    
+
     new FacebookStrategy
       clientID:       config.oauth.facebook.clientId,
       clientSecret:   config.oauth.facebook.secret,
       callbackURL:    config.baseurl + '/auth/facebook/callback'
-      , (accessToken, refreshToken, profile, done) ->
+      , (accessToken, refreshToken, profile, done) =>
         console.log "Got accesstoken #{accessToken} and a profile", profile
-        done null, profile
+        @_findOauthUser 'facebook', profile, done
 
 
 module.exports = FacebookOauth

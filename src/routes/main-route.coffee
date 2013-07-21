@@ -1,11 +1,14 @@
 
-Route   = require './'
+ensureLoggedIn  = require('connect-ensure-login').ensureLoggedIn
+
+Route           = require './'
+
 
 class MainRoute extends Route
 
   setup: ->
-    @app.get '/', (req, res) ->
-      res.render 'index', title: 'Express'
+    @app.all '/', ensureLoggedIn('/login'), (req, res) ->
+      res.render 'home'
 
 
 module.exports = MainRoute
