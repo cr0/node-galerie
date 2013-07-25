@@ -1,9 +1,9 @@
 define [
   'controllers/base/controller'
   'models/hello-world'
-  'views/home-view'
+  'views/search-view'
   'views/imprint-view'
-], (Controller, HelloWorld, HomeView, ImprintView) ->
+], (Controller, HelloWorld, SearchView, ImprintView) ->
   'use strict'
 
   class HelloController extends Controller
@@ -11,12 +11,12 @@ define [
     show: (params) ->
       @title = 'Hello'
       @model = new HelloWorld()
-      @view = new HomeView
+      @view = new SearchView
         model:   @model
-        region: 'main'
+        region: 'teaser'
 
     imprint: (params) ->
       @title = 'Imprint'
       @view = new ImprintView
-        region: 'main'
+        region: 'teaser'
 

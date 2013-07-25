@@ -63,7 +63,7 @@ module.exports = (grunt) ->
           urlfunc:    'url',
           linenos:    true
         files:
-          'public/css/main.css': 'assets/styl/*.styl'
+          'public/css/main.css': 'assets/styl/**/*.styl'
 
     jade:
       client:
@@ -75,7 +75,7 @@ module.exports = (grunt) ->
           processName: ( filename ) ->
             path.basename( filename ).split( '.' )[0]
         files:
-          'public/js/templates/home.js':      'assets/tpl/home.jade'
+          'public/js/templates/search.js':    'assets/tpl/search.jade'
           'public/js/templates/imprint.js':   'assets/tpl/imprint.jade'
           'public/js/templates/skeleton.js':  'assets/tpl/skeleton.jade'
 
@@ -99,9 +99,11 @@ module.exports = (grunt) ->
       coffee:
         files:      ['src/**/*.coffee']
         tasks:      ['clean:server', 'coffee:server']
-      stylus:
-        files:      ['assets/styl/*.styl']
-        tasks:      ['stylus:assets']
+      assets:
+        files:      ['assets/styl/**/*.styl', 'assets/tpl/**/*.jade']
+        tasks:      ['stylus:assets', 'jade:client']
+        options: 
+          livereload: true
 
 
 

@@ -5,5 +5,5 @@ define [
   'use strict'
 
   class ImprintView extends View
-    id:       'imprint'
-    template: Template
+    id:         'imprint'
+    template:   Template

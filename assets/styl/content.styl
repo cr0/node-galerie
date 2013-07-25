@@ -1,0 +1,75 @@
+
+$half-width = 800px/2
+$height = 800px/2.5
+
+#content
+  width: $content-width
+  height: $height
+  margin: 15em auto 1em auto
+  font-size: 80%
+
+  a
+    color: black
+    &:hover
+      text-decoration: underline
+    
+
+  #skeleton
+    height: inherit
+
+    div.teaser, div.main
+      display: inline-block
+      width: $half-width
+      height: 100%
+      float: left
+      font-size: 150%
+
+    .teaser
+      background-color: white
+      padding: 1em
+      text-align: center
+
+      h1
+        font-size: 300%
+        font-weight: bold
+        margin-top: 0.5em
+        margin-bottom: 0.3em
+
+    .main
+      background-color: rgba(0, 0, 0, .7)
+      padding: 0
+
+      a
+        color: white
+        font-size: 140%
+        &:hover
+          text-decoration: none
+
+      ul
+
+        li
+          background: linear-gradient(top, #1e1e1e, darken(#1e1e1e, 5))
+          float: left
+          clear: both
+
+          a
+            padding: 0.5em 2em
+            display: block
+
+          &:hover
+              background: linear-gradient(top, lighten(#1e1e1e, 8), #1e1e1e)
+
+          &.google
+            background: linear-gradient(top, #dd4c39, darken(#dd4c39, 5))
+            &:hover
+              background: linear-gradient(top, lighten(#dd4c39, 8), #dd4c39)
+
+          &.facebook
+            background: linear-gradient(top, #4c67a1, darken(#4c67a1, 5))
+            &:hover
+              background: linear-gradient(top, lighten(#4c67a1, 8), #4c67a1)
+
+          &.amazon
+            background: linear-gradient(top, #ff9900, darken(#ff9900, 5))
+            &:hover
+              background: linear-gradient(top, lighten(#ff9900, 8), #ff9900)

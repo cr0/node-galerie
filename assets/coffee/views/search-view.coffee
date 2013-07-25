@@ -1,9 +1,9 @@
 define [
   'views/base/view'
-  'templates/home'
+  'templates/search'
 ], (View, Template) ->
   'use strict'
 
-  class HomeView extends View
-    id:         'home'
+  class SearchView extends View
+    id:         'search'
     template:   Template

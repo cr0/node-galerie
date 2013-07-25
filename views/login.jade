@@ -1,19 +1,23 @@
 extends layout
 
 block content
+  #skeleton.login
+    
+    .teaser
+      h1 Login
+      p 
+        | Melde dich mit einem der nebenstehenden Accounts an
+    .main
+      ul
+        li.amazon.clearfix
+          a(href='/auth/amazon/', title='Login with Amazon') Amazon
 
-  p 
-    | Login using one of the following services
+        li.facebook.clearfix
+          a(href='/auth/facebook/', title='Login with Facebook') Facebook
 
-  ul
-    li
-      a(href='/auth/local/', title='Login with local account') Login with Local Account
+        li.google.clearfix
+          a(href='/auth/google/', title='Login with Google') Google
 
-    li
-      a(href='/auth/google/', title='Login with Google') Login with Google
+        li.local.clearfix
+          a(href='/auth/local/', title='Login with local account') Lokaler Account
 
-    li
-      a(href='/auth/facebook/', title='Login with Facebook') Login with Facebook
-
-    li
-      a(href='/auth/amazon/', title='Login with Amazon') Login with Amazon

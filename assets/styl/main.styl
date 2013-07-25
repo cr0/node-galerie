@@ -1,30 +1,48 @@
 @import "nib"
+
+@import "_variables"
+
+@import "header"
+@import "content"
+@import "footer"
+
+@import "tpl/search"
+
 global-reset()
 
+*
+  box-sizing: border-box
+
+:root
+  height: 100%
+
 body
-  padding: 50px
-  font: 90% "Helvetica Neue", Arial, sans-serif
+  width: 100%
+  
+  font: 100% "Helvetica Neue", Arial, sans-serif
+  color: $text-color
+
+  background-color: $background-color
+  background: url("../img/background.jpg") center center no-repeat fixed
+  background-size: cover
+
+a
+  color: white
+  text-decoration: none
 
 a.button
   color: #00B7FF
 
 h1
-  font-size: 200%
+  font-size: 150%
+
+h2
+  font-size: 130%
   font-weight: 100
-  margin-bottom: 1.5%
 
-header
-
-footer
-  margin-top: 50px;
-  color: darkgray;
-
-  ul 
-    display: inline
-
-    li
-      float: left
-      margin-left: 5px
+h3
+  font-size: 110%
+  font-weight: 200
 
 p
   margin-top: 1%

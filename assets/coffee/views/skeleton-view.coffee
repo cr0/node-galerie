@@ -5,8 +5,9 @@ define [
   'use strict'
 
   class SkeletonView extends View
-    container: 'div#main'
+    container: 'div#content'
     id:        'skeleton'
     regions:
-      'main': '#content'
+      'teaser': '.teaser'
+      'main':   '.main'
     template: Template
