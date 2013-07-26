@@ -7,7 +7,7 @@ Route           = require './'
 class UserRoute extends Route
 
   setup: ->
-    @app.all '/user/me', ensureLoggedIn('/login'), (req, res) ->
+    @app.all '/user/me', ensureLoggedIn('/auth/req'), (req, res) ->
       res.json
         id:         req.user.id
         type:       req.user.type
@@ -18,5 +18,7 @@ class UserRoute extends Route
         albums:     req.user.albums
         roles:      req.user.roles
         groups:     []
+        loggedin:  true
+    
 
 module.exports = UserRoute

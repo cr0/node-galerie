@@ -2,7 +2,9 @@ define [
   'jquery'
   'lib/utils'
   'controllers/base/controller'
-], ($, utils, Controller) ->
+  'models/current-user'
+  'views/search-view'
+], ($, utils, Controller, CurrentUser, SearchView) ->
   'use strict'
 
   class HelloController extends Controller
@@ -10,10 +12,23 @@ define [
     show: (params) ->
       @title = 'Hello'
 
-      $out = $('.pt-page.pt-page-current').first()
-      $in = $('#search')
+      @model = CurrentUser
 
-      utils.pageTransition $in, $out, 'left'
+      proceed = =>
+        if @model.get 'loggedin'
+          @view = new SearchView
+            model: @model
+            region: 'search'
+
+          utils.pageTransition $('#search'), $('.pt-page.pt-page-current').first(), 'left'
+
+        else @redirectToRoute 'login'
+
+      @model.validateSync
+        success: proceed
+        error: (model, error) => @redirectToRoute 'login'
+
+           
 
     imprint: (params) ->
       @title = 'Imprint'

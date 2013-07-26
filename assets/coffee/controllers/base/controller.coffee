@@ -3,8 +3,7 @@ define [
   'views/skeleton-view'
   'views/imprint-view'
   'views/login-view'
-  'views/search-view'
-], (Chaplin, SekeltonView, ImprintView, LoginView, SearchView) ->
+], (Chaplin, SekeltonView, ImprintView, LoginView) ->
   'use strict'
 
   class Controller extends Chaplin.Controller
@@ -12,4 +11,3 @@ define [
       @compose 'site', SekeltonView
       @compose 'imprint', ImprintView, region: 'imprint'
       @compose 'login', LoginView, region: 'login'
-      @compose 'search', SearchView, region: 'search'

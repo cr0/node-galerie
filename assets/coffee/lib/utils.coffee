@@ -16,6 +16,8 @@ define [
   _(utils).extend
     pageTransition: ($in, $out, dir) ->
 
+      if not $in.length or $in is $out then return
+
       animEndEventNames =
         'WebkitAnimation' : 'webkitAnimationEnd'
         'OAnimation' : 'oAnimationEnd'
@@ -29,11 +31,15 @@ define [
         endCurrPage = endNextPage = false
         resetPage $out, $in
 
+        $in.trigger 'inview'
+        $out.trigger 'outview'
+
+
       resetPage = ($out, $in) ->
-        $out.removeClass (index, css) -> return (css.match (/\pt-page-move\S+/g) || []).join(' ')
+        $out.removeClass (index, css) -> return (css.match (/\pt-page-move\S+/g) || [])?.join(' ')
         $out.removeClass 'pt-page-current pt-page-ontop'
 
-        $in.removeClass (index, css) -> return (css.match (/\pt-page-move\S+/g) || []).join(' ')
+        $in.removeClass (index, css) -> return (css.match (/\pt-page-move\S+/g) || [])?.join(' ')
         $in.addClass 'pt-page-ontop'
 
       switch dir

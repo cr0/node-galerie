@@ -2,16 +2,27 @@ define [
   'jquery'
   'lib/utils'
   'controllers/base/controller'
-], ($, utils, Controller) ->
+  'models/current-user'
+], ($, utils, Controller, CurrentUser) ->
   'use strict'
 
   class AuthController extends Controller
 
-    form: (params) ->
+    form: () ->
       @title = 'Login'
 
-      $out = $('.pt-page.pt-page-current').first()
-      $in = $('#login')
+      CurrentUser.validateSync
+        success: (model) =>
+          console.log model
+          if model.get 'loggedin' then @redirectToRoute 'home'
 
-      utils.pageTransition $in, $out, 'top'
+        error: (model, error) =>
+          utils.pageTransition $('#login'), $('.pt-page.pt-page-current').first(), 'top'
+          
+          $(document).one 'loginsuccess', =>
+
+            model.fetch
+              success: (user) => @redirectToRoute 'home'
+              error: (user, error) -> console.error('error while logging in')
+        
 

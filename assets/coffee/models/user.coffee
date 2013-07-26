@@ -1,7 +1,13 @@
 define [
+  'chaplin'
   'models/base/model'
-], (Model) ->
+], (Chaplin, Model) ->
   'use strict'
 
   class User extends Model
-    # This model is intentionally left blank
+    _.extend @prototype, Chaplin.EventBroker
+
+    urlRoot: '/user'
+
+    defaults:
+      loggedin:   false

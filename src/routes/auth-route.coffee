@@ -7,11 +7,6 @@ class AuthRoute extends Route
 
   setup: ->
 
-    # login
-#    @app.all '/login', (req, res) ->
-#      res.render '/', 
-#        needslogin: true
-
     # google
     @app.all '/auth/google', passport.authenticate 'google', scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
@@ -19,45 +14,61 @@ class AuthRoute extends Route
     ]
     @app.all '/auth/google/callback', passport.authenticate 'google', 
       failureRedirect: '/auth/failed'
-      successReturnToOrRedirect: '/account'
+      successRedirect: '/auth/success'
 
     # facebook
-    @app.all '/auth/facebook', passport.authenticate 'facebook', scope: ['email']
+    @app.all '/auth/facebook', passport.authenticate 'facebook', scope: ['email'], display: 'popup'
     @app.all '/auth/facebook/callback', passport.authenticate 'facebook', 
       failureRedirect: '/auth/failed'
-      successReturnToOrRedirect: '/account'
+      successRedirect: '/auth/success'
 
     # amazon
     @app.all '/auth/amazon', passport.authenticate 'amazon', scope: ['profile']
     @app.all '/auth/amazon/callback', passport.authenticate 'amazon', 
       failureRedirect: '/auth/failed'
-      successReturnToOrRedirect: '/account'
+      successRedirect: '/auth/success'
 
     # local
     @app.all '/auth/local', passport.authenticate 'local', 
       failureRedirect: '/auth/failed'
-      successReturnToOrRedirect: '/account'
+      successRedirect: '/auth/success'
 
     @app.all '/logout', (req, res) ->
       req.logout()
-      res.format
-        'json': () -> 
-          res.json
-            code: 'ok'
-            num:  200
-        'default': () ->
-            res.send 200
+      res.status 200
+      if req.xhr then res.json
+          code:     200
+          message: 'logout successful'
+      else res.redirect '/'
+
+    # auth req
+    @app.all '/auth/req', (req, res) ->
+      res.status 401
+      if req.xhr then res.json
+        error:
+          code:     401
+          message: 'login required'
+      else
+        res.render 'error',
+          error:
+            code:     401
+            message:  'login required'
+
+    # auth req
+    @app.all '/auth/success', (req, res) ->
+      res.status 200
+      if req.xhr then res.redirect '/user/me'
+      else res.render 'success'
 
     # error
     @app.all '/auth/failed', (req, res) ->
+      res.status 401
       if req.xhr
         res.json 
           error:
             code:     401
             message:  'login failed'
-        , 401
       else
-        res.status 401
         res.render 'error',
           error:
             code:     401
