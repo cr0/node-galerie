@@ -5,5 +5,9 @@ define ->
   # `match` is match method of the Router
   (match) ->
     match '', 'hello#show'
+    
+    match 'login', 'auth#form'
+
     match 'imprint', 'hello#imprint'
+
     match '*notfound', 'hello#show'

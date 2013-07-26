@@ -7,3 +7,7 @@ define [
   class View extends Chaplin.View
     autoRender: true
     getTemplateFunction: -> @template
+    
+    render: ->
+      super
+      @trigger 'rendered'

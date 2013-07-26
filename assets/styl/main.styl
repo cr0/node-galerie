@@ -2,6 +2,8 @@
 
 @import "_variables"
 
+@import "animation"
+
 @import "header"
 @import "content"
 @import "footer"
@@ -13,43 +15,55 @@ global-reset()
 *
   box-sizing: border-box
 
+  &:focus
+    outline: 0
+
 :root
   height: 100%
 
 body
   width: 100%
   
-  font: 100% "Helvetica Neue", Arial, sans-serif
+  font: 1em "Helvetica Neue", Arial, sans-serif
+  font-weight: 100
   color: $text-color
 
   background-color: $background-color
-  background: url("../img/background.jpg") center center no-repeat fixed
-  background-size: cover
+  //background: url("../img/background.jpg") center center no-repeat fixed
+  //background-size: cover
 
 a
-  color: white
+  color: $link-color
   text-decoration: none
+  font-weight: 200
 
 a.button
   color: #00B7FF
 
 h1
-  font-size: 150%
+  font-size: 2em
 
 h2
-  font-size: 130%
+  font-size: 1.5em
   font-weight: 100
 
 h3
-  font-size: 110%
+  font-size: 1.15em
   font-weight: 200
 
 p
   margin-top: 1%
 
 pre
-  font: 100% Consolas, "Courier New", serif
+  font: 1em Consolas, "Courier New", serif
   margin-top: 0.5%
   margin-bottom: 0.5%
   border-left: 2px solid
   padding-left: 1%
+
+input, textarea, button
+  font: 1em "Helvetica Neue", Arial, sans-serif
+  font-weight: 100
+
+.clearfix
+  clearfix()

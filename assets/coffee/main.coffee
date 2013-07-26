@@ -7,6 +7,7 @@ require.config
     underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min'
     backbone:   '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min'
     jade:       '//cdnjs.cloudflare.com/ajax/libs/jade/0.27.7/runtime.min'
+    modernizr:  '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr'
     chaplin:    'vendor/chaplin'
 
     # plugins
@@ -20,6 +21,8 @@ require.config
       exports: '_'
     jade:
       exports: 'jade'
+    modernizr:
+      exports: 'Modernizr'
 
 
 require ['application', 'routes'], (App, routes) ->

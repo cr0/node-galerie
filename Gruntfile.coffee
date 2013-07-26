@@ -77,6 +77,7 @@ module.exports = (grunt) ->
         files:
           'public/js/templates/search.js':    'assets/tpl/search.jade'
           'public/js/templates/imprint.js':   'assets/tpl/imprint.jade'
+          'public/js/templates/login.js':     'assets/tpl/login.jade'
           'public/js/templates/skeleton.js':  'assets/tpl/skeleton.jade'
 
           'public/js/templates/ajax/.js':     'assets/tpl/ajax/login.jade'
@@ -99,9 +100,9 @@ module.exports = (grunt) ->
       coffee:
         files:      ['src/**/*.coffee']
         tasks:      ['clean:server', 'coffee:server']
-      assets:
-        files:      ['assets/styl/**/*.styl', 'assets/tpl/**/*.jade']
-        tasks:      ['stylus:assets', 'jade:client']
+      client:
+        files:      ['assets/styl/**/*.styl', 'assets/tpl/**/*.jade', 'assets/coffee/**/*.coffee']
+        tasks:      ['stylus:assets', 'jade:client', 'coffee:client']
         options: 
           livereload: true
 

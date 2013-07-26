@@ -1,22 +1,25 @@
 define [
+  'jquery'
+  'lib/utils'
   'controllers/base/controller'
-  'models/hello-world'
-  'views/search-view'
-  'views/imprint-view'
-], (Controller, HelloWorld, SearchView, ImprintView) ->
+], ($, utils, Controller) ->
   'use strict'
 
   class HelloController extends Controller
 
     show: (params) ->
       @title = 'Hello'
-      @model = new HelloWorld()
-      @view = new SearchView
-        model:   @model
-        region: 'teaser'
+
+      $out = $('.pt-page.pt-page-current').first()
+      $in = $('#search')
+
+      utils.pageTransition $in, $out, 'left'
 
     imprint: (params) ->
       @title = 'Imprint'
-      @view = new ImprintView
-        region: 'teaser'
+      
+      $out = $('.pt-page.pt-page-current').first()
+      $in = $('#imprint')
+
+      utils.pageTransition $in, $out, 'bottom'
 

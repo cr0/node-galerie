@@ -8,9 +8,9 @@ class AuthRoute extends Route
   setup: ->
 
     # login
-    @app.all '/login', (req, res) ->
-      res.render 'login', 
-        needslogin: true
+#    @app.all '/login', (req, res) ->
+#      res.render '/', 
+#        needslogin: true
 
     # google
     @app.all '/auth/google', passport.authenticate 'google', scope: [
@@ -38,9 +38,15 @@ class AuthRoute extends Route
       failureRedirect: '/auth/failed'
       successReturnToOrRedirect: '/account'
 
-    @app.all 'logout', (req, res) ->
+    @app.all '/logout', (req, res) ->
       req.logout()
-      res.redirect '/'
+      res.format
+        'json': () -> 
+          res.json
+            code: 'ok'
+            num:  200
+        'default': () ->
+            res.send 200
 
     # error
     @app.all '/auth/failed', (req, res) ->

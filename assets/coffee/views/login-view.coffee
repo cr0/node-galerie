@@ -1,9 +1,9 @@
 define [
   'jquery'
   'views/base/view'
-  'templates/search'
+  'templates/login'
 ], ($, View, Template) ->
   'use strict'
 
-  class SearchView extends View
+  class LoginView extends View
     template:   Template

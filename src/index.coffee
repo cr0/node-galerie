@@ -33,7 +33,7 @@ class App
             message:  "route not found"
         , 404
       else
-        res.redirect '/'
+        res.render 'home'
       
 
   start: ->

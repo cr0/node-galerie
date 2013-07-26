@@ -1,9 +1,9 @@
 define [
+  'jquery'
   'views/base/view'
   'templates/imprint'
-], (View, Template) ->
+], ($, View, Template) ->
   'use strict'
 
   class ImprintView extends View
-    id:         'imprint'
     template:   Template

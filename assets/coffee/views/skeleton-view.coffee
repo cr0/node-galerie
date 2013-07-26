@@ -7,7 +7,11 @@ define [
   class SkeletonView extends View
     container: 'div#content'
     id:        'skeleton'
+    className: 'skeleton'
     regions:
-      'teaser': '.teaser'
-      'main':   '.main'
+      'imprint':  '#imprint'
+      'login':    '#login'
+      'search':   '#search'
+      'gallery':  '#gallery'
+      'setting':  '#setting'
     template: Template
