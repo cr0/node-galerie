@@ -9,7 +9,7 @@ class UserRoute extends Route
   setup: ->
     @app.all '/user/me', ensureLoggedIn('/auth/req'), (req, res) ->
       res.json
-        id:         req.user.id
+        _id:        req.user.id
         type:       req.user.type
         name:       req.user.name
         username:   req.user.username

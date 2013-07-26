@@ -12,17 +12,20 @@ define [
       @title = 'Login'
 
       CurrentUser.validateSync
-        success: (model) =>
-          console.log model
-          if model.get 'loggedin' then @redirectToRoute 'home'
+        success: =>
+          if CurrentUser.get 'loggedin' then @redirectToRoute 'home'
 
-        error: (model, error) =>
+        denied: (user) =>
           utils.pageTransition $('#login'), $('.pt-page.pt-page-current').first(), 'top'
-          
-          $(document).one 'loginsuccess', =>
 
-            model.fetch
-              success: (user) => @redirectToRoute 'home'
-              error: (user, error) -> console.error('error while logging in')
+          $(document).one 'loginsuccess', =>
+            
+            CurrentUser.fetch
+              success: (user) => 
+                console.log CurrentUser
+                @redirectToRoute 'home'
+              error: (user, error) -> console.error 'error requesting', error
+
+        error: (user, error) -> console.error 'error requesting', error
         
 

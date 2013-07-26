@@ -14,10 +14,10 @@ define [
 
       @model = CurrentUser
 
-      proceed = =>
-        if @model.get 'loggedin'
+      proceed = (model, resp) =>
+        if model.get 'loggedin'
           @view = new SearchView
-            model: @model
+            model: model
             region: 'search'
 
           utils.pageTransition $('#search'), $('.pt-page.pt-page-current').first(), 'left'
@@ -26,9 +26,9 @@ define [
 
       @model.validateSync
         success: proceed
-        error: (model, error) => @redirectToRoute 'login'
+        denied: => @redirectToRoute 'login'
+        error: (model, error) -> console.error 'error requesting', error
 
-           
 
     imprint: (params) ->
       @title = 'Imprint'

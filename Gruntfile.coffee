@@ -25,9 +25,9 @@ module.exports = (grunt) ->
           ext:      '.js'
         ]
       client:
-        options:
-          sourceMap: true
-          sourceRoot: '/coffee/'
+#        options:
+#          sourceMap: true
+#          sourceRoot: '/coffee/'
         files: [
           expand:   true
           cwd:      'assets/coffee/'
