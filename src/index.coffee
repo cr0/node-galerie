@@ -24,6 +24,10 @@ class App
   routes: ->
     @_includeRoute file for file in fs.readdirSync __dirname + '/routes/' when file.endsWith '-route.js'
 
+    # sourcemap route
+    @EXPRESS.all /^\/assets\/(.*)$/, (req, res) ->
+      res.redirect req.params[0];
+    
     # create 404 route
     @EXPRESS.all '*', (req, res) ->
       if req.xhr

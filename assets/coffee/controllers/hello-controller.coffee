@@ -3,8 +3,11 @@ define [
   'lib/utils'
   'controllers/base/controller'
   'models/current-user'
-  'views/search-view'
-], ($, utils, Controller, CurrentUser, SearchView) ->
+  'models/gallery'
+  'models/gallery-collection'
+  'views/search/search-view'
+  'views/search/items-view'
+], ($, utils, Controller, CurrentUser, Gallery, GalleryCollection, SearchView, SearchItemsView) ->
   'use strict'
 
   class HelloController extends Controller
@@ -12,29 +15,32 @@ define [
     show: (params) ->
       @title = 'Hello'
 
-      @model = CurrentUser
+      @currentuser = new CurrentUser
+      
+      collection = new GalleryCollection
+      collection.add id: num, name: "gallery #{num}" for num in [1..6]
 
-      proceed = (model, resp) =>
-        if model.get 'loggedin'
-          @view = new SearchView
-            model: model
+      @currentuser.fetch
+        success: (model) =>
+          @search = new SearchView
+            model:  model
             region: 'search'
 
-          utils.pageTransition $('#search'), $('.pt-page.pt-page-current').first(), 'left'
+          @results = new SearchItemsView
+            collection: collection
+            region:     'results'
 
-        else @redirectToRoute 'login'
+          utils.pageTransition $('#search'), 'left'
 
-      @model.validateSync
-        success: proceed
-        denied: => @redirectToRoute 'login'
+        denied: => 
+          @currentuser.dispose()
+          @redirectToRoute 'login'
+          
         error: (model, error) -> console.error 'error requesting', error
 
 
     imprint: (params) ->
       @title = 'Imprint'
       
-      $out = $('.pt-page.pt-page-current').first()
-      $in = $('#imprint')
-
-      utils.pageTransition $in, $out, 'bottom'
+      utils.pageTransition $('#imprint'), 'bottom'
 

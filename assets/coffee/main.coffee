@@ -1,12 +1,11 @@
 require.config
 
-  baseUrl: 'js/'
+  baseUrl: '/js/'
 
   paths:
     jquery:     '//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min'
     underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min'
-    # backbone:   '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min'
-    backbone:   'vendor/backbone'
+    backbone:   '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min'
     jade:       '//cdnjs.cloudflare.com/ajax/libs/jade/0.27.7/runtime.min'
     modernizr:  '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr'
     chaplin:    'vendor/chaplin'

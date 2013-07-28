@@ -8,6 +8,6 @@ define [
     title: 'node-galerie'
 
     initMediator: ->
-      Chaplin.mediator.foo = null
+      Chaplin.mediator.loggedin = false
 
       super

@@ -25,12 +25,12 @@ module.exports = (grunt) ->
           ext:      '.js'
         ]
       client:
-#        options:
-#          sourceMap: true
-#          sourceRoot: '/coffee/'
+        options:
+          sourceMap: true
+#          sourceRoot: 'coffee/'
         files: [
           expand:   true
-          cwd:      'assets/coffee/'
+          cwd:      'assets/coffee'
           src:      ['**/*.coffee']
           dest:     'public/js/'
           ext:      '.js'
@@ -75,7 +75,12 @@ module.exports = (grunt) ->
           processName: ( filename ) ->
             path.basename( filename ).split( '.' )[0]
         files:
-          'public/js/templates/search.js':    'assets/tpl/search.jade'
+          'public/js/templates/search.js':      'assets/tpl/search.jade'
+          'public/js/templates/search-item.js': 'assets/tpl/search-item.jade'
+
+          'public/js/templates/gallery.js':      'assets/tpl/gallery.jade'
+          'public/js/templates/gallery-item.js':      'assets/tpl/gallery-item.jade'
+
           'public/js/templates/imprint.js':   'assets/tpl/imprint.jade'
           'public/js/templates/login.js':     'assets/tpl/login.jade'
           'public/js/templates/skeleton.js':  'assets/tpl/skeleton.jade'

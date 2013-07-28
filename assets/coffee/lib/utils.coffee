@@ -14,9 +14,12 @@ define [
   # Add additional application-specific properties and methods
 
   _(utils).extend
-    pageTransition: ($in, $out, dir) ->
+    pageTransition: ($in, dir) ->
 
-      if not $in.length or $in is $out then return
+      $out = $('.pt-page.pt-page-current').first()
+
+      console.log $in.is $out
+      if not $in.length or $in.is $out then return
 
       animEndEventNames =
         'WebkitAnimation' : 'webkitAnimationEnd'
@@ -33,7 +36,6 @@ define [
 
         $in.trigger 'inview'
         $out.trigger 'outview'
-
 
       resetPage = ($out, $in) ->
         $out.removeClass (index, css) -> return (css.match (/\pt-page-move\S+/g) || [])?.join(' ')
@@ -60,6 +62,7 @@ define [
           outClass = 'pt-page-moveToBottom'
           inClass = 'pt-page-moveFromTop'
 
+
       $in.addClass 'pt-page-current'
 
       $out.addClass(outClass).on animEndEventName, () ->
@@ -70,7 +73,7 @@ define [
       $in.addClass(inClass).on animEndEventName, () ->
         $in.off animEndEventName
         endNextPage = true
-        if endNextPage then onEndAnimation $out, $in
+        if endCurrPage or not $out.length then onEndAnimation $out, $in
 
       if !support then onEndAnimation $out, $in
 
