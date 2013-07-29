@@ -7,5 +7,8 @@ define ->
     match 'imprint', 'hello#imprint', name: 'imprint'
 
     match 'gallery/:id', 'gallery#show', name: 'gallery'
+    match 'gallery/:id/:picnum', 'gallery#show', name: 'gallery-picture'
+
+    match 'user/setting', 'user#setting', name: 'setting'
 
     match '*notfound', 'hello#show'

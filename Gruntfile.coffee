@@ -63,7 +63,7 @@ module.exports = (grunt) ->
           urlfunc:    'url',
           linenos:    true
         files:
-          'public/css/main.css': 'assets/styl/**/*.styl'
+          'public/css/main.css': 'assets/styl/main.styl'
 
     jade:
       client:
@@ -75,17 +75,19 @@ module.exports = (grunt) ->
           processName: ( filename ) ->
             path.basename( filename ).split( '.' )[0]
         files:
-          'public/js/templates/search.js':      'assets/tpl/search.jade'
-          'public/js/templates/search-item.js': 'assets/tpl/search-item.jade'
+          'public/js/templates/search.js':        'assets/tpl/search.jade'
+          'public/js/templates/search-item.js':   'assets/tpl/search-item.jade'
 
-          'public/js/templates/gallery.js':      'assets/tpl/gallery.jade'
-          'public/js/templates/gallery-item.js':      'assets/tpl/gallery-item.jade'
+          'public/js/templates/gallery.js':       'assets/tpl/gallery.jade'
+          'public/js/templates/gallery-item.js':  'assets/tpl/gallery-item.jade'
 
-          'public/js/templates/imprint.js':   'assets/tpl/imprint.jade'
-          'public/js/templates/login.js':     'assets/tpl/login.jade'
-          'public/js/templates/skeleton.js':  'assets/tpl/skeleton.jade'
+          'public/js/templates/setting.js':       'assets/tpl/setting.jade'
 
-          'public/js/templates/ajax/.js':     'assets/tpl/ajax/login.jade'
+          'public/js/templates/imprint.js':       'assets/tpl/imprint.jade'
+          'public/js/templates/login.js':         'assets/tpl/login.jade'
+          'public/js/templates/skeleton.js':      'assets/tpl/skeleton.jade'
+
+          'public/js/templates/ajax/.js':         'assets/tpl/ajax/login.jade'
 
     requirejs: 
       compile: 

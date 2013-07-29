@@ -11,3 +11,9 @@ define [
     render: ->
       super
       @trigger 'rendered'
+
+    dispose: ->
+      window.setTimeout () =>
+        console.log 'dispose', @
+        super
+      , 600

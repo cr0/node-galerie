@@ -8,3 +8,4 @@ define [
     template:   Template
     className:  'item'
     tagName:    'div'
+      

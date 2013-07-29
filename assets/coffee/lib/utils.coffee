@@ -18,7 +18,7 @@ define [
 
       $out = $('.pt-page.pt-page-current').first()
 
-      console.log $in.is $out
+      console.log $in.is($out), $in, $out
       if not $in.length or $in.is $out then return
 
       animEndEventNames =

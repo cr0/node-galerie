@@ -12,4 +12,3 @@ define [
     defaults:
       type:       'picture'
       name:       'Picture'
-      url:        'http://localhost:3000/img/background.jpg'

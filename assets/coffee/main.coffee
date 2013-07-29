@@ -9,6 +9,9 @@ require.config
     jade:       '//cdnjs.cloudflare.com/ajax/libs/jade/0.27.7/runtime.min'
     modernizr:  '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr'
     chaplin:    'vendor/chaplin'
+    lazyload:   'vendor/jquery.lazyload'
+    mousewheel: 'vendor/jquery.mousewheel'
+    scrollto:   'vendor/jquery.scrollto'
 
     # plugins
     text:       '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.5/text'
@@ -23,6 +26,15 @@ require.config
       exports: 'jade'
     modernizr:
       exports: 'Modernizr'
+    lazyload:
+      deps:    ['jquery']
+      exports: 'jQuery.fn.lazyload'
+    mousewheel:
+      deps:    ['jquery']
+      exports: 'jQuery.fn.mousewheel'
+    scrollto:
+      deps:    ['jquery']
+      exports: 'jQuery.fn.scrollTo'
 
 
 require ['application', 'routes'], (App, routes) ->
