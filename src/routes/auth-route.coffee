@@ -33,7 +33,7 @@ class AuthRoute extends Route
       failureRedirect: '/auth/failed'
       successRedirect: '/auth/success'
 
-    @app.all '/logout', (req, res) ->
+    @app.all '/auth/logout', (req, res) ->
       req.logout()
       res.status 200
       if req.xhr then res.json
@@ -63,16 +63,14 @@ class AuthRoute extends Route
     # error
     @app.all '/auth/failed', (req, res) ->
       res.status 401
-      if req.xhr
-        res.json 
-          error:
-            code:     401
-            message:  'login failed'
-      else
-        res.render 'error',
-          error:
-            code:     401
-            message:  'login failed'
+      if req.xhr then res.json 
+        error:
+          code:     401
+          message:  'login failed'
+      else res.render 'error',
+        error:
+          code:     401
+          message:  'login failed'
 
 
 module.exports = AuthRoute

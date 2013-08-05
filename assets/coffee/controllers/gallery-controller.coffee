@@ -1,38 +1,31 @@
 define [
   'jquery'
   'lib/utils'
-  'controllers/base/controller'
-  'models/current-user'
+  'controllers/base/auth-controller'
   'models/gallery'
   'views/gallery/gallery-view'
   'views/gallery/items-view'
-], ($, utils, Controller, CurrentUser, Gallery, GalleryView, GalleryItemsView) ->
+], ($, utils, AuthController, Gallery, GalleryView, GalleryItemsView) ->
   'use strict'
 
-  class HelloController extends Controller
+  class HelloController extends AuthController
 
     show: (params) ->
-      @title = 'Gallery'
+      @adjustTitle 'Gallery'
 
-      @currentuser = new CurrentUser
       @gallery = new Gallery name: "Test #{params.id}"
-      @gallery.get('pictures').add id: num, url: "//lorempixel.com/1600/1200/?r=#{num}" for num in [1..40]
+      @pictures = @gallery.get('pictures')
+      @pictures.id = '1234'
+      @pictures.add id: num, url: "//lorempixel.com/1600/1200/?r=#{num}" for num in [1..40]
 
-      @currentuser.fetch
-        success: (model) =>
-          @search = new GalleryView
-            model:   @gallery
-            region: 'gallery'
+      @search = new GalleryView
+        model:   @gallery
+        region: 'gallery'
 
-          @pictures = new GalleryItemsView
-            collection:   @gallery.get 'pictures'
-            region:       'images'
-            inititems:    params.picnum ? 10
+      @pictures = new GalleryItemsView
+        collection:   @pictures
+        region:       'images'
+        preload:      params.preload ? 10
 
-          utils.pageTransition $('#gallery'), 'right'
-
-        denied: => 
-          @currentuser.dispose()
-          @redirectToRoute 'login'
-        error: (model, error) -> console.error 'error requesting', error
+      utils.pageTransition $('#gallery'), 'right'
 

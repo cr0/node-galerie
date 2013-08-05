@@ -2,13 +2,11 @@ ul
   li
     a(href="/") node-galerie '13
 
-  if needslogin
-    li
-      a(href="/login").noscript login
+  li.logout
+    a(href="/logout") logout
 
-  else
-    li
-      a(href="/logout").noscript logout
+  li.login
+    a(href="/login") login
 
   li
     a(href="/imprint").imprint imprint

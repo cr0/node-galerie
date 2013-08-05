@@ -14,6 +14,5 @@ define [
 
     dispose: ->
       window.setTimeout () =>
-        console.log 'dispose', @
         super
       , 600

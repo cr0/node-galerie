@@ -3,6 +3,7 @@ fs            = require 'fs'
 path          = require 'path'
 passport      = require 'passport'
 mongoose      = require 'mongoose'
+upload        = require 'jquery-file-upload-middleware'
 
 AmazonOauth   = require './util/amazon-oauth'
 FacebookOauth = require './util/facebook-oauth'
@@ -17,6 +18,7 @@ class App
 
     @_setConfig()
     @_setOauth()
+    @_upload()
 
     mongoose.connect 'mongodb://localhost/test'
 
@@ -45,6 +47,15 @@ class App
       console.log "Listening on #{@port}\nPress CTRL-C to stop server."
 
 
+  _upload: ->
+    upload.configure
+      uploadDir: process.cwd() + '/public/uploads'
+      uploadUrl: '/uploads'
+      imageVersions:
+        thumbnail:
+          width: 80
+          height: 80
+
   _includeRoute: (file) ->
     try
       route = require './routes/' + file
@@ -56,6 +67,7 @@ class App
   _setConfig: ->
     @EXPRESS.use express.static(process.cwd() + '/public')
     @EXPRESS.use express.static(process.cwd() + '/assets')
+    @EXPRESS.use '/upload', upload.fileHandler()
     @EXPRESS.use express.bodyParser()
     @EXPRESS.use express.favicon()
     @EXPRESS.use express.logger('dev')

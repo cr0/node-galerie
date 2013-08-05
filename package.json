@@ -45,7 +45,8 @@
     "connect-ensure-login": "0.1.x",
     "basic-auth-mongoose": "0.1.x",
     "mongoose-schema-extend": "0.1.x",
-    "source-map-support": "0.2.x"
+    "source-map-support": "0.2.x",
+    "jquery-file-upload-middleware": "0.0.8"
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.5.x",

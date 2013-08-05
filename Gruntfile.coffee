@@ -83,8 +83,10 @@ module.exports = (grunt) ->
 
           'public/js/templates/setting.js':       'assets/tpl/setting.jade'
 
+          'public/js/templates/footer.js':        'assets/tpl/footer.jade'
           'public/js/templates/imprint.js':       'assets/tpl/imprint.jade'
           'public/js/templates/login.js':         'assets/tpl/login.jade'
+          'public/js/templates/error.js':         'assets/tpl/error.jade'
           'public/js/templates/skeleton.js':      'assets/tpl/skeleton.jade'
 
           'public/js/templates/ajax/.js':         'assets/tpl/ajax/login.jade'

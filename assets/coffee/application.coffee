@@ -5,9 +5,10 @@ define [
   'use strict'
 
   class Application extends Chaplin.Application
-    title: 'node-galerie'
+    title: 'node-galerie.'
 
     initMediator: ->
-      Chaplin.mediator.loggedin = false
+      Chaplin.mediator.user = CurrentUser
+      Chaplin.mediator.redirectUrl = null
 
       super

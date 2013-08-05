@@ -1,28 +1,18 @@
 define [
   'lib/utils'
-  'controllers/base/controller'
-  'models/current-user'
+  'chaplin'
+  'controllers/base/auth-controller'
   'views/user/setting-view'
-], (utils, Controller, CurrentUser, SettingView) ->
+], (utils, Chaplin, AuthController, SettingView) ->
   'use strict'
 
-  class UserController extends Controller
+  class UserController extends AuthController
 
     setting: (params) ->
-      @title = 'Hello'
+      @adjustTitle 'Settings'
 
-      @currentuser = new CurrentUser
+      @search = new SettingView
+        model:  Chaplin.mediator.user
+        region: 'setting'
 
-      @currentuser.fetch
-        success: (model) =>
-          @search = new SettingView
-            model:  model
-            region: 'setting'
-
-          utils.pageTransition $('#setting'), 'bottom'
-
-        denied: => 
-          @currentuser.dispose()
-          @redirectToRoute 'login'
-          
-        error: (model, error) -> console.error 'error requesting', error
+      utils.pageTransition $('#setting'), 'top'

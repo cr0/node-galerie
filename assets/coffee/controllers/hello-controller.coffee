@@ -1,46 +1,29 @@
 define [
   'jquery'
+  'chaplin'
   'lib/utils'
-  'controllers/base/controller'
-  'models/current-user'
-  'models/gallery'
+  'controllers/base/auth-controller'
   'models/gallery-collection'
   'views/search/search-view'
   'views/search/items-view'
-], ($, utils, Controller, CurrentUser, Gallery, GalleryCollection, SearchView, SearchItemsView) ->
+], ($, Chaplin, utils, AuthController, GalleryCollection, SearchView, SearchItemsView) ->
   'use strict'
 
-  class HelloController extends Controller
+  class HelloController extends AuthController
 
     show: (params) ->
-      @title = 'Hello'
-
-      @currentuser = new CurrentUser
+      @adjustTitle 'Hello'
       
       collection = new GalleryCollection
       collection.add id: num, name: "gallery #{num}" for num in [1..6]
 
-      @currentuser.fetch
-        success: (model) =>
-          @search = new SearchView
-            model:  model
-            region: 'search'
+      @search = new SearchView
+        model:  Chaplin.mediator.user
+        region: 'search'
 
-          @results = new SearchItemsView
-            collection: collection
-            region:     'results'
+      @results = new SearchItemsView
+        collection: collection
+        region:     'results'
 
-          utils.pageTransition $('#search'), 'left'
-
-        denied: => 
-          @currentuser.dispose()
-          @redirectToRoute 'login'
-          
-        error: (model, error) -> console.error 'error requesting', error
-
-
-    imprint: (params) ->
-      @title = 'Imprint'
-      
-      utils.pageTransition $('#imprint'), 'bottom'
+      utils.pageTransition $('#search'), 'left'
 

@@ -8,4 +8,8 @@ define [
     template:   Template
     className:  'item'
     tagName:    'div'
+
+    render: ->
+      super
+      @$el.dblclick (e) -> console.log e.target.src
       

@@ -1,7 +1,8 @@
 define [
+  'lib/utils'
   'views/base/view'
   'templates/skeleton'
-], (View, Template) ->
+], (utils, View, Template) ->
   'use strict'
 
   class SkeletonView extends View
@@ -14,4 +15,9 @@ define [
       'search':   '#search'
       'gallery':  '#gallery'
       'setting':  '#setting'
+      'dynamic':  '#dynamic'
     template: Template
+
+    initialize: ->
+      super
+      @subscribeEvent 'loggedout', -> @publishEvent '!router:routeByName', 'hello_home'
