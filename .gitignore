@@ -1,4 +1,5 @@
 .test
+config/setup.coffee
 doc
 node_modules
 public/css
