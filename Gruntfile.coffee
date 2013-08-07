@@ -6,7 +6,7 @@ module.exports = (grunt) ->
 
     clean:
       server:
-        src:        ['app']
+        src:        []
       coverage:
         src:        ['src/**/*.js']
       public:
