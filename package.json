@@ -1,5 +1,6 @@
 {
   "name": "node-galerie",
+  "private": true,
   "version": "0.0.0",
   "description": "a gallery written in node, nothing more.",
   "main": "server.js",
@@ -9,6 +10,7 @@
   "scripts": {
     "install": "grunt build",
     "test": "grunt test",
+    "start": "node start.js",
     "blanket": {
       "pattern": [
         ".test"
@@ -29,24 +31,12 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "coffee-script": "1.6.x",
-    "express": "3.x",
-    "mongoose": "3.6.x",
-    "jade": "0.33.x",
     "grunt": "0.4.x",
     "grunt-cli": "0.1.x",
     "grunt-contrib-coffee": "0.7.x",
     "grunt-contrib-clean": "0.5.x",
-    "passport": "0.1.x",
-    "passport-amazon": "0.1.x",
-    "passport-google-oauth": "0.1.x",
-    "passport-facebook": "0.1.x",
-    "passport-local": "0.1.x",
-    "yaml-config": "0.2.x",
-    "connect-ensure-login": "0.1.x",
-    "basic-auth-mongoose": "0.1.x",
-    "mongoose-schema-extend": "0.1.x",
     "source-map-support": "0.2.x",
-    "jquery-file-upload-middleware": "0.0.8"
+    "mongoose": "3.6.x"
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.5.x",
