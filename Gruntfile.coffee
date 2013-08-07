@@ -63,7 +63,8 @@ module.exports = (grunt) ->
           urlfunc:    'url',
           linenos:    true
         files:
-          'public/css/main.css': 'assets/styl/main.styl'
+          'public/css/main.css':      'assets/styl/main.styl'
+          'public/css/finalize.css':  'assets/styl/finalize.styl'
 
     jade:
       client:

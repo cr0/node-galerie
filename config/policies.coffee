@@ -7,5 +7,6 @@ module.exports =
     '*':  'authenticated'
 
   'UserController':
-    '*':  true
-    'me': 'authenticated'
+    '*':        true
+    'finalize': true
+    'me':       'authenticated'

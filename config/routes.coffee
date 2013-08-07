@@ -10,7 +10,7 @@ module.exports =
   '/auth/req':      'auth#required'
   '/auth/failed':   'auth#failed'
   '/auth/logout':   'auth#logout'
-
+  '/auth/finalize': 'auth#finalize'
   '/auth/:provider/callback': 'auth#validate'
 
   '/user/me':       'user#me'

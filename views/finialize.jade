@@ -1,0 +1,36 @@
+!!!5
+html
+  
+  head
+    title node-galerie
+    link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/css/finalize.css')
+
+    script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+
+  body
+    h1 Hi #{name}
+    p.hint Du hast dich über einen externen Anbieter angemeldet. Wir haben daher ein paar Felder vorausgefüllt.
+
+    div.image
+      img(src="#{avatar}")
+      p avatar provided by #{avatarProvider}
+
+    form(action='/auth/finalize', method='post')
+      div.pair
+        input(readonly, name='name', value='#{name}') 
+
+      div.pair
+        input(readonly, type='emai', required, name='email', value='#{email}', placeholder='Email-Adresse')
+
+      div.pair
+        input(name='username', required, value='#{username}', placeholder='Nickname') 
+
+      div.pair
+        input(name='birthday', type='date', required, value='#{birthday}', placeholder='Geburtstag') 
+
+      div.pair
+        input(name='_id', type='hidden', value='#{_id}')
+        button Zugang anlegen
+
+
