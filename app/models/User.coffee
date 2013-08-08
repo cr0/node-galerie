@@ -15,14 +15,18 @@ UserSchema = new mongoose.Schema
     type:     String
     required: true
 
-  avatar:
-    type:     String
+  'avatar.url': String
+  'avatar.provider': String
 
   username:   String
 
   birthday:   Date
 
   verified:   
+    type:     Boolean
+    default:  true # for testing set to true
+
+  'provider.finalized':   
     type:     Boolean
     default:  false
 

@@ -1,10 +1,14 @@
 @import "nib"
+global-reset()
+
+@import "vendor/hint.css"
 
 @import "_variables"
 
 @import "animation"
 @import "horizontal-scroll"
 @import "buttons"
+@import "forms"
 
 @import "header"
 @import "content"
@@ -13,8 +17,6 @@
 @import "tpl/login"
 @import "tpl/search"
 @import "tpl/gallery"
-
-global-reset()
 
 *
   box-sizing: border-box
@@ -65,10 +67,6 @@ pre
   margin-bottom: 0.5%
   border-left: 2px solid
   padding-left: 1%
-
-input, textarea, button
-  font: 1em "Helvetica Neue", Arial, sans-serif
-  font-weight: 100
 
 .clearfix
   clearfix()

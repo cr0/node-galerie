@@ -10,24 +10,24 @@ html
 
   body
     h1 Hi #{name}
-    p.hint Du hast dich über einen externen Anbieter angemeldet. Wir haben daher ein paar Felder vorausgefüllt.
+    p.info Du meldest dich zum ersten Mal über einen externen Anbieter an. Bitte ergänze die restlichen Felder.
 
     div.image
-      img(src="#{avatar}")
-      p avatar provided by #{avatarProvider}
+      img(src="#{avatar.url}")
+      p avatar provided by #{avatar.provider}
 
     form(action='/auth/finalize', method='post')
       div.pair
-        input(readonly, name='name', value='#{name}') 
+        input.fullwidth(readonly, name='name', value='#{name}')
 
       div.pair
-        input(readonly, type='emai', required, name='email', value='#{email}', placeholder='Email-Adresse')
+        input.fullwidth(readonly, type='email', required, name='email', value='#{email}', placeholder='Email-Adresse')
 
-      div.pair
-        input(name='username', required, value='#{username}', placeholder='Nickname') 
+      div.pair.hint--right(data-hint="Nickname")
+        input.fullwidth(id="username", name='username', required, value='#{username}', placeholder='Nickname', class="#{missing_username ? 'missing' : ''}")
 
-      div.pair
-        input(name='birthday', type='date', required, value='#{birthday}', placeholder='Geburtstag') 
+      div.pair.hint--right(data-hint="Geburtstag")
+        input.fullwidth(id="birthday", name='birthday', required, type='date', value='#{birthday}', placeholder='Geburtstag', class="#{missing_birthday ? 'missing' : ''}") 
 
       div.pair
         input(name='_id', type='hidden', value='#{_id}')

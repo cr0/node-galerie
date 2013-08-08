@@ -7,7 +7,7 @@ body
   margin: 50px auto
   width: 500px
 
-p.hint
+p.info
   margin-bottom: 2em
 
 div.image
@@ -46,21 +46,8 @@ form
   div.pair
     width: 100%
 
-    input
-      color: lighten($text-color, 15)
+    input.fullwidth
       width: 100%
-      float: right
-      font-size: 140%
-      background-color: white
-      border: 0
-      padding: 5px
-      transition: background-color 0.6s
-
-      &:hover
-        background-color: rgb(206, 227, 242)
-
-      &:focus:not(readonly)
-        color: $text-color
 
   button
     margin-top: 1em

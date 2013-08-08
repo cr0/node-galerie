@@ -52,32 +52,33 @@ module.exports = class AuthController extends Mmh.Controller
         if user
           req.logIn user, (err) ->
             if err then return next err
+            else if not user.provider.finalized then res.render 'finialize', user.toJSON()
             else if not user.verified then return next new Error 'User Account is not verified'
             else 
               if req.xhr then res.redirect (if req.session.returnto? then req.session.returnto else '/user/me')
               else res.render 'success'
         else
-
           switch auth.provider.name
             when 'facebook' 
               avatarProvider = 'facebook'
-              avatar = "https://graph.facebook.com/#{auth.provider.id}/picture?width=150&height=150"
+              avatarUrl = "https://graph.facebook.com/#{auth.provider.id}/picture?width=150&height=150"
             else
               avatarProvider = 'gravatar'
-              avatar = gravatar.url auth.info.emails[0]?.value, {s: '150', r: 'x', d: 'identicon'}
+              avatarUrl = gravatar.url auth.info.emails[0]?.value, s: '150', r: 'x', d: 'identicon'
 
           user = new User
             name:             auth.info.displayName
             email:            auth.info.emails[0]?.value
-            username:         auth.info.username
-            avatar:           avatar
+            username:         if auth.info.username? then auth.info.username else ""
+            'avatar.url':     avatarUrl
+            'avatar.provider':avatarProvider
             'provider.name':  auth.provider.name
             'provider.id':    auth.provider.id
 
           user.save (err) ->
             if err then return next err
             else
-              res.render 'finialize', _.extend user.toJSON(), avatarProvider: avatarProvider
+              res.render 'finialize', user.toJSON()
 
 
 
@@ -86,13 +87,22 @@ module.exports = class AuthController extends Mmh.Controller
     username  = req.body.username
     birthday  = req.body.birthday
 
-    User.findById id, (err, user) ->
+    User.findById id, (err, user) =>
       if err then return next err
       else
         if not user then return next new Error "Unable to finalize user: User not found (id #{id})"
 
+        if not username then usernameM = true
+        if not birthday then birthdayM = true
+
+        if usernameM or birthdayM then return res.render 'finialize', _.extend user.toJSON(), 
+          missing_username: usernameM || false
+          missing_birthday: birthdayM || false
+
         user.username = username
         user.birthday = birthday
+        user.provider.finalized = true
+
         user.save (err) ->
           if err then return next err
           else
@@ -101,8 +111,6 @@ module.exports = class AuthController extends Mmh.Controller
               else 
                 if req.xhr then res.redirect (if req.session.returnto? then req.session.returnto else '/user/me')
                 else res.render 'success'
-
-
 
 
 

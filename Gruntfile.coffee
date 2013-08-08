@@ -61,7 +61,8 @@ module.exports = (grunt) ->
             'public/'
           ]
           urlfunc:    'url',
-          linenos:    true
+          linenos:    true,
+          'include css': true
         files:
           'public/css/main.css':      'assets/styl/main.styl'
           'public/css/finalize.css':  'assets/styl/finalize.styl'
