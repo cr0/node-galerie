@@ -5,14 +5,14 @@ global-reset()
 
 @import "_variables"
 
-@import "animation"
-@import "horizontal-scroll"
-@import "buttons"
-@import "forms"
+@import "common/animation"
+@import "common/buttons"
+@import "common/forms"
 
-@import "header"
-@import "content"
-@import "footer"
+@import "structure/header"
+@import "structure/content"
+@import "structure/footer"
+@import "structure/horizontal-scroll"
 
 @import "tpl/login"
 @import "tpl/search"
@@ -28,16 +28,19 @@ global-reset()
   height: 100%
 
 body
-  width: 100%
+  width: 90%
+  margin: 50px auto
   
   font: 1em "Helvetica Neue", Arial, sans-serif
   font-weight: 100
   color: $text-color
 
   background-color: $background-color
-  //background: url("../img/background.jpg") center center no-repeat fixed
-  //background-size: cover
   overflow: hidden
+
+@media (min-width: 500px) and (max-width: 750px)
+  body
+    width: 500px
 
 a
   color: $link-color

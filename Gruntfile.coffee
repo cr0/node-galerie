@@ -65,7 +65,8 @@ module.exports = (grunt) ->
           'include css': true
         files:
           'public/css/main.css':      'assets/styl/main.styl'
-          'public/css/finalize.css':  'assets/styl/finalize.styl'
+          'public/css/finalize.css':  'assets/styl/pages/finalize.styl'
+          'public/css/error.css':     'assets/styl/pages/error.styl'
 
     jade:
       client:
@@ -141,5 +142,5 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'dev', [
-    'clean:public', 'clean:server', 'coffee:server', 'stylus:assets', 'watch'
+    'clean:public', 'clean:server', 'coffee:server', 'stylus:assets', 'jade:client', 'coffee:client', 'watch'
   ]

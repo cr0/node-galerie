@@ -49,6 +49,7 @@ module.exports = class AuthController extends Mmh.Controller
     , (err, user) ->
       if err then next err
       else
+        # known user
         if user
           req.logIn user, (err) ->
             if err then return next err
@@ -57,28 +58,41 @@ module.exports = class AuthController extends Mmh.Controller
             else 
               if req.xhr then res.redirect (if req.session.returnto? then req.session.returnto else '/user/me')
               else res.render 'success'
+        # new user
         else
-          switch auth.provider.name
-            when 'facebook' 
-              avatarProvider = 'facebook'
-              avatarUrl = "https://graph.facebook.com/#{auth.provider.id}/picture?width=150&height=150"
-            else
-              avatarProvider = 'gravatar'
-              avatarUrl = gravatar.url auth.info.emails[0]?.value, s: '150', r: 'x', d: 'identicon'
-
-          user = new User
-            name:             auth.info.displayName
-            email:            auth.info.emails[0]?.value
-            username:         if auth.info.username? then auth.info.username else ""
-            'avatar.url':     avatarUrl
-            'avatar.provider':avatarProvider
-            'provider.name':  auth.provider.name
-            'provider.id':    auth.provider.id
-
-          user.save (err) ->
+          # validate if user with same email exists
+          User.count email: auth.info.emails[0]?.value, (err, count) ->
             if err then return next err
-            else
-              res.render 'finialize', user.toJSON()
+            if count > 0 then return next new Error "User with this email (#{auth.info.emails[0]?.value}) " + 
+              "already registered with another oauth provider"
+
+            # ok create new user
+            avatarProvider = 'gravatar'
+            avatarUrl = gravatar.url auth.info.emails[0]?.value, s: '150', r: 'x', d: 'identicon'
+
+            switch auth.provider.name
+              when 'facebook' 
+                avatarProvider = 'facebook'
+                avatarUrl = "https://graph.facebook.com/#{auth.provider.id}/picture?width=150&height=150"
+              when 'google'
+                if auth.info.picture
+                  avatarProvider = 'google'
+                  avatarUrl = "https://plus.google.com/s2/photos/profile/#{auth.provider.id}?sz=150"
+
+            user = new User
+              name:             auth.info.displayName
+              email:            auth.info.emails[0]?.value
+              username:         auth.info.username
+              birthday:         auth.info.birthday
+              'avatar.url':     avatarUrl
+              'avatar.provider':avatarProvider
+              'provider.name':  auth.provider.name
+              'provider.id':    auth.provider.id
+
+            user.save (err) ->
+              if err then return next err
+              else
+                res.render 'finialize', user.toJSON()
 
 
 
