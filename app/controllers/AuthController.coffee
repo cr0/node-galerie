@@ -16,19 +16,6 @@ module.exports = class AuthController extends Mmh.Controller
     else res.redirect '/'
 
 
-  required: ( req, res ) ->
-    res.status 401
-    if req.xhr then res.json
-      error:
-        code:     401
-        message: 'login required'
-    else
-      res.render 'error',
-        error:
-          code:     401
-          message:  'login required'
-
-
   failed: ( req, res ) ->
     res.status 400
     if req.xhr then res.json
@@ -46,7 +33,7 @@ module.exports = class AuthController extends Mmh.Controller
     User.findOne
       'provider.name':  auth.provider.name
       'provider.id':    auth.provider.id
-    , (err, user) ->
+    , "+provider.finalized +verified", (err, user) ->
       if err then next err
       else
         # known user

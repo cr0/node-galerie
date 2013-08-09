@@ -10,3 +10,6 @@ module.exports =
     '*':        true
     'finalize': true
     'me':       'authenticated'
+
+  'GalleryController':
+    '*':        'authenticated'

@@ -7,7 +7,6 @@ module.exports =
   '/gallery':       'home#index'
   '/settings':      'home#index'
 
-  '/auth/req':      'auth#required'
   '/auth/failed':   'auth#failed'
   '/auth/logout':   'auth#logout'
   '/auth/finalize': 'auth#finalize'
