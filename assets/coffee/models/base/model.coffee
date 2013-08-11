@@ -9,6 +9,9 @@ define [
     idAttribute: '_id'
 
     fetch: (options = {}) ->
+      class ServerError extends Error
+        constructor: (@name, @code, @message, @stack) ->
+
       @beginSync()
 
       success = options.success
@@ -20,8 +23,14 @@ define [
         @finishSync()
 
       options.error = (model, response, options) =>
-        if response.status is 401 and typeof denied is 'function' then denied? model, response, options
+        json     = response.responseJSON.error
+        response = new ServerError json.name, json.code, json.message, json.details?.stack
+        if response.status is 401 or 403 and typeof denied is 'function' then denied? model, response, options
         else error? model, response, options
         @abortSync()
 
       super options
+
+    # make usage of save more comfortable
+    save: (cb, attributes = {}) ->
+      super attributes, cb

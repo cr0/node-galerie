@@ -76,4 +76,11 @@ define [
 
       if !support then onEndAnimation $out, $in
 
+    formatFileSize: (bytes)->
+      if typeof bytes is not 'number' then return ''
+            
+      if bytes >= 1000000000 then return "#{(bytes / 1000000000).toFixed(2)} GB"
+      else if bytes >= 1000000 then return "#{(bytes / 1000000).toFixed(2)} MB"
+      else if bytes >= 1000 then return "#{(bytes / 1000).toFixed(2)} KB"
+
   utils

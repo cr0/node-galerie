@@ -1,15 +1,13 @@
-!!!5
-html
-  
-  head
-    title ...
+extends layout/multi
 
-    script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js')
-    script(type='text/javascript').
-      $(document).ready(function() {
-        window.opener.$(window.opener.document).trigger('loginsuccess');
-        window.close();
-      });
+block js
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+  script(type='text/javascript').
+    $(document).ready(function() {
+      window.opener.$(window.opener.document).trigger('loginsuccess');
+      window.close();
+    });
 
-  body
-    h1 log in successful
+block body
+  h1 Login erfolglreich
+  p Gleich gehts weiter...

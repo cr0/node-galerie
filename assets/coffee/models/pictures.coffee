@@ -5,7 +5,7 @@ define [
 ], (Chaplin, Collection, Picture) ->
   'use strict'
 
-  class PictureCollection extends Collection
+  class Pictures extends Collection
     _.extend @prototype, Chaplin.EventBroker
 
     url:    => "/picture/#{@id}"

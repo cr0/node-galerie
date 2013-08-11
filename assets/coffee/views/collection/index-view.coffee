@@ -4,7 +4,7 @@ define [
 ], (View, Template) ->
   'use strict'
 
-  class GalleryView extends View
+  class CollectionView extends View
     template:   Template
 
     regions:

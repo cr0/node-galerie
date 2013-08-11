@@ -6,8 +6,8 @@ global-reset()
 @import "_variables"
 
 @import "common/animation"
-@import "common/buttons"
 @import "common/forms"
+@import "common/buttons"
 
 @import "structure/header"
 @import "structure/content"
@@ -15,8 +15,11 @@ global-reset()
 @import "structure/horizontal-scroll"
 
 @import "tpl/login"
+@import "tpl/imprint"
 @import "tpl/search"
 @import "tpl/gallery"
+@import "tpl/picture"
+@import "tpl/error"
 
 *
   box-sizing: border-box
@@ -28,30 +31,23 @@ global-reset()
   height: 100%
 
 body
-  width: 90%
-  margin: 50px auto
-  
   font: 1em "Helvetica Neue", Arial, sans-serif
-  font-weight: 100
+  font-weight: 200
   color: $text-color
 
   background-color: $background-color
   overflow: hidden
 
-@media (min-width: 500px) and (max-width: 750px)
-  body
-    width: 500px
-
 a
   color: $link-color
   text-decoration: none
-  font-weight: 200
 
 a.button
   color: #00B7FF
 
 h1
   font-size: 2em
+  font-weight: 100
 
 h2
   font-size: 1.5em

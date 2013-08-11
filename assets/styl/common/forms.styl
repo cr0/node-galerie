@@ -11,7 +11,7 @@ label
   display: inline-block
 
 
-input
+input, textarea
   color: lighten($text-color, 15)
   width: 75%
   display: inline-block
@@ -29,3 +29,19 @@ input
 
   &.missing
     background-color: rgb(246, 220, 221)
+
+  &.fullwidth
+    width: 100%
+
+  &.halfwidth
+    width: 50%
+
+  &.smallwidth
+    width:25%
+
+input[type="checkbox"], input[type="radio"]
+  line-height: 0.7
+  
+  &:after
+    content: attr(data-description)
+    margin-left: 25px

@@ -81,8 +81,15 @@ module.exports = (grunt) ->
           'public/js/templates/search.js':        'assets/tpl/search.jade'
           'public/js/templates/search-item.js':   'assets/tpl/search-item.jade'
 
-          'public/js/templates/gallery.js':       'assets/tpl/gallery.jade'
-          'public/js/templates/gallery-item.js':  'assets/tpl/gallery-item.jade'
+          'public/js/templates/gallery.js':       'assets/tpl/gallery/index.jade'
+          'public/js/templates/gallery-item.js':  'assets/tpl/gallery/item.jade'
+          'public/js/templates/gallery-new.js':   'assets/tpl/gallery/new.jade'
+
+          'public/js/templates/picture-new.js':         'assets/tpl/picture/new.jade'
+          'public/js/templates/picture-upload.js':      'assets/tpl/picture/upload.jade'
+          'public/js/templates/picture-collections.js': 'assets/tpl/picture/collections.jade'
+          'public/js/templates/picture-collection.js':  'assets/tpl/picture/collection.jade'
+          'public/js/templates/picture-tool.js':        'assets/tpl/picture/tool.jade'
 
           'public/js/templates/setting.js':       'assets/tpl/setting.jade'
 

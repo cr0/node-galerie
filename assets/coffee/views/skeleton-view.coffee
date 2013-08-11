@@ -15,6 +15,7 @@ define [
       'search':   '#search'
       'gallery':  '#gallery'
       'setting':  '#setting'
+      'error':    '#error'
       'dynamic':  '#dynamic'
     template: Template
 

@@ -1,10 +1,8 @@
 
-.teaser
-  h1= name
-  if file
-    p #{file}  #{lineno}
+h1 ##{code} &mdash; #{name}
+p.info= message
 
-  pre= message
+pre.stack= stack
 
-  p
-    a(href="/") startseite
+p
+  a(href="/") startseite

@@ -1,18 +1,17 @@
 define [
   'views/base/collection-view'
   'views/gallery/item-view'
-  'views/gallery/add-view'
   'jquery.fileupload'
   'jquery.fileupload-ui'
   'lazyload'
   'mousewheel'
   'scrollto'
-], (CollectionView, GalleryItemView, GalleryAddView) ->
+], (CollectionView, CollectionItemView) ->
   'use strict'
 
-  class GalleryItemsView extends CollectionView
+  class CollectionItemsView extends CollectionView
     className:  'wrapper'
-    itemView:   GalleryItemView
+    itemView:   CollectionItemView
     tagName:    'div'
     useCssAnimation: false
 

@@ -3,10 +3,10 @@ define [
   'chaplin'
   'lib/utils'
   'controllers/base/auth-controller'
-  'models/gallery-collection'
+  'models/collections'
   'views/search/search-view'
   'views/search/items-view'
-], ($, Chaplin, utils, AuthController, GalleryCollection, SearchView, SearchItemsView) ->
+], ($, Chaplin, utils, AuthController, Collections, SearchView, SearchItemsView) ->
   'use strict'
 
   class HelloController extends AuthController
@@ -14,8 +14,8 @@ define [
     show: (params) ->
       @adjustTitle 'Hello'
       
-      collection = new GalleryCollection
-      collection.add id: num, name: "gallery #{num}" for num in [1..6]
+      collection = new Collections
+      collection.add id: num, name: "gallery #{num}" for num in [1..8]
 
       @search = new SearchView
         model:  Chaplin.mediator.user

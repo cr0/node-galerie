@@ -1,20 +1,16 @@
 
-.teaser
-  h1 Login
-  p 
-  | Melde dich mit einem Account an
+h1 Login
+p 
+  | Melde dich mithilfe eines Drittanbieters an.
     
-.main
-  ul.login-provider
-    li.amazon.clearfix
-      a(href='/auth/amazon/', title='Login with Amazon') Amazon
 
-    li.facebook.clearfix
-      a(href='/auth/facebook/', title='Login with Facebook') Facebook
+ul.login-provider
 
-    li.google.clearfix
-      a(href='/auth/google/', title='Login with Google') Google
+  li.amazon
+    a(href='/auth/amazon/', title='Login with Amazon') Amazon
 
-    li.local.clearfix
-      a(href='/auth/local/', title='Login with local account') Lokaler Account
+  li.facebook
+    a(href='/auth/facebook/', title='Login with Facebook') Facebook
 
+  li.google
+    a(href='/auth/google/', title='Login with Google') Google

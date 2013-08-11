@@ -10,5 +10,4 @@ define [
     urlRoot: '/picture'
 
     defaults:
-      type:       'picture'
       name:       'Picture'

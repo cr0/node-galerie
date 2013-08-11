@@ -1,0 +1,16 @@
+
+h1 Neue Collection anlegen
+p.info Eine Collection ist eine Sammlung von Bildern. Collections können mithilfe des Namens oder Tags gefunden werden. Bilder in einer Collection erben automatisch alle Tags.
+
+form
+  div.pair.hint--right(data-hint="Name")
+    input.fullwidth(id="name", name='name', required, value='#{name ? name : ''}', placeholder='Name', class="#{missing_name? 'missing' : ''}")
+  
+  div.pair.hint--right(data-hint="Beschreibung")
+    textarea.fullwidth(id="description", name='description', value='#{description ? description : ''}', placeholder='Beschreibung', class="#{missing_description ? 'missing' : ''}")
+
+  div.pair.hint--right(data-hint="Tags")
+    input.fullwidth(id="tags", required, name='tags', value='#{tags ? tags : ''}', placeholder='Tags erlauben es Nutzern schnell und einfach gewünschte Alben zu finden (Tag1, Tag2, ...)', class="#{missing_tags ? 'missing' : ''}")
+
+  div.pair
+    button Collection anlegen

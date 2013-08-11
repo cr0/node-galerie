@@ -8,4 +8,4 @@ define [
     template:   Template
 
     regions:
-      'results':  '.main'
+      'results':  '.results'

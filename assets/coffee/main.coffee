@@ -1,5 +1,6 @@
 require.config
 
+  waitSeconds: 15
   baseUrl: '/js/'
 
   paths:
@@ -10,11 +11,17 @@ require.config
     modernizr:  '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min'
     chaplin:    'vendor/chaplin'
 
+    # addons
+    async:      'vendor/requirejs/async',
+    goog:       'vendor/requirejs/goog',
+    propertyParser: 'vendor/requirejs/propertyParser'
+
     # jquery
     lazyload:   'vendor/jquery.lazyload'
     mousewheel: 'vendor/jquery.mousewheel'
     scrollto:   'vendor/jquery.scrollto'
     scrollstop: 'vendor/jquery.scrollstop'
+    'jquery.resizestop': 'vendor/jquery.resizestop'
 
     # fileupload
     'load-image':                 'vendor/load-image'
@@ -54,8 +61,14 @@ require.config
     scrollto:
       deps:    ['jquery']
       exports: 'jQuery.fn.scrollTo'
+    'jquery.resizestop':
+      deps:    ['jquery']
+      exports: 'jQuery.fn.resizestop'
 #    'jquery.fileupload':
 #      deps:     ['load-image', 'canvas-to-blob']
+#      
+      
+define 'gmaps', ['async!http://maps.google.com/maps/api/js?v=3&key=AIzaSyAPioLTf2snn7k023uPTMreFY-y1e0M10g&sensor=false'], () -> return window.google.maps
 
 
 require ['application', 'routes'], (App, routes) ->

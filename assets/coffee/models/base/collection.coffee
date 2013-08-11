@@ -20,8 +20,12 @@ define [
         @finishSync()
 
       options.error = (collection, response, options) =>
-        if response.status is 401 and typeof denied is 'function' then denied? collection, response, options
+        if response.status is 401 or 403 and typeof denied is 'function' then denied? collection, response, options
         else error? collection, response, options
         @abortSync()
 
       super options
+
+    # make usage of save more comfortable
+    save: (cb, attributes = {}) ->
+      super attributes, cb

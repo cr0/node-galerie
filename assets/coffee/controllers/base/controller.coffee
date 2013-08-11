@@ -14,7 +14,7 @@ define [
       @compose 'site', SekeltonView
       @compose 'imprint', ImprintView, region: 'imprint'
       @compose 'login', LoginView, region: 'login'
-      @compose 'error', ErrorView, region: 'dynamic'
+      @compose 'error', ErrorView, region: 'error'
 
 
 

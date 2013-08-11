@@ -12,55 +12,32 @@
     &:hover
       text-decoration: underline
 
-  .pt-page
-    font-size: 80%
+  .pt-page > div
+    height: inherit
 
+.nonwidth
+  & > div
+    width: 80%
+    margin: 4em auto
+
+@media (min-width: 500px) and (max-width: 650px)
+  .nonwidth
     & > div
-      height: $height
-      width: $content-width
-      margin: 15em auto 1em auto
+      width: 500px
 
-    div.teaser, div.main
-      display: inline-block
-      width: $half-width
-      height: 100%
-      float: left
-      font-size: 150%
+@media (max-width: 500px)
+  .nonwidth
+    & > div
+      width: 100%
 
-    .teaser
-      background-color: white
-      padding: 0.1em 1em
-      //text-align: center
+@media (max-height: 500px)
+  .nonwidth
+    & > div
+      margin: 1.5em auto
 
-      h1
-        font-size: 300%
-        font-weight: 100
-        margin-bottom: 0.3em
+div.pair
+  width: 100%
 
-    .main
-      //background-color: rgba(0, 0, 0, .7)
-      padding: 0
-
-      a
-        color: white
-        font-size: 140%
-        &:hover
-          text-decoration: none
-
-      ul
-
-        li
-          background: linear-gradient(top, #1e1e1e, darken(#1e1e1e, 5))
-          float: left
-          clear: both
-          transition: padding 0.3s ease-out
-
-          a
-            padding: 0.5em 2em
-            display: block
-
-          &:hover
-            background: linear-gradient(top, lighten(#1e1e1e, 8), #1e1e1e)
-            padding-right: 1em
-            padding-left: 1em
-
+  &.inline
+    display: inline
+    width: auto

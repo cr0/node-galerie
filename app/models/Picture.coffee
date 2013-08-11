@@ -18,6 +18,10 @@ PictureSchema = new mongoose.Schema
     select:   false
 
   sources:
+    thumb:
+      type:     String
+      required: true
+
     low:
       type:     String
       required: true
@@ -44,36 +48,15 @@ PictureSchema = new mongoose.Schema
       ref:    'User'
     name: String
 
-
-GallerySchema = new mongoose.Schema
-
-  type:          
-    type:     String
-    default:  'gallery'
-    select:   false
-
-  name:
-    type:     String
-    required: true
-    unique:   true
-
-  location:
-    type: [Number]
-    index: '2d'
-
-  user: 
-    _id:
-      type:   mongoose.Schema.Types.ObjectId
-      ref:    'User'
-    name: String
-
-  pictures: [PictureSchema]
-
   tags: 
     type: [String]
     index: 'text'
 
+  collections:
+    type:   [mongoose.Schema.Types.ObjectId]
+    ref:    'Collection'
 
-GallerySchema.plugin textSearch
 
-module.exports = Gallery = mongoose.model 'Gallery', GallerySchema
+PictureSchema.plugin textSearch
+
+module.exports = Picture = mongoose.model 'Picture', PictureSchema

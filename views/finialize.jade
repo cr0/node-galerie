@@ -3,9 +3,14 @@ extends layout/multi
 block css
   link(rel='stylesheet', href='/css/finalize.css')
 
+block js
+  script(type='text/javascript').
+    if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function() {}, function() {});
+
 block body
   h1 Hi #{name}
   p.info Du meldest dich zum ersten Mal über einen externen Anbieter an. Bitte ergänze die restlichen Felder.
+  p.geo Um dir Alben in deiner Umgebung vorzuschlagen, wirst du von deinem Browser möglicherweise gefragt, ob du deinen Standort freigeben willst. 
 
   div.image
     img(src="#{avatar.url}")

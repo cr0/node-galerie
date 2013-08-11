@@ -19,7 +19,9 @@ define [
     getTemplateData: ->
       data = 
         name:     @model.name
+        code:     if @model.code then @model.code else 500
         message:  @model.message
+        stack:    @model.stack
         lineno:   @model.lineNumber
         file:     @model.fileName
 

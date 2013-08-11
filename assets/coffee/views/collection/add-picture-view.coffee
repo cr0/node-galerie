@@ -3,7 +3,7 @@ define [
 ], (View, Template) ->
   'use strict'
 
-  class GalleryAddView extends View
+  class AddPictureView extends View
 
     render: ->
 

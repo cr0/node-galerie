@@ -1,9 +1,20 @@
 @import "nib"
 
 body
-  background: linear-gradient(top, lighten(#80B3FF, 80%), #80B3FF);
+  background: linear-gradient(top, lighten(#80B3FF, 80%), #80B3FF)
+  width: 80%
+  margin: 4em auto
 
-p.info
+@media (min-width: 500px) and (max-width: 750px)
+  body
+    width: 500px
+
+@media (max-width: 500px)
+  body
+    width: 100%
+
+p.geo
+  font-size: .75em
   margin-bottom: 2em
 
 div.image
@@ -39,14 +50,6 @@ form
   vertical-align: top;
   width: 60%
 
-  div.pair
-    width: 100%
-
-    input.fullwidth
-      width: 100%
-
   button
-    margin-top: 1em
-    font-size: 140%
     width: 100%
 
