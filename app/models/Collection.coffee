@@ -13,7 +13,6 @@ CollectionSchema = new mongoose.Schema
   name:
     type:     String
     required: true
-    unique:   true
 
   description: String
 
@@ -34,4 +33,4 @@ CollectionSchema = new mongoose.Schema
 
 CollectionSchema.plugin textSearch
 
-module.exports = Collection = mongoose.model 'Collection', CollectionSchema
+module.exports = Collection = mongoose.model 'Collection', CollectionSchema, 'content'

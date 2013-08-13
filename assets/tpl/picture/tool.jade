@@ -1,10 +1,13 @@
 form
   
   div.pair.inline
-    input.smallwidth(id='create-collection', name='create-collection', type="checkbox", value='collection', data-description='Collection erstellen')
+    input.smallwidth(id='create-collection', name='create-collection', type="checkbox", value='true', data-description='Collection erstellen')
 
   div.pair.inline
-    input.smallwidth(id='use-collection', name='use-collection', type="checkbox", value='collection', data-description='Zu Collection hinzufügen')
+    input.smallwidth(id='use-collection', name='use-collection', type="checkbox", value='true', data-description='Zu Collection hinzufügen')
+
+  div.pair.inline
+    input.smallwidth(id='auto-upload', name='auto-upload', type="checkbox", value='true', checked, data-description='Upload im Hintergrund')
 
   div.pair.hint--right.create-collection(data-hint="Name")
     input.fullwidth(id="name", name='name', required, value='#{name ? name : ''}', placeholder='Name', class="#{missing_name? 'missing' : ''}")

@@ -4,6 +4,8 @@ define (require) ->
   require 'jquery.fileupload'
   require 'jquery.fileupload-ui'
   require 'jquery.resizestop'
+  require 'jquery.mousewheel'
+  require 'jquery.scrollto'
 
   $               = require 'jquery'
   _               = require 'underscore'
@@ -22,60 +24,51 @@ define (require) ->
       $hint = @$el.children 'div.drop'
       $list = @$el.children 'div.list'
 
-      rowToUse = 0
-      itemsPerRow = 3
-      rowDefaultHeight = 400
+      minImageHeight = 250
+      maxImageHeight = 500
+      currentRows = 0
+      maxRows = 3
 
-      addToRow = ($item, cb) =>
-
-        validateRow = ($row) ->
-          $children = $row.children()
-
-          ratios = _.map $children, (child) -> $(child).data('ratio')
-
-          newheight = rowDefaultHeight
-          width = 1e10
-          difference = -100
-
-          i = 0
-          start = _.reduce $children, (memo, child) -> 
-            memo + parseInt($(child).css('margin-left'), 10) + parseInt($(child).css('margin-right'), 10)
-          , 0
-
-          while difference > 1 or difference < -1
-            oldheightdiff = heightdiff * -1
-            if difference > 1 then heightdiff = Math.ceil(difference / $children.length)
-            # math ceil make -0.6 to 0 which should be -1
-            else if  difference < 1 then heightdiff = Math.ceil(difference / $children.length * -1) * -1
-
-            if heightdiff is oldheightdiff then heightdiff--
-            newheight -= heightdiff
-
-            width = _.reduce ratios, (memo, ratio) -> 
-              memo + ratio * newheight
-            , start
-            difference = parseInt(width - $list.width(), 10)
-            # console.log "new difference #{difference} and newheight is #{newheight} (#{width} - #{$list.width()}) -- smallered about #{heightdiff}"
-
-            # kill endless loops
-            if ++i is 1000 then throw new Error "Cannot find correct height for item"
-
-          if newheight > rowDefaultHeight then  newheight = rowDefaultHeight
-
-          console.log "need resize from #{$row.height()} to #{newheight}, took #{i} iterations"
-          $children.each (idx, child) -> resizeImage($(child), newheight)
-
-          cb?()
-
-        resizeImage = ($item, newheight) ->
-          ratio = $item.data('ratio')
-          $image = $item.find('.determiner').first()
-          $image.height(newheight)
-          $image.width(newheight * ratio) 
-          $item.css('opacity', 1)
+      createRow = (idx) ->
+        $list.append($('<div>').addClass("row row-#{idx}"))
+        $list.append($('<br>'))
 
 
-        $currentRow = $list.children(".row-#{rowToUse}")
+      resizeItem = ($item) ->
+        rowHeight = $list.height() / currentRows
+        rowHeight = if rowHeight > maxImageHeight then maxImageHeight else rowHeight
+
+        ratio = $item.data('ratio')
+        $item.data('initialheight', rowHeight)
+        console.log "resizing child (ratio #{ratio}): new height #{rowHeight} new width: #{rowHeight * ratio}"
+        $image = $item.find('.determiner').first()
+        $image.height(rowHeight)
+        $image.width(rowHeight * ratio) 
+        $item.css('opacity', 1)
+
+
+      resizeItems = ($children, cb) ->
+        console.log "resizing all rows"
+        $children.each (i, child) -> resizeItem($(child))
+        cb?()
+
+
+      addToRow = ($item, cb) ->
+        newrow = no
+        if currentRows < maxRows
+          newrow = yes
+          createRow(++currentRows)
+
+        getRow = ->
+          currentwidth = 1e10
+          $selectedRow = null
+          for i in [1..currentRows]
+            $row = $("div.row.row-#{i}")
+            if $row.width() < currentwidth
+              $selectedRow = $row
+              currentwidth = $row.width()
+          $selectedRow
+
         $image = $item.find('.determiner').first()
         if not $image.length then throw new Error 'Item to add has no *.determiner'
 
@@ -84,26 +77,25 @@ define (require) ->
         # add ratio to image
         $item.data('ratio', imageWidth / imageHeight)
         $item.addClass('row-item')
+        $row = getRow()
+        $row.append($item)
 
-        # row does not exist, create one
-        if not $currentRow.length
-          $currentRow = $('<div>').addClass("row row-#{rowToUse}")
-          $list.append($currentRow)
-          $(window).resizestop -> validateRow $currentRow 
+        if newrow then resizeItems($("div.row").children(), cb)
+        else 
+          resizeItem($item)
+          cb?()
+      
+      $(window).resizestop -> resizeItems($("div.row").children())
 
-        # if row is full create a new one
-        if $currentRow.children().length >= itemsPerRow 
-          rowToUse++
-          return addToRow $item
 
-        $currentRow.append $item
-        validateRow $currentRow 
-          
+      $list.mousewheel (event, delta) ->
+        @scrollLeft -= delta
+        event.preventDefault()  
 
       $file = $('<input>', type: 'file', name: 'files[]')
 
       $file.fileupload
-        url: '/upload'
+        url: '/api/picture'
         dataType: 'json'
         autoUpload: no
         uploadTemplateId: null
@@ -131,8 +123,10 @@ define (require) ->
 
         file.preview.className = 'determiner'
         $preview    = $('<div>').addClass('preview').append(file.preview).append($('<div>').addClass('shadow'))
-        $description= $('<div>').addClass('meta').append($('<span>').addClass('description').html("#{file.name} (#{utils.formatFileSize(file.size)})"))
-        $context.append($preview).append($description)
+        $meta       = $('<div>').addClass('meta')
+        $meta.append($('<span>').addClass('description').html("#{file.name} (#{utils.formatFileSize(file.size)})"))
+
+        $context.append($preview).append($meta)
 
         addToRow $context, ->
           data.submit()
@@ -140,13 +134,18 @@ define (require) ->
 
       $file.on 'fileuploadprogress', (e, data) =>
         context = data.contexts[data.index]
-        initialheight = context.data 'initialheight'
+        context.find('.shadow').css 'height', "#{100 * ( 1 - data.loaded / data.total ) }%"
 
-        context.children('.shadow').stop().animate
-          height: "#{ initialheight * ( 1 - data.loaded / data.total ) }px"
-
+      $file.on 'fileuploaddone', (e, data) =>
+        context = data.contexts[data.index]
+        context.addClass('success').removeClass('failed')
+        console.log "upload done: ", data.result
 
       $file.on 'fileuploadfail', (e, data) =>
+        context = data.contexts[data.index]
+        context.addClass('failed')
+        context.find('.shadow').css('height', '100%')
+
         console.error "upload failed: #{data.errorThrown} - #{data.textStatus}"
 
       $hint.append $file

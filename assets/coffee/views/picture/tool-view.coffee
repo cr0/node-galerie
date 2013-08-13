@@ -9,7 +9,11 @@ define (require) ->
     template:   Template
 
     events:
-      'click #create-collection': 'showCollectionTools'
+      'click #create-collection': 'showCreateCollection'
+      'click #use-collection':    'showUseCollection'
 
-    showCollectionTools: ->
+    showCreateCollection: ->
       @$el.find('.create-collection').fadeToggle()
+
+    showUseCollection: ->
+      @$el.find('.collections').fadeToggle()

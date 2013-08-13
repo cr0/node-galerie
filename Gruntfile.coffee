@@ -85,6 +85,7 @@ module.exports = (grunt) ->
           'public/js/templates/gallery-item.js':  'assets/tpl/gallery/item.jade'
           'public/js/templates/gallery-new.js':   'assets/tpl/gallery/new.jade'
 
+          'public/js/templates/picture-index.js':       'assets/tpl/picture/index.jade'
           'public/js/templates/picture-new.js':         'assets/tpl/picture/new.jade'
           'public/js/templates/picture-upload.js':      'assets/tpl/picture/upload.jade'
           'public/js/templates/picture-collections.js': 'assets/tpl/picture/collections.jade'

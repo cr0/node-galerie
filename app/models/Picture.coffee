@@ -2,6 +2,7 @@
 mongoose    = require 'mongoose'
 textSearch  = require 'mongoose-text-search'
 
+
 PictureSchema = new mongoose.Schema
     
   type:          
@@ -11,6 +12,10 @@ PictureSchema = new mongoose.Schema
 
   name:
     type:     String
+    required: true
+
+  mime:
+    type: String
     required: true
 
   exif: 
@@ -37,6 +42,10 @@ PictureSchema = new mongoose.Schema
     original:   
       type:     String
       required: true
+
+  filesize: 
+    type: String
+    required: true
   
   location:
     type: [Number]
@@ -59,4 +68,4 @@ PictureSchema = new mongoose.Schema
 
 PictureSchema.plugin textSearch
 
-module.exports = Picture = mongoose.model 'Picture', PictureSchema
+module.exports = Picture = mongoose.model 'Picture', PictureSchema, 'content'

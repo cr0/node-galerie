@@ -18,8 +18,8 @@ require.config
 
     # jquery
     lazyload:   'vendor/jquery.lazyload'
-    mousewheel: 'vendor/jquery.mousewheel'
-    scrollto:   'vendor/jquery.scrollto'
+    'jquery.mousewheel': 'vendor/jquery.mousewheel'
+    'jquery.scrollto':   'vendor/jquery.scrollto'
     scrollstop: 'vendor/jquery.scrollstop'
     'jquery.resizestop': 'vendor/jquery.resizestop'
 
@@ -55,10 +55,10 @@ require.config
     lazyload:
       deps:    ['jquery', 'scrollstop']
       exports: 'jQuery.fn.lazyload'
-    mousewheel:
+    'jquery.mousewheel':
       deps:    ['jquery']
       exports: 'jQuery.fn.mousewheel'
-    scrollto:
+    'jquery.scrollto':
       deps:    ['jquery']
       exports: 'jQuery.fn.scrollTo'
     'jquery.resizestop':
