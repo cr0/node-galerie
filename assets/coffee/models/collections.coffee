@@ -1,12 +1,13 @@
-define [
-  'chaplin'
-  'models/base/collection'
-  'models/collection'
-], (Chaplin, Collection, CollectionModel) ->
+define (require) ->
   'use strict'
 
-  class Collections extends Collection
+  Chaplin       = require 'chaplin'
+
+  CCollection   = require 'models/base/collection'
+  Collection    = require 'models/collection'
+
+  class Collections extends CCollection
     _.extend @prototype, Chaplin.EventBroker
 
     url:    '/api/collection'
-    model:  CollectionModel
+    model:  Collection

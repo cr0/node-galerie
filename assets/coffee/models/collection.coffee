@@ -1,8 +1,7 @@
 define [
   'chaplin'
   'models/base/model'
-  'models/pictures'
-], (Chaplin, Model, Pictures) ->
+], (Chaplin, Model) ->
   'use strict'
 
   class Collection extends Model
@@ -12,4 +11,3 @@ define [
 
     defaults:
       name:       'Galerie'
-      pictures:   new Pictures

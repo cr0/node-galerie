@@ -6,7 +6,6 @@ fs         = require 'fs'
 gm         = require 'gm'
 Mmh        = require 'mmh'
 mongoose   = require 'mongoose'
-_          = require 'lodash'
 
 Picture    = require '../models/Picture'
 
@@ -121,12 +120,7 @@ module.exports = class PictureController extends Mmh.RestController
 
           picture.save (err) ->
             if err then return cb err
-
-            responses.push _.extend picture.toObject(), 
-              url:          "//#{setup.server.host}:#{setup.server.port}/#{setup.server.path}/picture/#{results.standard}"
-              thumbnailUrl: "//#{setup.server.host}:#{setup.server.port}/#{setup.server.path}/picture/#{results.thumb}"
-              deleteUrl:    "//#{setup.server.host}:#{setup.server.port}/#{setup.server.path}/picture/#{results.standard}"
-              deleteType:   "DELETE"
+            responses.push picture
 
             cb()
     

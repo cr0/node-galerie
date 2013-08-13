@@ -11,6 +11,7 @@ define (require) ->
   _               = require 'underscore'
   utils           = require 'lib/utils'
 
+  Picture         = require 'models/Picture'
   View            = require 'views/base/view'
   Template        = require 'templates/picture-upload'
 
@@ -72,11 +73,11 @@ define (require) ->
         $image = $item.find('.determiner').first()
         if not $image.length then throw new Error 'Item to add has no *.determiner'
 
-        imageWidth = $image.width() || parseInt $image.attr('width'), 10
-        imageHeight = $image.height() || parseInt $image.attr('height'), 10
+        imageWidth = $image.width() || parseInt($image.attr('width'), 10)
+        imageHeight = $image.height() || parseInt($image.attr('height'), 10)
         # add ratio to image
         $item.data('ratio', imageWidth / imageHeight)
-        $item.addClass('row-item')
+        $item.addClass('row-item').attr('id', "row-item-#{_.random(0,99999)}")
         $row = getRow()
         $row.append($item)
 
@@ -134,12 +135,16 @@ define (require) ->
 
       $file.on 'fileuploadprogress', (e, data) =>
         context = data.contexts[data.index]
-        context.find('.shadow').css 'height', "#{100 * ( 1 - data.loaded / data.total ) }%"
+        context.find('.shadow').css('height', "#{100 * ( 1 - data.loaded / data.total ) }%")
 
       $file.on 'fileuploaddone', (e, data) =>
         context = data.contexts[data.index]
         context.addClass('success').removeClass('failed')
-        console.log "upload done: ", data.result
+
+        for pictureJson in data.result.files
+          picture = new Picture(pictureJson)
+          console.info "Received new picture from server", picture
+
 
       $file.on 'fileuploadfail', (e, data) =>
         context = data.contexts[data.index]

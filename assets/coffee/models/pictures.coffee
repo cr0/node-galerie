@@ -8,5 +8,5 @@ define [
   class Pictures extends Collection
     _.extend @prototype, Chaplin.EventBroker
 
-    url:    => "/picture/#{@id}"
+    url:    => "/api/picture/#{@id}"
     model:  Picture

@@ -9,7 +9,7 @@ define (require) ->
   class PictureSources extends Model
     _.extend @prototype, Chaplin.EventBroker
 
-    urlRoot: '/picture'
+    urlRoot: '/api/picture'
 
     defaults:
       thumb:    null

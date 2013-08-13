@@ -10,7 +10,7 @@ define [
     urlRoot: '/user'
 
     defaults:
-      name:       'Guest'
-      username:   'Guest'
+      name:       null
+      username:   null
       email:      null
       loggedin:   false

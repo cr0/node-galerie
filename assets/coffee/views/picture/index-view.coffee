@@ -8,6 +8,4 @@ define (require) ->
   class PictureView extends View
     template:   Template
     className:  'picture'
-
-  render: ->
     
