@@ -12,4 +12,5 @@ define (require) ->
     urlRoot: '/api/tag'
 
     defaults:
-      name:   null
+      name:       null
+      occurrence: 0

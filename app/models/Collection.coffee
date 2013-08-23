@@ -16,7 +16,7 @@ CollectionSchema = new mongoose.Schema
 
   description: String
 
-  user: 
+  from: 
     _id:
       type:   mongoose.Schema.Types.ObjectId
       ref:    'User'
@@ -26,11 +26,13 @@ CollectionSchema = new mongoose.Schema
     type:   [mongoose.Schema.Types.ObjectId]
     ref:    'Picture'
 
-  tags: 
-    type: [String]
-    index: 'text'
+  tags: [
+    name: 
+      type: String
+      index: 'text'
+  ]
 
 
 CollectionSchema.plugin textSearch
 
-module.exports = Collection = mongoose.model 'Collection', CollectionSchema, 'content'
+module.exports = Collection = mongoose.model 'Collection', CollectionSchema, 'contents'

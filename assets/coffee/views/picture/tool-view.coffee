@@ -2,6 +2,7 @@ define (require) ->
   'use strict'
 
   View            = require 'views/base/view'
+  Tags            = require 'models/tags'
   Template        = require 'templates/picture-tool'
 
 

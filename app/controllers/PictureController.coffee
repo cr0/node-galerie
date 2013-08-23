@@ -4,6 +4,7 @@ crypto     = require 'crypto'
 ExifImage  = require('exif').ExifImage
 fs         = require 'fs'
 gm         = require 'gm'
+_          = require 'lodash'
 Mmh        = require 'mmh'
 mongoose   = require 'mongoose'
 
@@ -14,12 +15,29 @@ setup      = require '../../config/setup'
 
 module.exports = class PictureController extends Mmh.RestController
 
+  @HIDDEN_TAG_NAME: 'hidden'
+  @HIDDEN_TAG_DESC: 'Tag to signal that a image is hidden'
+
+  get: ( req, res, next ) -> 
+    if req.params.id 
+      Picture.findById req.params.id, (err, picture) ->
+        if err then return next new Error err
+        if not picture then return next new Mmh.Error.NotFound "No picture with id #{req.params.id}"
+        res.json picture
+    else
+      Picture.find {'type': 'picture'}, (err, pictures) ->
+        if err then return next new Error err
+        res.json 
+          length: pictures.length
+          data:   pictures
+
+
   post: (req, res, next) ->
 
     basePath = "#{process.cwd()}/data"
 
     responses = []
-    async.each req.files.files, (file, cb) ->
+    async.each req.files.files, (file, cb) =>
       pictureId = new mongoose.Types.ObjectId()
 
       async.parallel
@@ -97,6 +115,7 @@ module.exports = class PictureController extends Mmh.RestController
 
           newName = "#{pictureId}-#{shasum.digest('hex')[0..10]}-original"
           fs.renameSync(file.path, "#{basePath}/#{newName}")
+
           picture = new Picture
             _id:      pictureId
             name:     file.name
@@ -112,6 +131,7 @@ module.exports = class PictureController extends Mmh.RestController
             user:
               _id:  req.user._id
               name: req.user.name
+            tags: ['hidden']
 
           if results.exif?.location?
             lat = results.exif.location.GPSLatitude[0] + results.exif.location.GPSLatitude[1] / 60 + results.exif.location.GPSLatitude[2] / 3600
@@ -129,7 +149,26 @@ module.exports = class PictureController extends Mmh.RestController
       res.json files: responses
 
 
+  put: ( req, res, next ) -> 
+    Picture.findById req.params.id, (err, picture) ->
+      if err then return next new Error err
 
+      picture.name      = req.body.name
+      picture.location  = req.body.location
+      picture.tags      = req.body.tags
+      
+      picture.save (err) ->
+        if err then return next new Error err
+        res.json picture
+
+
+  delete: ( req, res, next ) -> 
+    Picture.findById req.params.id, (err, collection) ->
+      if err then return next new Error err
+
+      collection.delete (err) ->
+        if err then return next new Error err
+        res.json code: 'ok'
 
 
 

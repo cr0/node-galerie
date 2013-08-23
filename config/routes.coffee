@@ -15,4 +15,6 @@ module.exports =
 
   '/a/:controller/:action?': 'home#index'
 
+  '/api/tag/exists': 'tag#exists'
+
   '/user/me':       'user#me'

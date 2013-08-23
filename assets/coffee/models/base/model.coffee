@@ -34,3 +34,4 @@ define [
     # make usage of save more comfortable
     save: (cb, attributes = {}) ->
       super attributes, cb
+

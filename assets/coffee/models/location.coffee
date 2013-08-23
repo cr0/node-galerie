@@ -16,5 +16,7 @@ define (require) ->
       long:   null
 
     initialize: (options) ->
+      @unset '0'
+      @unset '1'
       @set 'lat', options[0]
       @set 'long', options[1]

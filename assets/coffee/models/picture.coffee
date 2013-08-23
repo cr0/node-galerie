@@ -1,10 +1,10 @@
 define (require) ->
   'use strict'
 
-  Chaplin = require 'chaplin'
+  Chaplin         = require 'chaplin'
 
   Model           = require 'models/base/model'
-  Collections     = require 'models/collections'
+  #Collections     = require 'models/collections'
   PictureSources  = require 'models/picture-sources'
   Location        = require 'models/location'
   Tags            = require 'models/tags'
@@ -18,7 +18,7 @@ define (require) ->
 
     defaults:
       name:       'Picture'
-      user:       null
+      from:       null
       sources:    null
       location:   null
       collections:null
@@ -26,8 +26,8 @@ define (require) ->
 
     initialize: (options) ->
       @set 'sources', new PictureSources(options?.sources)
-      @set 'user', new User(options?.user)
-      @set 'collections', new Collections(options?.collections)
+      @set 'from', new User(options?.from)
+      #@set 'collections', new Collections(options?.collections)
       @set 'tags', new Tags(options?.tags)
 
       if options.location.length > 0 then @set 'location', new Location(options?.location)

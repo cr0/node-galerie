@@ -51,21 +51,22 @@ PictureSchema = new mongoose.Schema
     type: [Number]
     index: '2d'
 
-  user: 
+  from: 
     _id:
       type:   mongoose.Schema.Types.ObjectId
       ref:    'User'
     name: String
 
-  tags: 
-    type: [String]
+  tags: [
+    type: String
     index: 'text'
+  ]
 
   collections:
     type:   [mongoose.Schema.Types.ObjectId]
     ref:    'Collection'
 
-
 PictureSchema.plugin textSearch
 
-module.exports = Picture = mongoose.model 'Picture', PictureSchema, 'content'
+
+module.exports = Picture = mongoose.model 'Picture', PictureSchema, 'contents'

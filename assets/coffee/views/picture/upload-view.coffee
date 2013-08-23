@@ -144,6 +144,7 @@ define (require) ->
         for pictureJson in data.result.files
           picture = new Picture(pictureJson)
           console.info "Received new picture from server", picture
+          console.info "Jsonified picture:", picture.toJSON()
 
 
       $file.on 'fileuploadfail', (e, data) =>

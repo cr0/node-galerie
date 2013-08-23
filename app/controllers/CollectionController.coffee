@@ -13,9 +13,11 @@ module.exports = class CollectionController extends Mmh.RestController
         if not collection then return next new Mmh.Error.NotFound "No collection with id #{req.params.id}"
         res.json collection
     else
-      Collection.find (err, collections) ->
+      Collection.find {'type': 'collection'}, (err, collections) ->
         if err then return next new Error err
-        res.json collections
+        res.json 
+          length: collections.length
+          data:   collections
 
 
   post: ( req, res, next ) -> 
