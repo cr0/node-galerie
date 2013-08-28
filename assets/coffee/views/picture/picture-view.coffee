@@ -15,10 +15,12 @@ define (require) ->
     className:  'item'
     tagName:    'li'
     inlinescrolling: 160
+    loadThreshold: 400
 
     render: ->
       super
       $img = @$el.children('.image').first()
+      $img.data('loaded', no)
 
       highSource = $img.data('original');
       imageHeight = $img.data('height');
@@ -31,6 +33,15 @@ define (require) ->
 
         position = (@inlinescrolling - @inlinescrolling / $('body').innerWidth() * imagePos) / -2
         if -@inlinescrolling <= position <= 0 then $img.css('background-position', "#{position}px 100%")
+
+        if imagePos - $('body').innerWidth() - @loadThreshold < 0 and not $img.data('loaded')
+          $img.data('loaded', yes)
+          $preloadImg = $('<img>').attr('src', highSource)
+          $preloadImg.appendTo('body').hide().on 'load', =>
+            $preloadImg.remove()
+            $img.fadeOut 'fast', ->
+              $img.css('background-image', "url('#{highSource}')").fadeIn 'fast'
+
 
       $(window).resizestop => 
         windowHeight = $('body').innerHeight()
@@ -54,8 +65,3 @@ define (require) ->
         @$el.css('margin-top', (windowHeight - height) / 2)
 
       $(window).trigger 'resize'
-
-      $preloadImg = $('<img>').attr('src', highSource)
-      $preloadImg.appendTo('body').hide().on 'load', =>
-        $preloadImg.remove()
-        $img.css('background-image', "url('#{highSource}')")
