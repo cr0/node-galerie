@@ -7,6 +7,7 @@ require.config
     jquery:     '//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min'
     underscore: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.min'
     backbone:   '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min'
+    'backbone-relational': '//cdnjs.cloudflare.com/ajax/libs/backbone-relational/0.8.5/backbone-relational.min'
     jade:       '//cdnjs.cloudflare.com/ajax/libs/jade/0.27.7/runtime.min'
     modernizr:  '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min'
     chaplin:    'vendor/chaplin'
@@ -17,10 +18,10 @@ require.config
     propertyParser: 'vendor/requirejs/propertyParser'
 
     # jquery
-    lazyload:   'vendor/jquery.lazyload'
+    'jquery.lazyload':   'vendor/jquery.lazyload'
     'jquery.mousewheel': 'vendor/jquery.mousewheel'
     'jquery.scrollto':   'vendor/jquery.scrollto'
-    scrollstop: 'vendor/jquery.scrollstop'
+    'jquery.scrollstop': 'vendor/jquery.scrollstop'
     'jquery.resizestop': 'vendor/jquery.resizestop'
 
     # fileupload
@@ -48,12 +49,14 @@ require.config
     backbone:
       deps:     ['underscore', 'jquery'],
       exports:  'Backbone'
+    'backbone-relational':
+      deps:     ['underscore', 'backbone']
     jade:
       exports: 'jade'
     modernizr:
       exports: 'Modernizr'
-    lazyload:
-      deps:    ['jquery', 'scrollstop']
+    'jquery.lazyload':
+      deps:    ['jquery', 'jquery.scrollstop']
       exports: 'jQuery.fn.lazyload'
     'jquery.mousewheel':
       deps:    ['jquery']

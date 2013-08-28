@@ -4,20 +4,21 @@ define (require) ->
   Chaplin         = require 'chaplin'
 
   Model           = require 'models/base/model'
-  PictureSource   = require 'models/picture-source'
+  Picture         = require 'models/picture'
+  Pictures        = require 'models/pictures'
   Location        = require 'models/location'
   Tag             = require 'models/tag'
   Tags            = require 'models/tags'
   User            = require 'models/user'
 
 
-  class Picture extends Model
+  class Bucket extends Model
     _.extend @prototype, Chaplin.EventBroker
 
-    urlRoot: '/api/picture'
+    urlRoot: '/api/bucket'
 
     defaults:
-      name:       'Picture'
+      name:       'Bucket'
 
     relations: [
       type:           'HasOne'
@@ -28,11 +29,18 @@ define (require) ->
         includeInJSON:no
     ,
       type:           'HasMany'
+      key:            'pictures'
+      relatedModel:   Picture
+      collectionType: Pictures
+      includeInJSON:  ['_id', 'name']
+      reverseRelation:
+        includeInJSON:  ['_id', 'name']
+    ,
+      type:           'HasMany'
       key:            'tags'
       relatedModel:   Tag
       collectionType: Tags
       includeInJSON:  'name'
-      parse:          yes
       reverseRelation:
         includeInJSON:no
     ,
@@ -42,12 +50,4 @@ define (require) ->
       includeInJSON:  yes
       reverseRelation:
         includeInJSON:no
-    ,
-      type:           'HasOne'
-      key:            'sources'
-      relatedModel:   PictureSource
-      includeInJSON:  yes
-      reverseRelation:
-        includeInJSON:no
-        type:         'HasOne'
     ]

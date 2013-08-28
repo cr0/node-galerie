@@ -4,7 +4,6 @@ define (require) ->
   View            = require 'views/base/view'
   ToolView        = require 'views/picture/tool-view'
   UploadView      = require 'views/picture/upload-view'
-  CollectionsView = require 'views/picture/collections-view'
   Template        = require 'templates/picture-new'
 
 
@@ -14,7 +13,6 @@ define (require) ->
 
     regions:
       'tools':        '.tools'
-      'collections':  '.collections'
       'upload':       '.upload'
 
     render: ->
@@ -25,9 +23,4 @@ define (require) ->
 
       uploadView = new UploadView region: 'upload'
       @subview 'upload', uploadView
-
-      console.log @collection
-
-      collectionView = new CollectionsView region: 'collections', collection: @collection
-      @subview 'collection', collectionView
 

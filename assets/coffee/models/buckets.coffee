@@ -4,11 +4,11 @@ define (require) ->
   Chaplin       = require 'chaplin'
 
   Collection    = require 'models/base/collection'
-  Tag           = require 'models/tag'
+  Bucket        = require 'models/bucket'
 
 
-  class Tags extends Collection
+  class Buckets extends Collection
     _.extend @prototype, Chaplin.EventBroker
 
-    url:    '/api/tag'
-    model:  Tag
+    url:    '/api/bucket'
+    model:  Bucket

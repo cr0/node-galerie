@@ -1,9 +1,10 @@
-define [
-  'chaplin'
-  'models/base/model'
-], (Chaplin, Model) ->
+define (require, exports) ->
+  'use strict'
 
-  class Collection extends Chaplin.Collection
+  Chaplin       = require 'chaplin'
+  Model         = require 'models/base/model'
+
+  exports.Collection = class Collection extends Chaplin.Collection
     _.extend @prototype, Chaplin.SyncMachine
 
     model: Model
@@ -27,7 +28,7 @@ define [
       super options
 
     parse: (json) ->
-      json.data
+      if json.data then json.data else json
 
     # make usage of save more comfortable
     save: (cb, attributes = {}) ->

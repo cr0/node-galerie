@@ -11,5 +11,8 @@ module.exports =
     'finalize': true
     'me':       'authenticated'
 
-  'GalleryController':
+  'BucketController':
+    '*':        'authenticated'
+
+  'PictureController':
     '*':        'authenticated'

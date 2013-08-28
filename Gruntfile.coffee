@@ -10,7 +10,7 @@ module.exports = (grunt) ->
       coverage:
         src:        ['src/**/*.js']
       public:
-        src:        ['public/css/**', 'public/js/**', '!public/js/vendor/*']
+        src:        ['public/css/**', 'public/js/**', '!public/js/vendor/**']
         filter:     'isFile'
 
     coffee:
@@ -85,11 +85,12 @@ module.exports = (grunt) ->
           'public/js/templates/gallery-item.js':  'assets/tpl/gallery/item.jade'
           'public/js/templates/gallery-new.js':   'assets/tpl/gallery/new.jade'
 
-          'public/js/templates/picture-index.js':       'assets/tpl/picture/index.jade'
+          'public/js/templates/picture-item.js':       'assets/tpl/picture/item.jade'
+          'public/js/templates/picture-items.js':       'assets/tpl/picture/items.jade'
           'public/js/templates/picture-new.js':         'assets/tpl/picture/new.jade'
           'public/js/templates/picture-upload.js':      'assets/tpl/picture/upload.jade'
-          'public/js/templates/picture-collections.js': 'assets/tpl/picture/collections.jade'
-          'public/js/templates/picture-collection.js':  'assets/tpl/picture/collection.jade'
+          'public/js/templates/picture-buckets.js':     'assets/tpl/picture/buckets.jade'
+          'public/js/templates/picture-bucket.js':      'assets/tpl/picture/bucket.jade'
           'public/js/templates/picture-tool.js':        'assets/tpl/picture/tool.jade'
 
           'public/js/templates/setting.js':       'assets/tpl/setting.jade'

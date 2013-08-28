@@ -1,6 +1,9 @@
 
 mongoose    = require 'mongoose'
 textSearch  = require 'mongoose-text-search'
+lifecycle   = require 'mongoose-lifecycle'
+
+Lookup      = require '../models/Lookup'
 
 
 PictureSchema = new mongoose.Schema
@@ -24,24 +27,44 @@ PictureSchema = new mongoose.Schema
 
   sources:
     thumb:
-      type:     String
-      required: true
+      name:
+        type:     String
+        required: true
+      height: Number
+      width: Number
+      ratio: Number
 
     low:
-      type:     String
-      required: true
+      name:
+        type:     String
+        required: true
+      height: Number
+      width: Number
+      ratio: Number
 
     middle:
-      type:     String
-      required: true
+      name:
+        type:     String
+        required: true
+      height: Number
+      width: Number
+      ratio: Number
 
     standard:
-      type:     String
-      required: true
+      name:
+        type:     String
+        required: true
+      height: Number
+      width: Number
+      ratio: Number
 
     original:   
-      type:     String
-      required: true
+      name:
+        type:     String
+        required: true
+      height: Number
+      width: Number
+      ratio: Number
 
   filesize: 
     type: String
@@ -62,11 +85,17 @@ PictureSchema = new mongoose.Schema
     index: 'text'
   ]
 
-  collections:
-    type:   [mongoose.Schema.Types.ObjectId]
-    ref:    'Collection'
 
 PictureSchema.plugin textSearch
-
+PictureSchema.plugin lifecycle
 
 module.exports = Picture = mongoose.model 'Picture', PictureSchema, 'contents'
+
+
+Picture.on 'afterInsert', (picture) ->
+  lookup = new Lookup
+    _id:  picture._id
+    type: 'picture'
+  lookup.save()
+
+

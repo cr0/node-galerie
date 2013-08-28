@@ -1,5 +1,9 @@
 
-mongoose  = require 'mongoose'
+mongoose    = require 'mongoose'
+lifecycle   = require 'mongoose-lifecycle'
+
+Lookup      = require '../models/Lookup'
+
 
 UserSchema = new mongoose.Schema
 
@@ -47,4 +51,13 @@ UserSchema = new mongoose.Schema
       required: true
 
 
+UserSchema.plugin lifecycle
+
 module.exports = User = mongoose.model 'User', UserSchema
+
+
+User.on 'afterInsert', (user) ->
+  lookup = new Lookup
+    _id:  user._id
+    type: 'user'
+  lookup.save()

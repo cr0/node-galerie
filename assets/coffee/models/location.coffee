@@ -1,9 +1,9 @@
 define (require) ->
   'use strict'
 
-  Chaplin = require 'chaplin'
+  Chaplin     = require 'chaplin'
 
-  Model   = require 'models/base/model'
+  Model       = require 'models/base/model'
 
 
   class Location extends Model

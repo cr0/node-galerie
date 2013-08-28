@@ -1,12 +1,24 @@
-define [
-  'chaplin'
-], (Chaplin) ->
+define (require, exports) ->
   'use strict'
 
-  class Model extends Chaplin.Model
+  require 'backbone-relational'
+
+  Chaplin       = require 'chaplin'
+
+  exports.Model = class Model extends Backbone.RelationalModel
+    _.extend @prototype, Chaplin.EventBroker
     _.extend @prototype, Chaplin.SyncMachine
     
+    attributes = ['getAttributes', 'serialize', 'disposed']
+    for attr in attributes
+      @::[attr] = Chaplin.Model::[attr]
+
     idAttribute: '_id'
+
+    dispose: ->
+      return if @disposed
+      @trigger 'relational:unregister', @, @collection
+      Chaplin.Model::dispose.call(@)
 
     fetch: (options = {}) ->
       class ServerError extends Error

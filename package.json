@@ -42,7 +42,8 @@
     "mongoose-text-search": "0.0.x",
     "gm": "1.11.x",
     "async": "0.2.x",
-    "exif": "0.3.x"
+    "exif": "0.3.x",
+    "mongoose-lifecycle": "~1.0.0"
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.5.x",

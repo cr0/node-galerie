@@ -5,7 +5,7 @@ define (require) ->
   utils               = require 'lib/utils'
 
   AuthController      = require 'controllers/base/auth-controller'
-  Collections         = require 'models/collections'
+  Buckets             = require 'models/buckets'
   NewPictureView      = require 'views/picture/new-view'
 
 
@@ -14,12 +14,8 @@ define (require) ->
     create: (params) ->
       @adjustTitle 'a/Picture'
 
-      collections = new Collections
-      collections.fetch()
-
       @view = new NewPictureView
         region:      'dynamic'
-        collection:  collections
 
       utils.pageTransition $('#dynamic'), 'top'
 

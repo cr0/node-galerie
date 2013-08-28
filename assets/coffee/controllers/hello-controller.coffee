@@ -1,28 +1,31 @@
-define [
-  'jquery'
-  'chaplin'
-  'lib/utils'
-  'controllers/base/auth-controller'
-  'models/collections'
-  'views/search/search-view'
-  'views/search/items-view'
-], ($, Chaplin, utils, AuthController, Collections, SearchView, SearchItemsView) ->
+define (require) ->
   'use strict'
+
+  $                   = require 'jquery'
+  Chaplin             = require 'chaplin'
+  utils               = require 'lib/utils'
+  AuthController      = require 'controllers/base/auth-controller'
+
+  Buckets             = require 'models/buckets'
+
+  SearchView          = require 'views/search/search-view'
+  SearchItemsView     = require 'views/search/items-view'
+
 
   class HelloController extends AuthController
 
     show: (params) ->
       @adjustTitle 'Hello'
       
-      collection = new Collections
-      collection.add id: num, name: "gallery #{num}" for num in [1..8]
+      buckets = new Buckets
+      buckets.add id: num, name: "gallery #{num}" for num in [1..8]
 
       @search = new SearchView
         model:  Chaplin.mediator.user
         region: 'search'
 
       @results = new SearchItemsView
-        collection: collection
+        collection: buckets
         region:     'results'
 
       utils.pageTransition $('#search'), 'left'

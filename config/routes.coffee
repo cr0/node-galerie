@@ -8,13 +8,25 @@ module.exports =
   '/picture/:id':   'home#index'
   '/settings':      'home#index'
 
+  '/a/:controller/:action?':    'home#index'
+
+
   '/auth/failed':   'auth#failed'
   '/auth/logout':   'auth#logout'
   '/auth/finalize': 'auth#finalize'
   '/auth/:provider/callback': 'auth#validate'
 
-  '/a/:controller/:action?': 'home#index'
+  'get /:id':       'lookup#find'
 
-  '/api/tag/exists': 'tag#exists'
+  '/api/search':                'search#go'
 
-  '/user/me':       'user#me'
+  '/api/tag/:id/exist':         'tag#exists'
+  '/api/tag/:id/buckets':       'tag#buckets'
+  '/api/tag/:id/pictures':      'tag#pictures'
+
+  '/api/picture/:id/buckets':   'picture#buckets'
+  '/api/picture/:id/show':      'picture#show'
+  '/i/:id':                     'picture#show'
+
+  '/api/user/:id/buckets':      'user#buckets'
+  '/api/user/:id/pictures':     'user#pictures'

@@ -2,9 +2,9 @@ define (require) ->
   'use strict'
 
   View            = require 'views/base/view'
-  Template        = require 'templates/picture-collection'
+  Template        = require 'templates/picture-bucket'
 
 
-  class PictureCollectionView extends View
+  class PictureBucketView extends View
     template:   Template
     className:  'item'

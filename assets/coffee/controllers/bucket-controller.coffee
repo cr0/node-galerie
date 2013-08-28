@@ -3,22 +3,24 @@ define (require) ->
 
   $                   = require 'jquery'
   utils               = require 'lib/utils'
+  
   AuthController      = require 'controllers/base/auth-controller'
-  Collection          = require 'models/collection'
+
+  Bucket              = require 'models/bucket'
 
   CollectionView      = require 'views/collection/index-view'
   CollectionItemsView = require 'views/collection/items-view'
   NewCollectionView   = require 'views/collection/new-view'
 
-  class CollectionController extends AuthController
+  class BucketController extends AuthController
 
     show: (params) ->
-      @adjustTitle 'Collection'
+      @adjustTitle 'bucket'
 
-      @collection = new Collection _id: params.id
-      @collection.fetch
-        success: (collection) =>
-          @pictures = @collection.get('pictures')
+      @bucket = new Bucket _id: params.id
+      @bucket.fetch
+        success: (bucket) =>
+          @pictures = @bucket.get('pictures')
           @pictures.id = '1234'
           @pictures.add id: num, url: "//lorempixel.com/1600/1200/?r=#{num}" for num in [1..40]
 
@@ -33,7 +35,7 @@ define (require) ->
 
           utils.pageTransition $('#gallery'), 'right'
 
-        error: (collection, error) =>
+        error: (bucket, error) =>
           @publishEvent '!error', error
 
 
