@@ -14,9 +14,10 @@ define (require) ->
     defaults:
       lat:    null
       long:   null
+      address:null
+      parts:  null
 
     initialize: (options) ->
-      @unset '0'
-      @unset '1'
-      @set 'lat', options[0]
-      @set 'long', options[1]
+      @unset 'latlng'
+      @set 'lat', options?.latlng?[0]
+      @set 'long', options?.latlng?[1]

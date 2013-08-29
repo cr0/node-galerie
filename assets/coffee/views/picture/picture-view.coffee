@@ -14,7 +14,8 @@ define (require) ->
     template:   Template
     className:  'item'
     tagName:    'li'
-    inlinescrolling: 160
+    inlineScrollingPercentage: 0.1
+    inlineScollingX: 160
     loadThreshold: 400
 
     render: ->
@@ -27,12 +28,11 @@ define (require) ->
       imageWidth = $img.data('width');
       imageScreen = imageWidth / imageHeight
 
-
       $('ul.pictures').first().scroll =>
         imagePos = $img.offset().left
 
-        position = (@inlinescrolling - @inlinescrolling / $('body').innerWidth() * imagePos) / -2
-        if -@inlinescrolling <= position <= 0 then $img.css('background-position', "#{position}px 100%")
+        position = (@inlineScollingX - @inlineScollingX / $('body').innerWidth() * imagePos) / -2
+        if -@inlineScollingX <= position <= 0 then $img.css('background-position', "#{position}px 100%")
 
         if imagePos - $('body').innerWidth() - @loadThreshold < 0 and not $img.data('loaded')
           $img.data('loaded', yes)
@@ -44,6 +44,7 @@ define (require) ->
 
 
       $(window).resizestop => 
+        @inlineScollingX = $('body').innerWidth() * @inlineScrollingPercentage 
         windowHeight = $('body').innerHeight()
         windowWidth  = $('body').innerWidth()
         windowScreen = windowWidth / windowHeight
@@ -52,11 +53,11 @@ define (require) ->
 
         [width, height] = if windowScreen > imageScreen then [imageWidth * windowHeight/imageHeight, windowHeight] else [windowWidth, imageHeight * windowWidth/imageWidth]
 
-        @$el.css('width', width - @inlinescrolling)
+        @$el.css('width', width - @inlineScollingX)
         $img.css('width', width)
 
         if $img.offset().left is 0
-          $img.css('background-position', "#{-@inlinescrolling / 2}px 100%")
+          $img.css('background-position', "#{-@inlineScollingX / 2}px 100%")
           console.log "first image detected"
         else
           $img.css('background-position', "0px 100%")

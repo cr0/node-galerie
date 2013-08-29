@@ -3,4 +3,32 @@ div.image(style="background-image: url('/i/#{sources.low.name}');", data-origina
 
 div.meta
   span.description #{name}
-  div.tags
+
+div.admin
+  div.date.element
+    h2 #{date.formatted_created}
+
+  div.location.element
+    h2 Ort
+    if location.lat
+      p.hint--right(data-hint="Auf Google Maps ansehen")
+        a(href="https://www.google.com/maps?q=#{location.lat},#{location.long}") #{location.address}
+    else
+      p.float-left Keine Daten
+      p.none.add.location
+        span.entypo.plus
+
+  div.tags.element
+    h2 Tags
+    ul
+      each tag, i in tags
+        li
+          a(href="/api/tag/#{tag._id}/pictures") #{tag._id}
+      li
+        p.add.tag
+          span.entypo.plus
+
+  div.buckets.element
+    h2 Buckets
+    p.add.bucket
+      span.entypo.plus

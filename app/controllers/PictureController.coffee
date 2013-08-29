@@ -3,9 +3,11 @@ async      = require 'async'
 crypto     = require 'crypto'
 ExifImage  = require('exif').ExifImage
 fs         = require 'fs'
+geocoder   = require 'geocoder'
 gm         = require 'gm'
 _          = require 'lodash'
 Mmh        = require 'mmh'
+moment     = require 'moment'
 mongoose   = require 'mongoose'
 
 Bucket     = require '../models/Bucket'
@@ -43,10 +45,7 @@ module.exports = class PictureController extends Mmh.RestController
 
       gm(file.path).size (err, imgSize) ->
         if err then return next new Error err
-        console.log "Image size: ", imgSize
-
         [imgWidth, imgHeight] = [imgSize.width, imgSize.height]
-        console.log "image dimensions height #{imgHeight} width #{imgWidth}"
 
         async.parallel
           thumb: (cb) ->
@@ -121,7 +120,7 @@ module.exports = class PictureController extends Mmh.RestController
               delete exifdata.makernote
 
               cb null, data: exifdata, location: location
-
+ 
         , (err, results) -> # async.parallel callback
           if err
             # delete created images
@@ -137,11 +136,16 @@ module.exports = class PictureController extends Mmh.RestController
             newName = "#{pictureId}-#{shasum.digest('hex')[0..10]}-original"
             fs.renameSync(file.path, "#{basePath}/#{newName}")
 
+            exifCreatedDate = results.exif?.data?.exif?.CreateDate
+            dateCreated = if exifCreatedDate? then moment(exifCreatedDate, 'YYYY:MM:DD HH:mm:ss').toDate() else new Date
+
             picture = new Picture
               _id:      pictureId
               name:     file.name
               filesize: file.size
               mime:     file.type
+              date:
+                created: dateCreated
               sources:
                 thumb:    results.thumb
                 low:      results.low
@@ -155,18 +159,32 @@ module.exports = class PictureController extends Mmh.RestController
               from:
                 _id:  req.user._id
                 name: req.user.name
-              tags: ['hidden','uploaded']
+              tags:     [ {_id: 'hidden'}, {_id: 'uploaded'} ]
 
             if results.exif?.location?
               lat = results.exif.location.GPSLatitude[0] + results.exif.location.GPSLatitude[1] / 60 + results.exif.location.GPSLatitude[2] / 3600
               long = results.exif.location.GPSLongitude[0] + results.exif.location.GPSLongitude[1] / 60 + results.exif.location.GPSLongitude[2] / 3600
-              picture.location = [lat, long]
+              
+              geocoder.reverseGeocode lat, long,  ( err, data ) ->
+                if err then return cb err
 
-            picture.save (err) ->
-              if err then return cb err
-              responses.push picture
+                picture.location = 
+                  latlng: [lat, long]
+                  address: data.results?[0]?.formatted_address
+                  parts:   data.results?[0]?.formatted_address?.split ', '
 
-              cb()
+                picture.save (err) ->
+                  if err then return cb err
+                  responses.push picture
+
+                  cb()
+
+            else
+              picture.save (err) ->
+                if err then return cb err
+                responses.push picture
+
+                cb()
       
     , (err) -> # async.each callback
       if err then return next new Error err
@@ -207,6 +225,3 @@ module.exports = class PictureController extends Mmh.RestController
 
   show: ( req, res, next ) ->
      res.sendfile "#{process.cwd()}/data/#{req.params.id}"
-
-
-

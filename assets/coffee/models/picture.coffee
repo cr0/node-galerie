@@ -9,6 +9,7 @@ define (require) ->
   Tag             = require 'models/tag'
   Tags            = require 'models/tags'
   User            = require 'models/user'
+  ItemDate        = require 'models/item-date'
 
 
   class Picture extends Model
@@ -46,6 +47,14 @@ define (require) ->
       type:           'HasOne'
       key:            'sources'
       relatedModel:   PictureSource
+      includeInJSON:  yes
+      reverseRelation:
+        includeInJSON:no
+        type:         'HasOne'
+    ,
+      type:           'HasOne'
+      key:            'date'
+      relatedModel:   ItemDate
       includeInJSON:  yes
       reverseRelation:
         includeInJSON:no

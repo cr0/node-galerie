@@ -25,6 +25,13 @@ PictureSchema = new mongoose.Schema
     type:     mongoose.Schema.Types.Mixed
     select:   false
 
+  date:
+    created:  Date
+    uploaded: 
+      type:     Date
+      default:  Date.now
+    changed:  Date
+
   sources:
     thumb:
       name:
@@ -71,8 +78,11 @@ PictureSchema = new mongoose.Schema
     required: true
   
   location:
-    type: [Number]
-    index: '2d'
+    latlng:
+      type:   [Number]
+      index:  '2d'
+    address:  String
+    parts:    [String]
 
   from: 
     _id:
@@ -81,8 +91,9 @@ PictureSchema = new mongoose.Schema
     name: String
 
   tags: [
-    type: String
-    index: 'text'
+    _id:
+      type: String
+      index: 'text'
   ]
 
 

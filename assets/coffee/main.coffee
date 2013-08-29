@@ -10,6 +10,7 @@ require.config
     'backbone-relational': '//cdnjs.cloudflare.com/ajax/libs/backbone-relational/0.8.5/backbone-relational.min'
     jade:       '//cdnjs.cloudflare.com/ajax/libs/jade/0.27.7/runtime.min'
     modernizr:  '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min'
+    moment:     '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min'
     chaplin:    'vendor/chaplin'
 
     # addons

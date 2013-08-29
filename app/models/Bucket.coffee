@@ -30,8 +30,9 @@ BucketSchema = new mongoose.Schema
     ref:    'Picture'
 
   tags: [
-    type: String
-    index: 'text'
+    _id:
+      type: String
+      index: 'text'
   ]
 
 

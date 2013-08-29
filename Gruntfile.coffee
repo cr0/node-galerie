@@ -10,7 +10,7 @@ module.exports = (grunt) ->
       coverage:
         src:        ['src/**/*.js']
       public:
-        src:        ['public/css/**', 'public/js/**', '!public/js/vendor/**']
+        src:        ['public/css/**', 'public/js/**', '!public/js/vendor/**', '!public/css/font/**']
         filter:     'isFile'
 
     coffee:

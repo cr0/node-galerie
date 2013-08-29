@@ -27,15 +27,15 @@ module.exports = class TagController extends Mmh.Controller
         mapreduce:      if stats.processtime then "#{stats.processtime} ms" else 'cached' 
         length:         tags.length
         for_contentid:  if req.params.id? then req.params.id else undefined
-        data:         _.map tags, (tag) -> name: tag._id, occurrence: tag.value
+        data:         _.map tags, (tag) -> _.extend tag._id, occurrence: tag.value
         
 
   exists: ( req, res, next ) ->
     if not req.params.id then return next new Mmh.BadRequest 'Missing tag_name'
 
     async.parallel
-      buckets: (cb) -> Bucket.count {type: 'bucket', tags: $in: [req.params.id]}, (err, count) -> cb err, count
-      pictures: (cb) -> Picture.count {type: 'picture', tags: $in: [req.params.id]}, (err, count) -> cb err, count
+      buckets: (cb) -> Bucket.count {type: 'bucket', tags: $in: [_id: req.params.id]}, (err, count) -> cb err, count
+      pictures: (cb) -> Picture.count {type: 'picture', tags: $in: [_id: req.params.id]}, (err, count) -> cb err, count
     , (err, results) ->
       if err then return next new Error err
       count = results.pictures + results.buckets
@@ -46,7 +46,7 @@ module.exports = class TagController extends Mmh.Controller
   pictures: ( req, res, next ) ->
     if not req.params.id then return next new Mmh.BadRequest 'Missing tag_name'
     
-    Picture.find {type: 'picture', tags: $in: [req.params.id]}, (err, pictures) ->
+    Picture.find {type: 'picture', tags: $in: [_id: req.params.id]}, (err, pictures) ->
       if err then return next new Error err
       res.json 
         length:       pictures.length
@@ -57,7 +57,7 @@ module.exports = class TagController extends Mmh.Controller
   buckets: ( req, res, next ) ->
     if not req.params.id then return next new Mmh.BadRequest 'Missing tag_name'
     
-    Bucket.find {type: 'bucket', tags: $in: [req.params.id]}, (err, buckets) ->
+    Bucket.find {type: 'bucket', tags: $in: [_id: req.params.id]}, (err, buckets) ->
       if err then return next new Error err
       res.json 
         length:       buckets.length
