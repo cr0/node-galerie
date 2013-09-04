@@ -19,11 +19,11 @@ require.config
     propertyParser: 'vendor/requirejs/propertyParser'
 
     # jquery
-    'jquery.lazyload':   'vendor/jquery.lazyload'
     'jquery.mousewheel': 'vendor/jquery.mousewheel'
     'jquery.scrollto':   'vendor/jquery.scrollto'
     'jquery.scrollstop': 'vendor/jquery.scrollstop'
     'jquery.resizestop': 'vendor/jquery.resizestop'
+    'jquery.autocomplete':'vendor/jquery.autocomplete'
 
     # fileupload
     'load-image':                 'vendor/load-image'
@@ -68,6 +68,9 @@ require.config
     'jquery.resizestop':
       deps:    ['jquery']
       exports: 'jQuery.fn.resizestop'
+    'jquery.autocomplete':
+      deps:    ['jquery']
+      exports: 'jQuery.fn.autocomplete'
 #    'jquery.fileupload':
 #      deps:     ['load-image', 'canvas-to-blob']
 #      

@@ -8,42 +8,34 @@ define (require) ->
 
   Bucket              = require 'models/bucket'
 
-  CollectionView      = require 'views/collection/index-view'
-  CollectionItemsView = require 'views/collection/items-view'
-  NewCollectionView   = require 'views/collection/new-view'
+  BucketView          = require 'views/bucket/index-view'
+  BucketCreateView    = require 'views/bucket/create-view'
 
   class BucketController extends AuthController
 
     show: (params) ->
       @adjustTitle 'bucket'
 
-      @bucket = new Bucket _id: params.id
-      @bucket.fetch
-        success: (bucket) =>
-          @pictures = @bucket.get('pictures')
-          @pictures.id = '1234'
-          @pictures.add id: num, url: "//lorempixel.com/1600/1200/?r=#{num}" for num in [1..40]
+      bucket = Bucket.findOrCreate _id: params.id
+      view   = new BucketView model: bucket, region: 'gallery'
 
-          @search = new CollectionView
-            model:   @gallery
-            region: 'gallery'
-
-          @pictures = new CollectionItemsView
-            collection:   @pictures
-            region:       'images'
-            preload:      params.preload ? 10
-
-          utils.pageTransition $('#gallery'), 'right'
-
-        error: (bucket, error) =>
-          @publishEvent '!error', error
+      utils.pageTransition $('#gallery'), 'right'
 
 
     create: (params) ->
-      @adjustTitle 'a/Collection'
+      @adjustTitle 'Erstelle Bucket...'
 
-      @view = new NewCollectionView
-        region: 'dynamic'
+      # create a temporary bucket
+      bucket = new Bucket
+        name:         "Temp-#{utils.uuid4()}"
+        temporary:    yes
+
+      view = new BucketCreateView
+        region:      'dynamic'
+        model:       bucket
+
+      @listenTo bucket, 'sync', => @publishEvent '!router:route', "/bucket/#{bucket.id}"
+      @listenTo bucket, 'error', => @publishEvent '!error', new Error 'Unable to create temporary bucket for uploading pictures'
 
       utils.pageTransition $('#dynamic'), 'top'
 

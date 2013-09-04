@@ -2,20 +2,18 @@ define (require) ->
   'use strict'
 
   $                   = require 'jquery'
+  moment              = require 'moment'
   utils               = require 'lib/utils'
 
   AuthController      = require 'controllers/base/auth-controller'
-  Buckets             = require 'models/buckets'
+  Bucket              = require 'models/bucket'
   NewPictureView      = require 'views/picture/new-view'
+  BucketView          = require 
 
 
   class PictureController extends AuthController
 
     create: (params) ->
       @adjustTitle 'a/Picture'
-
-      @view = new NewPictureView
-        region:      'dynamic'
-
-      utils.pageTransition $('#dynamic'), 'top'
+      @redirectToRoute 'bucket_create' 
 

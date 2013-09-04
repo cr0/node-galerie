@@ -16,3 +16,4 @@ define (require) ->
       username:   null
       email:      null
       loggedin:   false
+      reputation: 1

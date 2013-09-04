@@ -22,5 +22,5 @@ define (require) ->
       @subview 'tool', toolView
 
       uploadView = new UploadView region: 'upload'
-      @subview 'upload', uploadView
+      @subview 'upload', uploadView, model: @model # model is a temporary bucket
 

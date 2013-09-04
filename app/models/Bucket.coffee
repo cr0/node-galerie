@@ -19,6 +19,10 @@ BucketSchema = new mongoose.Schema
 
   description: String
 
+  temporary:
+    type:     Boolean
+    default:  no
+
   from: 
     _id:
       type:   mongoose.Schema.Types.ObjectId
@@ -33,6 +37,9 @@ BucketSchema = new mongoose.Schema
     _id:
       type: String
       index: 'text'
+    deletable: 
+      type: Boolean
+      default: yes
   ]
 
 

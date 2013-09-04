@@ -9,6 +9,9 @@ define (require, exports) ->
 
     model: Model
 
+    initialize: (options = {}) ->
+      @url = options.url if options.url?
+
     fetch: (options = {}) ->
       @beginSync()
 

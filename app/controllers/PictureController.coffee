@@ -109,6 +109,22 @@ module.exports = class PictureController extends Mmh.RestController
                 gm("#{basePath}/#{newName}").size (err, imgSize) ->
                   cb(err, name: newName, height: imgSize.height, width: imgSize.width)
 
+          blur: (cb) ->
+            tmpPath = "#{basePath}-#{new mongoose.Types.ObjectId()}"
+            maxWidth  = if imgWidth > 1600 then 1600 else imgWidth
+            maxHeight = if imgHeight > 1600 then 1600 else imgHeight
+            gm(file.path).noProfile().blur(30,20).resize(maxWidth, maxHeight).write tmpPath, (err) ->
+              shasum = crypto.createHash('sha256')
+              s      = fs.ReadStream(tmpPath)
+
+              s.on 'data', (d) -> shasum.update(d)
+              s.on 'end', (d) -> 
+                newName = "#{pictureId}-#{shasum.digest('hex')[0..10]}-blur"
+                fs.renameSync(tmpPath, "#{basePath}/#{newName}")
+
+                gm("#{basePath}/#{newName}").size (err, imgSize) ->
+                  cb(err, name: newName, height: imgSize.height, width: imgSize.width)
+
           exif: (cb) ->
             new ExifImage image: file.path, (err, exifdata) ->
               if err then return cb null
@@ -151,6 +167,7 @@ module.exports = class PictureController extends Mmh.RestController
                 low:      results.low
                 middle:   results.middle
                 standard: results.standard
+                blur:     results.blur
                 original: 
                   name:   newName
                   height: imgHeight
@@ -159,7 +176,7 @@ module.exports = class PictureController extends Mmh.RestController
               from:
                 _id:  req.user._id
                 name: req.user.name
-              tags:     [ {_id: 'hidden'}, {_id: 'uploaded'} ]
+              tags:     [ {_id: 'hidden', deletable: no}, {_id: 'uploaded', deletable: no} ]
 
             if results.exif?.location?
               lat = results.exif.location.GPSLatitude[0] + results.exif.location.GPSLatitude[1] / 60 + results.exif.location.GPSLatitude[2] / 3600

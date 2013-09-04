@@ -16,7 +16,7 @@ module.exports = class TagController extends Mmh.Controller
     if req.params.id? then query = _.extend _id: req.params.id, query
 
     o =
-      map: () -> emit tag, 1 for tag in @tags
+      map: () -> emit tag._id, 1 for tag in @tags
       reduce: (key, values) -> values.length
       query: query
       verbose: yes
@@ -27,7 +27,7 @@ module.exports = class TagController extends Mmh.Controller
         mapreduce:      if stats.processtime then "#{stats.processtime} ms" else 'cached' 
         length:         tags.length
         for_contentid:  if req.params.id? then req.params.id else undefined
-        data:         _.map tags, (tag) -> _.extend tag._id, occurrence: tag.value
+        data:           tags
         
 
   exists: ( req, res, next ) ->
@@ -63,4 +63,22 @@ module.exports = class TagController extends Mmh.Controller
         length:       buckets.length
         for_tag:      req.params.id
         data:         buckets
+
+  autocomplete: ( req, res, next ) ->
+
+    query = req.query.query
+
+    o =
+      map: () -> 
+        for tag in @tags
+          emit tag._id, 1 if not tag? or tag._id[0..query.length-1] is query
+      reduce: (key, values) -> values.length
+      scope:
+        query: query
+
+    Bucket.mapReduce o, (err, tags) ->
+      if err then return next new Error err
+      res.json 
+        query: query
+        suggestions: _.map tags, (tag) -> tag._id
 

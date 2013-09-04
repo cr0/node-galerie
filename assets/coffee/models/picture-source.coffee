@@ -33,6 +33,13 @@ define (require) ->
         includeInJSON:no
     ,
       type:           'HasOne'
+      key:            'blur'
+      relatedModel:   PictureSourceItem
+      includeInJSON:  yes
+      reverseRelation:
+        includeInJSON:no
+    ,
+      type:           'HasOne'
       key:            'standard'
       relatedModel:   PictureSourceItem
       includeInJSON:  yes

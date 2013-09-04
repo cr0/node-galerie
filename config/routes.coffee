@@ -4,7 +4,7 @@ module.exports =
   '/login':         'home#index'
   '/logout':        'home#index'
   '/imprint':       'home#index'
-  '/collection/:id':'home#index'
+  '/bucket/:id':    'home#index'
   '/picture/:id':   'home#index'
   '/settings':      'home#index'
 
@@ -30,3 +30,5 @@ module.exports =
 
   '/api/user/:id/buckets':      'user#buckets'
   '/api/user/:id/pictures':     'user#pictures'
+
+  '/ajax/tag/autocomplete':     'tag#autocomplete'

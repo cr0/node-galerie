@@ -9,10 +9,9 @@ define ->
 
     match 'imprint', 'static#imprint', name: 'static_imprint'
 
-    match 'collection/:id', 'collection#show', name: 'collection'
-    match 'collection/:id/:picnum', 'collection#show', name: 'collection_picture'
+    match 'bucket/:id', 'bucket#show', name: 'bucket_show'
+    match 'bucket/create/', 'bucket#create', name: 'bucket_create'
 
-    match 'a/collection', 'collection#create'
     match 'a/picture', 'picture#create'
 
     match 'user/setting', 'user#setting', name: 'setting'

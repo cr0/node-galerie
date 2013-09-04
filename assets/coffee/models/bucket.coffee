@@ -40,7 +40,7 @@ define (require) ->
       key:            'tags'
       relatedModel:   Tag
       collectionType: Tags
-      includeInJSON:  'name'
+      includeInJSON:  ['_id', 'deletable']
       reverseRelation:
         includeInJSON:no
     ,

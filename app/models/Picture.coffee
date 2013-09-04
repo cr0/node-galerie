@@ -49,6 +49,14 @@ PictureSchema = new mongoose.Schema
       width: Number
       ratio: Number
 
+    blur:   
+      name:
+        type:     String
+        required: true
+      height: Number
+      width: Number
+      ratio: Number
+
     middle:
       name:
         type:     String
@@ -94,6 +102,9 @@ PictureSchema = new mongoose.Schema
     _id:
       type: String
       index: 'text'
+    deletable: 
+      type: Boolean
+      default: yes
   ]
 
 

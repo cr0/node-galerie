@@ -81,30 +81,70 @@
             text-shadow: 1px 1px 0 black
             padding: 5px 5px 10px 5px
 
-          .admin
-            text-align: left
-            position: absolute
-            top: 15em
-            left: 2em
-            width: 20em
-            background: linear-gradient(top, #3781E8, darken(#3781E8, 15))
-            padding: 0.3em;
-            color: white;
-            
-            a 
-              color: white
-
-            .element
-              margin-bottom: 1em;
-
-              p.add
-                cursor: pointer
-
             .description
               overflow: ellipsis
 
-            .tags
-              
-              li
+          .admin
+            text-align: left
+            position: absolute
+            top: 5em
+            left: 0
+            color: white
+            width: 100%
+            
+            a 
+              color: black
+
+            ul.toolbar
+              margin-left: 1em
+
+              & > li
+                margin-bottom: 1em
+                margin-right: 0.5em
                 display: inline-block
-                margin-right: 5px
+
+                .icon
+                  cursor: pointer
+                  color: rgba(255,255,255,1)
+                  text-shadow: 1px 1px 0 rgba(198,198,198,1)
+                  font-size: 3em
+
+                  &.missing
+                    color: rgba(255, 58, 45, 1)
+
+                .badge
+                  font-size: 0.3em
+
+                  &.entypo
+                    font-size: 0.5em
+
+                .content
+                  position: absolute
+                  opacity: 0
+                  transition: opacity 0.5s ease-out, visibility 0.5s ease-out
+                  visibility: hidden
+                  background-color: rgba(255,255,255,.75)
+                  border-radius: 2px
+                  color: black
+                  min-width: 20em
+                  margin-top: 1.5em
+                  padding: 0.5em
+
+                  &:after
+                    bottom: 100%
+                    border: solid transparent
+                    content: " "
+                    height: 0
+                    width: 0
+                    position: absolute
+                    pointer-events: none
+                    border-color: rgba(255,255,255,0)
+                    border-bottom-color: rgba(255,255,255,.75)
+                    border-width: 8px
+                    left: 13px
+                    margin-left: -8px
+
+                  &.active 
+                    visibility:visible;
+                    opacity: 1
+                
