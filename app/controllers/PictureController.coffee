@@ -191,17 +191,23 @@ module.exports = class PictureController extends Mmh.RestController
                   parts:   data.results?[0]?.formatted_address?.split ', '
 
                 picture.save (err) ->
-                  if err then return cb err
-                  responses.push picture
-
-                  cb()
+                  Bucket.findById req.query.bucket_id, (err, bucket) ->
+                    if err then return cb err
+                    bucket.pictures.push picture._id
+                    bucket.save (err) ->
+                      if err then return cb err
+                      responses.push picture
+                      cb()
 
             else
               picture.save (err) ->
-                if err then return cb err
-                responses.push picture
-
-                cb()
+                Bucket.findById req.query.bucket_id, (err, bucket) ->
+                  if err then return cb err
+                  bucket.pictures.push picture._id
+                  bucket.save (err) ->
+                    if err then return cb err
+                    responses.push picture
+                    cb()
       
     , (err) -> # async.each callback
       if err then return next new Error err
@@ -233,7 +239,7 @@ module.exports = class PictureController extends Mmh.RestController
   buckets: ( req, res, next ) ->
     if not req.params.id then return next new Mmh.BadRequest 'Missing picture_id'
     
-    Bucket.find pictures: $in: [req.params.id], (err, buckets) ->
+    Bucket.find(pictures: $in: [req.params.id]).populate('pictures').exec (err, buckets) ->
       if err then return next new Error err
       res.json 
         length:       buckets.length
@@ -241,4 +247,5 @@ module.exports = class PictureController extends Mmh.RestController
         data:         buckets
 
   show: ( req, res, next ) ->
+     res.setHeader('Content-Type', 'image/jpeg')
      res.sendfile "#{process.cwd()}/data/#{req.params.id}"

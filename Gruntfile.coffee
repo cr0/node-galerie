@@ -88,8 +88,7 @@ module.exports = (grunt) ->
           'public/js/templates/picture-items.js':       'assets/tpl/picture/items.jade'
           'public/js/templates/picture-new.js':         'assets/tpl/picture/new.jade'
           'public/js/templates/picture-upload.js':      'assets/tpl/picture/upload.jade'
-          'public/js/templates/picture-buckets.js':     'assets/tpl/picture/buckets.jade'
-          'public/js/templates/picture-bucket.js':      'assets/tpl/picture/bucket.jade'
+          'public/js/templates/picture-add.js':     'assets/tpl/picture/add.jade'
           'public/js/templates/picture-tool.js':        'assets/tpl/picture/tool.jade'
 
           'public/js/templates/setting.js':       'assets/tpl/setting.jade'

@@ -19,6 +19,7 @@ define (require) ->
 
     defaults:
       name:       'Picture'
+      visible:    no
 
     relations: [
       type:           'HasOne'

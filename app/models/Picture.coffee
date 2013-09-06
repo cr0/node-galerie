@@ -17,6 +17,10 @@ PictureSchema = new mongoose.Schema
     type:     String
     required: true
 
+  visible:
+    type:     Boolean
+    default:  false
+
   mime:
     type: String
     required: true
@@ -90,7 +94,13 @@ PictureSchema = new mongoose.Schema
       type:   [Number]
       index:  '2d'
     address:  String
-    parts:    [String]
+    parts:    
+      type:   [String] 
+      select: false
+
+  num_buckets:
+    type: Number
+    default: 0
 
   from: 
     _id:

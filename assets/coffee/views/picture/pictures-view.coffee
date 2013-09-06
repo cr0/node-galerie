@@ -6,6 +6,7 @@ define (require) ->
   CollectionView  = require 'views/base/collection-view'
   ItemView        = require 'views/picture/picture-view'
   Template        = require 'templates/picture-items'
+  AddTemplate     = require 'templates/picture-add'
 
 
   class PicturesView extends CollectionView
@@ -14,6 +15,9 @@ define (require) ->
     className:    'horizontal-scroll'
     listSelector: 'ul.pictures'
     eventhandler: no
+
+    events:
+      'click a.fileupload': 'openFileDialogue'
     
     initialize: ->
       @addCollectionListeners()
@@ -23,6 +27,11 @@ define (require) ->
       if not @eventhandler
         @eventhandler = yes
         console.debug 'Adding scrollwheel..'
-        @$el.children(@listSelector).mousewheel (event, delta) ->
+        @$el.children(@listSelector).first().mousewheel (event, delta) ->
           @scrollLeft -= delta
           event.preventDefault()
+
+      @$el.children(@listSelector).first().append(AddTemplate())
+
+    openFileDialogue: ->
+      $(document).find('input:file').first().click()

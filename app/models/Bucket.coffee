@@ -29,9 +29,10 @@ BucketSchema = new mongoose.Schema
       ref:    'User'
     name: String
 
-  pictures:
-    type:   [mongoose.Schema.Types.ObjectId]
+  pictures: [
+    type:   mongoose.Schema.Types.ObjectId
     ref:    'Picture'
+  ]
 
   tags: [
     _id:

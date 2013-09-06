@@ -1,19 +1,20 @@
 
 Mmh        = require('mmh')
 
-Bucket = require '../models/Bucket'
+Bucket  = require '../models/Bucket'
+Picture = require '../models/Picture'
 
 
 module.exports = class BucketController extends Mmh.RestController
 
   get: ( req, res, next ) -> 
     if req.params.id 
-      Bucket.findById req.params.id, (err, bucket) ->
+      Bucket.findById(req.params.id).populate('pictures').exec (err, bucket) ->
         if err then return next new Error err
         if not bucket then return next new Mmh.Error.NotFound "No bucket with id #{req.params.id}"
         res.json bucket
     else
-      Bucket.find {'type': 'bucket'}, (err, buckets) ->
+      Bucket.find({'type': 'bucket'}).populate('pictures').exec (err, buckets) ->
         if err then return next new Error err
         res.json 
           length: buckets.length

@@ -9,8 +9,8 @@ define ->
 
     match 'imprint', 'static#imprint', name: 'static_imprint'
 
+    match 'bucket/create', 'bucket#create', name: 'bucket_create'
     match 'bucket/:id', 'bucket#show', name: 'bucket_show'
-    match 'bucket/create/', 'bucket#create', name: 'bucket_create'
 
     match 'a/picture', 'picture#create'
 

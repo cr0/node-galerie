@@ -34,7 +34,7 @@ define (require) ->
       collectionType: Pictures
       includeInJSON:  ['_id', 'name']
       reverseRelation:
-        includeInJSON:  ['_id', 'name']
+        includeInJSON:  no
     ,
       type:           'HasMany'
       key:            'tags'

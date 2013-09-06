@@ -23,25 +23,16 @@ define (require) ->
   class PictureUploadView extends View
     template: Template
 
-    regions:
-      'pictures': 'div.list'
-
-    initialize: ->
-      @pictures = new Pictures()
-
     render: ->
       super
-
-      picturesView = new PicturesView region: 'pictures', collection: @pictures
-      @subview 'tool', picturesView
 
       $hint         = @$el.children 'div.drop'
       $progressbar  = @$el.children 'div.progressbar.total'
 
-      $file = $('<input>', type: 'file', name: 'files[]')
+      $file = $('<input>', type: 'file', name: 'files[]', multiple: true)
 
       $file.fileupload
-        url: '/api/picture'
+        url: "/api/picture?bucket_id=#{@model.id}"
         dataType: 'json'
         autoUpload: no
         uploadTemplateId: null
@@ -84,7 +75,7 @@ define (require) ->
         for pictureJson in data.result.files
           picture = new Picture(pictureJson)
           console.info "Received new picture from server", picture
-          @pictures.add picture
+          @model.get('pictures').add picture
 
 
       $file.on 'fileuploadfail', (e, data) =>

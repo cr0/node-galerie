@@ -27,24 +27,23 @@ define (require) ->
 
     events:
       'click .icon.calendar': 'toggleIconCalendar'
-      'click .icon.location':      'toggleIconLocation'
+      'click .icon.location': 'toggleIconLocation'
       'click .icon.tag':      'toggleIconTag'
 
-
     initialize: () ->
-      @listenTo @model, 'change', @render
+      #@listenTo @model, 'change', @render
 
       @buckets = new Buckets url: "/api/picture/#{@model.id}/buckets"
       @buckets.syncing =>
-        @$el.find('div.icon.bucket span.badge').addClass(' entypo loading').text()
+        @$el.find('div.icon.bucket span.badge').addClass('entypo loading').text()
       @buckets.synced =>
         @$el.find('div.icon.bucket span.badge').removeClass('entypo loading').text(@buckets.length)
       @buckets.unsynced =>
-        @$el.find('div.icon.bucket span.badge').removeClass('entypo warning').text()
+        @$el.find('div.icon.bucket span.badge').removeClass('loading').addClass('entypo warning').text()
 
 
     getTemplateData: () ->
-      _.extend super, num_tags: @model.get('tags').length, num_buckets: 0
+      _.extend super, num_tags: @model.get('tags').length, num_buckets: @buckets.length || '?'
 
 
     toggleIconCalendar: (e, hide = no) ->
@@ -85,9 +84,9 @@ define (require) ->
 
     render: ->
       super
+      console.debug "Rendering image #{@model.id}"
 
-      @buckets.fetch()
-      $img = @$el.children('.image').first()
+      if @buckets.isUnsynced() then @buckets.fetch()
 
       @$el.find(@tagselector).autocomplete
         serviceUrl: '/ajax/tag/autocomplete'
@@ -128,36 +127,24 @@ define (require) ->
       #     tagToRemove = @model.get('tags').get ui.tagLabel
       #     @model.get('tags').remove tagToRemove
       #     @model.save()
+      @addResponsivity()
+      @addInlineScrolling()
 
-      # add image handler (resize, inlinescrolling)
-      $img.data('loaded', no)
+      $(window).trigger 'resize'
 
-      highSource = $img.data('original');
-      imageHeight = $img.data('height');
-      imageWidth = $img.data('width');
+
+    addResponsivity: ->
+      # add image handler (resize)
+      $img = @$el.children('.image').first()
+      imageHeight = $img.data('height')
+      imageWidth = $img.data('width')
       imageScreen = imageWidth / imageHeight
-
-      $('ul.pictures').first().scroll =>
-        imagePos = $img.offset().left
-
-        position = (@inlineScollingX - @inlineScollingX / $('body').innerWidth() * imagePos) / -2
-        if -@inlineScollingX <= position <= 0 then $img.css('background-position', "#{position}px 100%")
-
-        if imagePos - $('body').innerWidth() - @loadThreshold < 0 and not $img.data('loaded')
-          $img.data('loaded', yes)
-          $preloadImg = $('<img>').attr('src', highSource)
-          $preloadImg.appendTo('body').hide().on 'load', =>
-            $preloadImg.remove()
-            $img.fadeOut 'fast', ->
-              $img.css('background-image', "url('#{highSource}')").fadeIn 'fast'
 
       $(window).resizestop => 
         @inlineScollingX = $('body').innerWidth() * @inlineScrollingPercentage 
         windowHeight = $('body').innerHeight()
         windowWidth  = $('body').innerWidth()
         windowScreen = windowWidth / windowHeight
-
-        #console.log "window size has changed to w #{windowWidth} and h #{windowHeight}, resizing image w #{imageWidth} and h #{imageHeight}"
 
         [width, height] = if windowScreen > imageScreen then [imageWidth * windowHeight/imageHeight, windowHeight] else [windowWidth, imageHeight * windowWidth/imageWidth]
 
@@ -166,11 +153,40 @@ define (require) ->
 
         if $img.offset().left is 0
           $img.css('background-position', "#{-@inlineScollingX / 2}px 100%")
-          console.log "first image detected"
         else
           $img.css('background-position', "0px 100%")
 
         @$el.css('height', height)
         @$el.css('margin-top', (windowHeight - height) / 2)
 
-      $(window).trigger 'resize'
+
+    addInlineScrolling: ->
+      if not @$el.parent().length
+        window.setTimeout =>
+          @addInlineScrolling()
+        , 500
+        console.warn "Unable to add inlinescrolling, parent() unknown, waiting" 
+        return
+
+      console.debug "Adding inlinescrolling for #{@model.id}"
+
+      # inlinescrolling
+      $img = @$el.children('.image').first()
+      $img.data('loaded', no)
+      highSource = $img.data('original')
+
+      validateIfHighimageNeeded = =>
+        imagePos = $img.offset().left
+        position = (@inlineScollingX - @inlineScollingX / $('body').innerWidth() * imagePos) / -2
+
+        if -@inlineScollingX <= position <= 0 then $img.css('background-position', "#{position}px 100%")
+        if (imagePos - $('body').innerWidth() - @loadThreshold < 0 or imagePos < @loadThreshold) and not $img.data('loaded') 
+          $img.data('loaded', yes)
+          $preloadImg = $('<img>').attr('src', highSource)
+          $preloadImg.appendTo('body').hide().on 'load', =>
+            $preloadImg.remove()
+            $img.fadeOut 'fast', -> $img.css('background-image', "url('#{highSource}')").fadeIn 'fast'
+
+      @$el.parent().first().scroll validateIfHighimageNeeded
+      validateIfHighimageNeeded()
+        
