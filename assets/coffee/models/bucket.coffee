@@ -59,6 +59,10 @@ define (require) ->
       @set 'preview', "http://lorempixel.com/400/400/?#{Math.random()}"
       @on 'change:date', @updateFormattedDate, @
 
+
     updateFormattedDate: (model, value, options) ->
       # Thu Jan 02 13:10:56 CET 2014
       @set 'formatted_date', "#{Moment.unix(value/1000).format('D. MMM YYYY')}" if value?
+
+
+    comparator: (model) -> model.get('name')

@@ -22,7 +22,11 @@ define (require) ->
       'search':   '.search'
 
 
-    render: ->
+    initialize: ->
+      @addCollectionListeners()
+
+
+    renderAllItems: ->
       super
 
       @$el.prepend(@$el.find('.search'))

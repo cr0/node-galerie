@@ -1,15 +1,39 @@
 
-textarea.search(placeholder="Motorradtour in den Alpen 2013", autofocus=true, name="q")
+div.query
+  textarea.search(placeholder="Motorradtour in den Alpen 2013", autofocus=true, name="q")
+
+div.stats
+  p.pictures
+    span.countto(data-to="1234")
+    |  Fotos
+
+  p.buckets
+    span.countto(data-to="321")
+    |  Alben
+
+  p.users
+    span.countto(data-to="12")
+    |  Mitglieder
+
+  p.more
+    a(href="/analytics") mehr Statistiken
 
 div.additional
-  a(href="#!/q/!create") Neues Album
+  p Die Suchbar unterstützt natürlichsprachliche Suchanfragen &mdash;
+    a(href="#!/q/!hilfe") hää?
+
+  a(href="#!/q/!create")
+    //i.fa.fa-cloud-upload
+    | Neues Album
 
   a.user(href="#!/q/!profil")
-    img(src="#{avatar.url}")
+    //img(src="#{avatar.url}")
     span #{name} (
     span.user.reputation
     |  rep)
 
-  a(href="/user/setting") Einstellungen
+  a(href="/user/setting")
+    //i.fa.fa-wrench
+    | Einstellungen
 
   a(href="/logout") Logout

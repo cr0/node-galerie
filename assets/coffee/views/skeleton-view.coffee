@@ -21,4 +21,4 @@ define [
 
     initialize: ->
       super
-      @subscribeEvent 'loggedout', -> @publishEvent '!router:routeByName', 'hello_home'
+      #@subscribeEvent 'loggedout', -> @publishEvent '!router:routeByName', 'hello_home'
