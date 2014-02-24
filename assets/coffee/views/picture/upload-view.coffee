@@ -7,6 +7,7 @@ define (require) ->
   require 'jquery.mousewheel'
   require 'jquery.scrollto'
 
+  Chaplin         = require 'chaplin'
   $               = require 'jquery'
   _               = require 'underscore'
   utils           = require 'lib/utils'
@@ -22,6 +23,9 @@ define (require) ->
 
   class PictureUploadView extends View
     template: Template
+
+    initialize: ->
+      @user = Chaplin.mediator.user
 
     render: ->
       super
@@ -76,6 +80,7 @@ define (require) ->
           picture = new Picture(pictureJson)
           console.info "Received new picture from server", picture
           @model.get('pictures').add picture
+          @user.reputation 'picture:add'
 
 
       $file.on 'fileuploadfail', (e, data) =>

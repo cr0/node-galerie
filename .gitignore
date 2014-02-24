@@ -7,3 +7,5 @@ public/js
 .config.yml
 .codecov.js
 data
+public/components
+public/fonts

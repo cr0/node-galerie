@@ -8,25 +8,20 @@ define (require) ->
 
   Buckets             = require 'models/buckets'
 
-  SearchView          = require 'views/search/search-view'
-  SearchItemsView     = require 'views/search/items-view'
+  HomeView            = require 'views/home/index-view'
 
 
   class HelloController extends AuthController
 
     show: (params) ->
       @adjustTitle 'Hello'
-      
+
       buckets = new Buckets
-      buckets.add id: num, name: "gallery #{num}" for num in [1..8]
+      buckets.add id: num, name: "gallery #{num}", date: new Date() for num in [1..20]
 
-      @search = new SearchView
-        model:  Chaplin.mediator.user
-        region: 'search'
+      @search = new HomeView
+        collection:  buckets
+        region:     'home'
 
-      @results = new SearchItemsView
-        collection: buckets
-        region:     'results'
-
-      utils.pageTransition $('#search'), 'left'
+      utils.pageTransition $('#home'), 'left'
 

@@ -14,9 +14,9 @@ define [
 
       (fetch = (again) =>
         Chaplin.mediator.user.fetch
-          success: (model) => 
-            if not Chaplin.mediator.redirectUrl then @publishEvent '!router:routeByName', 'hello_home'
-            else @publishEvent '!router:route', Chaplin.mediator.redirectUrl
+          success: (model) =>
+            if not Chaplin.mediator.redirectUrl then @redirectTo 'hello_home'
+            else @redirectTo url: Chaplin.mediator.redirectUrl
 
           error: (model, error) -> console.error 'error requesting', error
           denied: ->
@@ -34,7 +34,7 @@ define [
           @publishEvent '!error', e
 
       else
-        @redirectToRoute 'hello_home' 
+        @redirectTo 'hello_home'
 
 
-      
+

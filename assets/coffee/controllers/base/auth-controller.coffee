@@ -11,4 +11,4 @@ define [
       if not Chaplin.mediator.user?.get 'loggedin'
         console.info "Login required for page: #{route.path}"
         Chaplin.mediator.redirectUrl = route.path
-        @redirectToRoute 'login_login' 
+        @redirectTo 'login_login'

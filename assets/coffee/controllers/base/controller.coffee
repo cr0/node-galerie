@@ -10,11 +10,11 @@ define [
 
   class Controller extends Chaplin.Controller
     beforeAction: (params, route) ->
-      @compose 'footer', FooterView
-      @compose 'site', SekeltonView
-      @compose 'imprint', ImprintView, region: 'imprint'
-      @compose 'login', LoginView, region: 'login'
-      @compose 'error', ErrorView, region: 'error'
+      @reuse 'footer', FooterView, model: Chaplin.mediator.user
+      @reuse 'site', SekeltonView
+      @reuse 'imprint', ImprintView, region: 'imprint'
+      @reuse 'login', LoginView, region: 'login'
+      @reuse 'error', ErrorView, region: 'error'
 
 
 

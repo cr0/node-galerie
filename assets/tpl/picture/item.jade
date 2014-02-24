@@ -11,7 +11,8 @@ div.admin
       div.icon.entypo.calendar
       div.content
         h2 Aufnahmedatum
-        p #{date.formatted_created}
+        p #{date.formatted_created} &mdash; 
+          a.created(href="#") nicht korrekt?
         h2 Uploaddatum
         p #{date.formatted_uploaded}
 

@@ -12,7 +12,7 @@ define [
     regions:
       'imprint':  '#imprint'
       'login':    '#login'
-      'search':   '#search'
+      'home':     '#home'
       'gallery':  '#gallery'
       'setting':  '#setting'
       'error':    '#error'

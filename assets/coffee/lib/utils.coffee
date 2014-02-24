@@ -1,9 +1,10 @@
-define [
-  'underscore'
-  'modernizr'
-  'chaplin'
-], (_, Modernizr, Chaplin) ->
+
+define (require) ->
   'use strict'
+
+  _           = require 'underscore'
+  Modernizr   = require 'modernizr'
+  Chaplin     = require 'chaplin'
 
   # Application-specific utilities
   # ------------------------------
@@ -53,7 +54,7 @@ define [
           outClass = 'pt-page-moveToRight'
           inClass = 'pt-page-moveFromLeft'
 
-        when "bottom" 
+        when "bottom"
           outClass = 'pt-page-moveToTop'
           inClass = 'pt-page-moveFromBottom'
 
@@ -78,7 +79,7 @@ define [
 
     formatFileSize: (bytes)->
       if typeof bytes is not 'number' then return ''
-            
+
       if bytes >= 1000000000 then return "#{(bytes / 1000000000).toFixed(2)} GB"
       else if bytes >= 1000000 then return "#{(bytes / 1000000).toFixed(2)} MB"
       else if bytes >= 1000 then return "#{(bytes / 1000).toFixed(2)} KB"

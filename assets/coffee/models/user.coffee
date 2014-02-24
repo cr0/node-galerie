@@ -16,4 +16,16 @@ define (require) ->
       username:   null
       email:      null
       loggedin:   false
-      reputation: 1
+      reputation: 0
+
+    reputationList:
+      picture:
+        add:      2
+
+    reputation: (which) ->
+      points = 0
+
+      switch which
+        when 'picture:add' then points = @reputationList['picture']['add']
+
+      @set 'reputation', @get('reputation') + points

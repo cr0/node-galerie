@@ -1,7 +1,7 @@
 {
   "name": "node-galerie",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "a gallery written in node, nothing more.",
   "main": "server.js",
   "directories": {
@@ -45,7 +45,12 @@
     "exif": "0.3.x",
     "mongoose-lifecycle": "1.0.x",
     "geocoder": "0.1.x",
-    "moment": "2.1.x"
+    "moment": "2.1.x",
+    "grunt-newer": "0.6.x",
+    "bower": "1.2.x",
+    "grunt-bower-requirejs": "0.8.x",
+    "grunt-contrib-copy": "0.5.x",
+    "grunt-modernizr": "0.5.x"
   },
   "devDependencies": {
     "grunt-contrib-watch": "0.5.x",

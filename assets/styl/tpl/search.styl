@@ -1,30 +1,72 @@
-#search
-  background: linear-gradient(top, #83F080, #FF7E40)
+#home
+  //background: linear-gradient(top, #83F080, #FF7E40)
+  background: white
 
-  & > div
+  div.results
+    overflow-y: auto
+    height: 100%
 
-    .field
-      margin-top: 7.5em
+    div.search
+      display: inline-block
+      position: relative
+      width: 33em
+      height: 35em
+      background-color: white
+      vertical-align:top
+      float: left
+      padding: 2em
 
-      input
-        font-size: 160%
-      
-
-    .results
-      margin-top: 3em
-
-      ul
+      textarea
+        background-color: rgba(247,80,90,.95)
+        color: white
+        font-size: 2.5em
         width: 100%
-        height: 100%
-        overflow: hidden
-        position: relative
+        padding: 0.2em 0.4em
+        line-height: 0.9em
+        height: 1.5em
+        transition: height  0.3s linear
 
-        li
-          transition: all 0.6s 
-          background: url('http://lorempixel.com/120/120/') center center transparent no-repeat
-          background-size: cover
-          width: 120px
-          height: 120px
-          display: inline-block
-          color: white
+      .additional
+        position: absolute
+        top: 13em
+        text-transform: uppercase
+
+        a
+          font-size: 1.8em
+          text-decoration: none
+          display: block
+          font-weight: 100
+          line-height: 1.4em
+
+          &.user img
+            height: 0.8em
+            width: 0.8em
+            margin-right: 0.2em
+
+
+    div.result-item
+      display: inline-block
+      width: 300px
+      height: 280px
+      background: center center transparent no-repeat
+      background-size: cover
+      color: transparent
+      transition: background-color 0.6s ease-in-out, background-image 0.6s ease-in-out
+      text-align: center
+      padding: 5em 2em 0 2em
+      font-size: 1.3em
+      text-transform: uppercase
+
+      &:hover
+        background-image: none !important
+        background-color: white
+        color: black
+        cursor: pointer
+
+        div.name
+          font-weight: 200
+          color: rgba(247,80,90,.95)
+
+        div.info
+          font-weight: 100
 

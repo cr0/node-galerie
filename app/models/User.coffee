@@ -36,6 +36,10 @@ UserSchema = new mongoose.Schema
     default:  true # for testing set to true
     select:   false
 
+  reputation: 
+    type:     Number
+    default:  13
+
   provider:
     finalized:  
       type:     Boolean

@@ -25,4 +25,5 @@ module.exports = class UserController extends Mmh.RestController
         birthday:   user.birthday
         avatar:     user.avatar
         provider:   user.provider
+        reputation: user.reputation
         loggedin:   if userid is req.user._id then yes else no

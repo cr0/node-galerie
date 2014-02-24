@@ -12,6 +12,12 @@ define [
 
     rendered:   no
 
+    bindings:
+      '.user.reputation': 
+        observe:      'reputation'
+        afterUpdate:  'highlight'
+      '.user.name':       'name'
+
     initialize: ->
       super
       @subscribeEvent 'loggedin', @updateFooter
@@ -19,14 +25,13 @@ define [
 
     render: ->
       super
-
       @rendered = yes
       @updateFooter()
 
     updateFooter: =>
       if not @rendered then return
 
-      if Chaplin.mediator.user?.get 'loggedin'
+      if @model?.get 'loggedin'
         @$el.find('.login').hide()
         @$el.find('.logout').show()
       else 

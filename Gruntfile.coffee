@@ -13,6 +13,15 @@ module.exports = (grunt) ->
         src:        ['public/css/**', 'public/js/**', '!public/js/vendor/**', '!public/css/font/**']
         filter:     'isFile'
 
+    copy:
+      fonts:
+        expand:   true
+        cwd:      'public/components/font-awesome/fonts/'
+        src:      '*'
+        dest:     'public/fonts'
+        filter:   'isFile'
+
+
     coffee:
       server:
         options:
@@ -101,8 +110,21 @@ module.exports = (grunt) ->
 
           'public/js/templates/ajax/.js':         'assets/tpl/ajax/login.jade'
 
-    requirejs: 
-      compile: 
+          'public/js/templates/home/index.js':  'assets/tpl/home/index.jade'
+          'public/js/templates/home/search.js': 'assets/tpl/home/search.jade'
+          'public/js/templates/home/result.js': 'assets/tpl/home/result.jade'
+
+    modernizr:
+      client:
+        devFile:    'public/components/modernizr/modernizr.js'
+        outputFile: 'public/components/modernizr/modernizr-b.js'
+        parseFiles: yes
+        uglify:     no
+        files:
+          src: ['public/js/**/*.js', 'public/css/**']
+
+    requirejs:
+      compile:
         options:
           preserveLicenseComments: false
           generateSourceMaps: false
@@ -115,18 +137,25 @@ module.exports = (grunt) ->
       coverage:
         command:    './node_modules/coffee-coverage/bin/coffeecoverage --initfile .codecov.js --exclude node_modules,Gruntfile.coffee,.git,test,assets --path relative . .'
 
+    bower:
+      client:
+        rjsConfig:  'public/js/main.js'
+
     watch:
       coffee:
         files:      ['src/**/*.coffee']
-        tasks:      ['clean:server', 'coffee:server']
+        tasks:      ['clean:server', 'newer:coffee:server']
       client:
         files:      ['assets/styl/**/*.styl', 'assets/tpl/**/*.jade', 'assets/coffee/**/*.coffee']
-        tasks:      ['stylus:assets', 'jade:client', 'coffee:client']
-        options: 
+        tasks:      ['stylus:assets', 'newer:jade:client', 'newer:coffee:client', 'bower:client']
+        options:
           livereload: true
 
 
 
+  grunt.loadNpmTasks 'grunt-newer'
+  grunt.loadNpmTasks 'grunt-modernizr'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-stylus'
@@ -135,6 +164,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-mocha-cov'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-shell'
+  grunt.loadNpmTasks 'grunt-bower-requirejs'
 
   grunt.registerTask 'build', [
     'clean:public', 'clean:server', 'coffee:server', 'coffee:client', 'stylus:assets', 'jade:client'
@@ -142,12 +172,13 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'test', [
     'mochacov:server'
-  ]   
+  ]
 
   grunt.registerTask 'travis', [
      'shell:coverage', 'mochacov:coverage', 'clean:coverage'
   ]
 
   grunt.registerTask 'dev', [
-    'clean:public', 'clean:server', 'coffee:server', 'stylus:assets', 'jade:client', 'coffee:client', 'watch'
+    'clean:public', 'newer:copy:fonts', 'clean:server', 'newer:coffee:server', 'stylus:assets', 'newer:jade:client',
+    'newer:coffee:client', 'modernizr:client', 'bower:client', 'watch'
   ]

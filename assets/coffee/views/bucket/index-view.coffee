@@ -18,9 +18,6 @@ define (require) ->
       'pictures': 'div.pictures'
       'upload':   'div.upload'
 
-    initialize: ->
-      #@listenToOnce @model, 'change', @create
-
     render: ->
       super
       @model.fetch
@@ -28,10 +25,12 @@ define (require) ->
         error: => @publishEvent '!error', new Error 'Unable to load bucket from server'
 
     create: ->
-      @$el.children('.loading').fadeOut()
-
       picturesView = new PicturesView region: 'pictures', collection: @model.get('pictures') 
       @subview 'pictures', picturesView
 
       uploadView = new UploadView region: 'upload', model: @model
       @subview 'upload', uploadView
+
+      @$el.children('.loading').first().fadeOut 'slow', =>
+        @$el.children('.pictures').first().fadeIn('slow')
+        @$el.children('.upload').first().fadeIn('slow')

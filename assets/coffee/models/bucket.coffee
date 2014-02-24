@@ -2,6 +2,7 @@ define (require) ->
   'use strict'
 
   Chaplin         = require 'chaplin'
+  Moment          = require 'moment'
 
   Model           = require 'models/base/model'
   Picture         = require 'models/picture'
@@ -19,6 +20,8 @@ define (require) ->
 
     defaults:
       name:       'Bucket'
+      author:     '<UNKNOWN_AUTHOR>'
+      date:       '<UNKNOWN_DATE>'
 
     relations: [
       type:           'HasOne'
@@ -51,3 +54,11 @@ define (require) ->
       reverseRelation:
         includeInJSON:no
     ]
+
+    initialize: ->
+      @set 'preview', "http://lorempixel.com/400/400/?#{Math.random()}"
+      @on 'change:date', @updateFormattedDate, @
+
+    updateFormattedDate: (model, value, options) ->
+      # Thu Jan 02 13:10:56 CET 2014
+      @set 'formatted_date', "#{Moment.unix(value/1000).format('D. MMM YYYY')}" if value?
