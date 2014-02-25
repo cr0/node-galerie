@@ -46,10 +46,10 @@ define (require) ->
         if i is placeholder.length
           window.clearInterval int
           window.setTimeout =>
-            $textarea = @$el.find('textarea.search')
             if not $textarea.val()
               @_animate $textarea, _.sample(SearchView.PLACEHOLDER)
-          , 5000
+          , 8000
+          return
 
         $textarea.attr('placeholder', placeholder[0..i++])
         $textarea.trigger('autosize.resize')

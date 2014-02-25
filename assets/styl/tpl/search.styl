@@ -1,6 +1,6 @@
 #home
   //background: linear-gradient(top, #83F080, #FF7E40)
-  background: white
+  //background: white
 
   div.results
     overflow-y: auto
@@ -11,11 +11,15 @@
       position: relative
       width: 33em
       height: 35em
-      background-color: white
+      background-color: transparent
       vertical-align:top
       float: left
       padding: 2em
       text-align: center
+
+      & > div
+        position: fixed
+        width: 35%
 
       a
         color: rgb(247,80,90)
@@ -27,6 +31,7 @@
 
       .query
         height: 160px
+        width: 100%
         overflow-y: visible
 
         textarea
@@ -43,6 +48,7 @@
 
       .stats, .additional
         text-transform: uppercase
+        width: 100%
 
         p
           display: block
@@ -89,14 +95,16 @@
       display: inline-block
       width: 300px
       height: 280px
-      background: center center transparent no-repeat #eee
-      background-size: cover
+      background: center center url('/img/load.gif') no-repeat
+      // background-size: cover
       color: transparent
       //transition: background-color 0.6s ease-in-out, background-image 0.6s ease-in-out
       text-align: center
       padding: 5em 2em 0 2em
       font-size: 1.3em
       text-transform: uppercase
+      position: relative
+      z-index: 100
 
       &:hover
         background-image: none !important

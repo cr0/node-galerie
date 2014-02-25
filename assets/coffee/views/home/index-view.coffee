@@ -1,6 +1,8 @@
 define (require) ->
   'use strict'
 
+  require 'jquery-mousewheel'
+
   Chaplin        = require 'chaplin'
 
   CollectionView = require 'views/base/collection-view'
@@ -29,7 +31,9 @@ define (require) ->
     renderAllItems: ->
       super
 
-      @$el.prepend(@$el.find('.search'))
+      @$el.mousewheel (e) -> @scrollTop -= e.deltaY
+
+      @$el.prepend @$el.find('.search')
 
       searchView = new SearchView region: 'search', model: Chaplin.mediator.user
       @subview 'search', searchView

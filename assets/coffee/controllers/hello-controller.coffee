@@ -2,6 +2,7 @@ define (require) ->
   'use strict'
 
   $                   = require 'jquery'
+  _                   = require 'underscore'
   Chaplin             = require 'chaplin'
   utils               = require 'lib/utils'
   AuthController      = require 'controllers/base/auth-controller'
@@ -17,7 +18,7 @@ define (require) ->
       @adjustTitle 'Hello'
 
       buckets = new Buckets
-      buckets.add id: num, name: "gallery #{num}", date: new Date() for num in [1..20]
+      buckets.add id: num, name: "gallery #{num}", date: new Date() for num in [1.._.random(2,30)]
 
       @search = new HomeView
         collection:  buckets
