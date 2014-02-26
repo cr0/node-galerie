@@ -99,6 +99,7 @@
       // background-size: cover
       color: transparent
       //transition: background-color 0.6s ease-in-out, background-image 0.6s ease-in-out
+      transition: opacity 0.6s ease-in-out
       text-align: center
       padding: 5em 2em 0 2em
       font-size: 1.3em
@@ -106,11 +107,16 @@
       position: relative
       z-index: 100
 
+      .inactive
+        opacity: 0.3 !important
+
       &:hover
         background-image: none !important
         background-color: white
         color: black
         cursor: pointer
+        opacity: 1 !important
+        transition: opacity 0
 
         div.name
           font-weight: 200

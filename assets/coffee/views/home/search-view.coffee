@@ -2,13 +2,13 @@ define (require) ->
   'use strict'
 
   require 'jquery-autosize'
-  require 'jquery-countTo'
 
-  _           = require 'underscore'
+  _               = require 'underscore'
 
-  View        = require 'views/base/view'
+  View            = require 'views/base/view'
 
-  Template    = require 'templates/home/search'
+  Template        = require 'templates/home/search'
+
 
   class SearchView extends View
     @PLACEHOLDER: [
@@ -18,6 +18,8 @@ define (require) ->
     ]
 
     template: Template
+    regions:
+      'stats': '.stats'
     bindings:
       '.user.reputation':
         observe:      'reputation'
@@ -32,12 +34,8 @@ define (require) ->
 
     render: ->
       super
+
       @_animate @$el.find('textarea.search'), _.sample(SearchView.PLACEHOLDER)
-
-
-    attach: ->
-      super
-      @$el.find('.countto').countTo speed: 4000
 
 
     _animate: ($textarea, placeholder) =>

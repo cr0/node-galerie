@@ -1,4 +1,4 @@
-module.exports = 
+module.exports =
 
   '/':              'home#index'
   '/login':         'home#index'
@@ -18,7 +18,7 @@ module.exports =
 
   'get /:id':       'lookup#find'
 
-  '/api/search':                'search#go'
+  '/api/search':                'search#get'
 
   '/api/tag/:id/exist':         'tag#exists'
   '/api/tag/:id/buckets':       'tag#buckets'

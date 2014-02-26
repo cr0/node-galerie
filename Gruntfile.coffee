@@ -110,9 +110,10 @@ module.exports = (grunt) ->
 
           'public/js/templates/ajax/.js':         'assets/tpl/ajax/login.jade'
 
-          'public/js/templates/home/index.js':  'assets/tpl/home/index.jade'
-          'public/js/templates/home/search.js': 'assets/tpl/home/search.jade'
-          'public/js/templates/home/result.js': 'assets/tpl/home/result.jade'
+          'public/js/templates/home/index.js':        'assets/tpl/home/index.jade'
+          'public/js/templates/home/search.js':       'assets/tpl/home/search.jade'
+          'public/js/templates/home/search-stats.js': 'assets/tpl/home/search-stats.jade'
+          'public/js/templates/home/result.js':       'assets/tpl/home/result.jade'
 
     modernizr:
       client:

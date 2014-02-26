@@ -3,13 +3,14 @@ define (require) ->
 
   require 'jquery-mousewheel'
 
-  Chaplin        = require 'chaplin'
+  Chaplin         = require 'chaplin'
 
-  CollectionView = require 'views/base/collection-view'
-  SearchView     = require 'views/home/search-view'
-  ResultView     = require 'views/home/result-view'
+  CollectionView  = require 'views/base/collection-view'
+  SearchView      = require 'views/home/search-view'
+  SearchStatsView = require 'views/home/search-stats-view'
+  ResultView      = require 'views/home/result-view'
 
-  Template       = require 'templates/home/index'
+  Template        = require 'templates/home/index'
 
 
   class HomeView extends CollectionView
@@ -27,16 +28,27 @@ define (require) ->
     initialize: ->
       @addCollectionListeners()
 
+      @delegate 'keypress', 'textarea.search', (e) =>
+        return unless e.keyCode is 13
+        e.preventDefault()
+        @search e.target.value
 
-    renderAllItems: ->
+
+    render: ->
       super
 
       @$el.mousewheel (e) -> @scrollTop -= e.deltaY
-
       @$el.prepend @$el.find('.search')
 
       searchView = new SearchView region: 'search', model: Chaplin.mediator.user
       @subview 'search', searchView
+
+      searchStatsView = new SearchStatsView region: 'stats'
+      @subview 'stats', searchStatsView
+
+
+    renderAllItems: ->
+      super
 
       ## resize to fit window width
       resizeTiles = =>
@@ -75,3 +87,21 @@ define (require) ->
       $(window).resize()
 
 
+    search: (query) ->
+      console.info "Searching for #{query}..."
+
+      if @xhr?
+        @xhr.abort()
+        console.debug "Stopped previous search request"
+
+      @$el.children('.result-item').css('opacity', 0.3)
+
+      @xhr = $.get('/api/search', query: query)
+      @xhr
+        .done (json) =>
+          console.debug "received answer for query:", json
+          @collection.reset()
+        .fail (error) =>
+          console.error "error while searching:", error
+        .always =>
+          @$el.children('.result-item').css('opacity', '')
