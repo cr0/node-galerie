@@ -8,7 +8,7 @@ define (require, exports) ->
   exports.Model = class Model extends Backbone.RelationalModel
     _.extend @prototype, Chaplin.EventBroker
     _.extend @prototype, Chaplin.SyncMachine
-    
+
     attributes = ['getAttributes', 'serialize', 'disposed']
     for attr in attributes
       @::[attr] = Chaplin.Model::[attr]
@@ -42,6 +42,9 @@ define (require, exports) ->
         @abortSync()
 
       super options
+
+    parse: (json) ->
+      if json.data then json.data else json
 
     # make usage of save more comfortable
     save: (cb, attributes = {}) ->
